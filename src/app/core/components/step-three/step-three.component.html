@@ -1,0 +1,799 @@
+<div class="register-step-three">
+  <form
+    #f="ngForm"
+    class="no-edit"
+    [formGroup]="ConsultationData"
+    *ngIf="editMode == false"
+  >
+    <div class="home-visit generic-switch-btn">
+      <p>Home Visit</p>
+      <label class="switch">
+        <input
+          type="checkbox"
+          (change)="addNewItem(stepThreeObject); removeValidators3($event)"
+          name=""
+          id="homeCheck"
+          (click)="homeCheck()"
+        />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div
+      class="form-group section-fees input-section"
+      *ngIf="isHomeVisit == true"
+    >
+      <div class="input-title">
+        <h3>Fees Per Session</h3>
+      </div>
+      <div class="section-fees__details wrapper">
+        <div
+          class="
+            section-fees__details section-fees__details__currency
+            input-title input-title--fees
+          "
+        >
+          <h3>Choose Your Currency</h3>
+          <div class="form-group custom-select">
+            <div class="Form-group-wrapper arrow">
+              <select
+                id="pet-select"
+                #homeVisitCurrency
+                (change)="addNewItem(stepThreeObject)"
+                class="form-control custom-select"
+              >
+                <option value="EGP">EGP</option>
+                <option value="US">US</option>
+                <option value="EUR">EUR</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="section-fees__details section-fees__details__fees">
+          <div class="form-group" [class.hasError]="f.submitted === true">
+            <div class="Form-group-wrapper">
+              <label for="">Home Visit</label>
+              <input
+                type="text"
+                name="homeVisit"
+                id="homeVisit"
+                #homeVisitfees
+                placeholder="200.00 EGP"
+                class="form-control"
+                formControlName="homeVisit"
+                (change)="addNewItem(stepThreeObject)"
+                (keydown)="allowOnlyNumber($event)"
+                (keydown)="noSpacesEvent($event)"
+              />
+              <div
+                *ngIf="
+                  f.submitted || ConsultationData?.controls?.homeVisit?.touched
+                "
+                class="error-feedback"
+              >
+                <p
+                  *ngIf="
+                    ConsultationData?.controls?.homeVisit?.errors?.required
+                  "
+                >
+                  This Field is required
+                </p>
+
+                <p
+                  *ngIf="
+                    ConsultationData?.controls?.homeVisit?.dirty &&
+                    ConsultationData?.controls?.homeVisit?.errors?.digit
+                  "
+                >
+                  numbers only
+                </p>
+                <p
+                  *ngIf="
+                    ConsultationData?.controls?.homeVisit?.dirty &&
+                    ConsultationData?.controls?.homeVisit?.errors?.notZero &&
+                    !ConsultationData?.controls?.homeVisit?.errors?.required
+                  "
+                >
+                  must greater than 0
+                </p>
+              </div>
+            </div>
+            <!---->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="home-visit generic-switch-btn">
+      <p>Video Consult</p>
+      <label class="switch">
+        <input
+          type="checkbox"
+          name=""
+          (change)="addNewItem(stepThreeObject); removeValidators4($event)"
+          id="videoCheck"
+          (click)="videoCheck()"
+        />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div
+      class="form-group availability input-section"
+      *ngIf="isVideoConsult == true"
+    >
+      <div class="input-title">
+        <h3>Video Consult Availability</h3>
+      </div>
+      <div class="availability__details">
+        <div class="availability__details">
+          <div
+            class="
+              availability__details__from
+              input-title input-title--subsection
+            "
+          >
+            <h3>From</h3>
+            <div class="form-group custom-select">
+              <div class="Form-group-wrapper arrow">
+                <select
+                  id="peselect"
+                  #videoFrom
+                  (change)="addNewItem(stepThreeObject)"
+                  class="form-control custom-select"
+                  formControlName="videoFrom"
+                >
+                  <option value="" selected>From...</option>
+                  <option
+                    [value]="date"
+                    *ngFor="let date of daties; let i = index"
+                    [id]="i"
+                  >
+                    {{ date }}
+                  </option>
+                </select>
+              </div>
+              <div
+                *ngIf="
+                  f.submitted || ConsultationData?.controls?.videoFrom?.touched
+                "
+                class="error-feedback"
+              >
+                <p
+                  *ngIf="
+                    ConsultationData?.controls?.videoFrom?.errors?.required
+                  "
+                >
+                  This Field is required
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="
+              availability__details__to
+              input-title input-title--subsection
+            "
+          >
+            <h3>To</h3>
+            <div class="form-group custom-select">
+              <div class="Form-group-wrapper arrow">
+                <select
+                  id="petselect"
+                  #videoTo
+                  (change)="addNewItem(stepThreeObject)"
+                  class="form-control custom-select"
+                  formControlName="videoTo"
+                >
+                  <option value="" selected>To...</option>
+                  <option
+                    [value]="date"
+                    *ngFor="let date of daties; let i = index"
+                    [id]="i"
+                  >
+                    {{ date }}
+                  </option>
+                </select>
+              </div>
+              <div
+                *ngIf="
+                  f.submitted || ConsultationData?.controls?.videoTo?.touched
+                "
+                class="error-feedback"
+              >
+                <p
+                  *ngIf="ConsultationData?.controls?.videoTo?.errors?.required"
+                >
+                  This Field is required
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="availability__details__days">
+          <div class="input-title input-title--subsection">
+            <h3>Pick Opening Days</h3>
+          </div>
+          <div class="availability__details__days__items">
+            <span
+              class="day active"
+              data-value="sunday"
+              (click)="addDay($event)"
+              >Sun</span
+            >
+            <span class="day" data-value="Monday" (click)="addDay($event)"
+              >Mon</span
+            >
+            <span class="day" data-value="Tuesday" (click)="addDay($event)"
+              >Tue</span
+            >
+            <span class="day" data-value="Wednesday" (click)="addDay($event)"
+              >Wed</span
+            >
+            <span class="day" data-value="Thursday" (click)="addDay($event)"
+              >Thu</span
+            >
+            <span class="day" data-value="Friday" (click)="addDay($event)"
+              >Fri</span
+            >
+            <span class="day" data-value="Saturday" (click)="addDay($event)"
+              >Sat</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="form-group section-fees input-section"
+      *ngIf="isVideoConsult == true"
+    >
+      <div class="input-title">
+        <h3>Fees Per Session</h3>
+      </div>
+      <div class="section-fees__details wrapper">
+        <div
+          class="
+            section-fees__details section-fees__details__currency
+            input-title input-title--fees
+          "
+        >
+          <h3>Choose Your Currency</h3>
+          <div class="form-group custom-select">
+            <div class="Form-group-wrapper arrow">
+              <select
+                id="pet-select"
+                #videoCallCurrency
+                (change)="addNewItem(stepThreeObject)"
+                class="form-control custom-select"
+              >
+                <option value="EGP">EGP</option>
+                <option value="US">US</option>
+                <option value="EUR">EUR</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="section-fees__details section-fees__details__fees">
+          <div class="form-group" [class.hasError]="f.submitted === true">
+            <div class="Form-group-wrapper">
+              <label for="">Video Call</label>
+              <input
+                type="text"
+                name="videoCall"
+                id="videoCall"
+                #videoCallfees
+                placeholder="200.00 EGP"
+                class="form-control"
+                (change)="addNewItem(stepThreeObject)"
+                formControlName="videoCall"
+                (keydown)="allowOnlyNumber($event)"
+                (keydown)="noSpacesEvent($event)"
+              />
+              <div
+                *ngIf="
+                  f.submitted || ConsultationData?.controls?.videoCall?.touched
+                "
+                class="error-feedback"
+              >
+                <p
+                  *ngIf="
+                    ConsultationData?.controls?.videoCall?.errors?.required
+                  "
+                >
+                  This Field is required
+                </p>
+
+                <p
+                  *ngIf="
+                    ConsultationData?.controls?.videoCall?.dirty &&
+                    ConsultationData?.controls?.videoCall?.errors?.digit
+                  "
+                >
+                  numbers only
+                </p>
+                <p
+                  *ngIf="
+                    ConsultationData?.controls?.videoCall?.dirty &&
+                    ConsultationData?.controls?.videoCall?.errors?.notZero &&
+                    !ConsultationData?.controls?.videoCall?.errors?.required
+                  "
+                >
+                  must greater than 0
+                </p>
+
+                <p
+                  *ngIf="
+                    ConsultationData?.controls?.videoCall?.dirty &&
+                    ConsultationData?.controls?.videoCall?.errors?.minerror &&
+                    !ConsultationData?.controls?.videoCall?.errors?.required
+                  "
+                >
+                  must greater than 50
+                </p>
+              </div>
+            </div>
+            <!---->
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <form
+    #f="ngForm"
+    class="edit"
+    [formGroup]="ConsultationData"
+    *ngIf="editMode == true"
+  >
+    <!--home-->
+    <div class="home-visit generic-switch-btn">
+      <p>Home Visit</p>
+      <label class="switch">
+        <input
+          type="checkbox"
+          [checked]="editModeData.is_home_visit == 1"
+          (change)="newItemEventCo(stepThreeObject); removeValidators($event)"
+          name=""
+          id="homeCheck"
+          (click)="homeCheck()"
+        />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <!--home-->
+
+    <!--fees per session-->
+    <div
+      class="form-group section-fees input-section"
+      *ngIf="isHomeVisit == true"
+    >
+      <div class="input-title">
+        <h3>Fees Per Session</h3>
+      </div>
+      <div class="section-fees__details wrapper">
+        <div
+          class="
+            section-fees__details section-fees__details__currency
+            input-title input-title--fees
+          "
+        >
+          <h3>Choose Your Currency</h3>
+          <div class="form-group custom-select">
+            <div class="Form-group-wrapper arrow">
+              <select
+                id="pet-select"
+                #homeVisitCurrency
+                (change)="newItemEventCo(stepThreeObject)"
+                class="form-control custom-select"
+              >
+                <option
+                  value="EGP"
+                  [selected]="editModeData.currency == 1 ? true : false"
+                >
+                  EGP
+                </option>
+                <option
+                  value="US"
+                  [selected]="editModeData.currency == 2 ? true : false"
+                >
+                  US
+                </option>
+                <option
+                  value="EUR"
+                  [selected]="editModeData.currency == 3 ? true : false"
+                >
+                  EUR
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="section-fees__details section-fees__details__fees">
+          <div class="form-group" [class.hasError]="f.submitted === true">
+            <div class="Form-group-wrapper">
+              <label for="">Home Visit</label>
+              <input
+                type="text"
+                name="homeVisit"
+                id="homeVisit"
+                #homeVisitfees
+                placeholder="200.00 EGP"
+                class="form-control"
+                (change)="newItemEventCo(stepThreeObject)"
+                formControlName="homeVisit"
+                (keydown)="allowOnlyNumber($event)"
+                (keydown)="noSpacesEvent($event)"
+              />
+              <div
+                *ngIf="
+                  f.submitted || ConsultationData?.controls?.homeVisit?.errors
+                "
+                class="error-feedback"
+              >
+                <p
+                  *ngIf="
+                    ConsultationData?.controls?.homeVisit?.touched &&
+                    ConsultationData?.controls?.homeVisit?.errors?.required
+                  "
+                >
+                  This Field is required
+                </p>
+
+                <p
+                  *ngIf="
+                    ConsultationData?.controls?.homeVisit?.dirty &&
+                    ConsultationData?.controls?.homeVisit?.errors?.digit
+                  "
+                >
+                  numbers only
+                </p>
+                <p
+                  *ngIf="
+                    ConsultationData?.controls?.homeVisit?.dirty &&
+                    ConsultationData?.controls?.homeVisit?.errors?.notZero
+                  "
+                >
+                  must greater than 0
+                </p>
+              </div>
+            </div>
+            <!---->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--fees per session-->
+
+    <!--video consult-->
+    <div class="home-visit--video home-visit generic-switch-btn">
+      <p>Video Consult</p>
+      <label class="switch">
+        <input
+          type="checkbox"
+          name=""
+          [checked]="editModeData.is_video_call == 1"
+          (change)="newItemEventCo(stepThreeObject); removeValidators2($event)"
+          id="videoCheck"
+          (click)="videoCheck()"
+        />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <!--video consult-->
+
+    <!--Fees Per Session-->
+    <div
+      class="form-group availability input-section"
+      *ngIf="isVideoConsult == true"
+    >
+      <div class="input-title">
+        <h3>Video Consult Availability</h3>
+      </div>
+      <div class="availability__details">
+        <div class="availability__details">
+          <div
+            class="
+              availability__details__from
+              input-title input-title--subsection
+            "
+          >
+            <h3>From</h3>
+            <div class="form-group custom-select">
+              <div class="Form-group-wrapper arrow">
+                <select
+                  id="peselect"
+                  #videoFrom
+                  (change)="newItemEventCo(stepThreeObject)"
+                  class="form-control custom-select"
+                  [value]="selectedFromValue"
+                  formControlName="videoFrom"
+                  [(ngModel)]="selectedFromValue"
+                >
+                  <!-- <option value="1:00 AM">1:00 AM</option> -->
+                  <option
+                    value=""
+                    [attr.selected]="selectedFromValue == '' ? true : null"
+                  >
+                    from...
+                  </option>
+                  <option
+                    [value]="date"
+                    *ngFor="let date of daties; let i = index"
+                    [id]="i"
+                    [attr.selected]="date == selectedFromValue ? true : null"
+                  >
+                    {{ date }}
+                  </option>
+                </select>
+              </div>
+              <div
+                *ngIf="
+                  f.submitted || ConsultationData?.controls?.videoFrom?.touched
+                "
+                class="error-feedback"
+              >
+                <p
+                  *ngIf="
+                    ConsultationData?.controls?.videoFrom?.errors?.required
+                  "
+                >
+                  This Field is required
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="
+              availability__details__to
+              input-title input-title--subsection
+            "
+          >
+            <h3>To</h3>
+            <div class="form-group custom-select">
+              <div class="Form-group-wrapper arrow">
+                <select
+                  id="petselect"
+                  #videoTo
+                  (change)="newItemEventCo(stepThreeObject)"
+                  class="form-control custom-select"
+                  [value]="selectedToValue"
+                  formControlName="videoTo"
+                  [(ngModel)]="selectedToValue"
+                >
+                  <!-- <option value="1:00 AM">1:00 AM</option> -->
+                  <option
+                    value=""
+                    [attr.selected]="selectedToValue == '' ? true : null"
+                  >
+                    To...
+                  </option>
+                  <option
+                    [value]="date"
+                    *ngFor="let date of daties; let i = index"
+                    [id]="i"
+                    [attr.selected]="date == selectedToValue ? true : null"
+                  >
+                    {{ date }}
+                  </option>
+                </select>
+              </div>
+              <div
+                *ngIf="
+                  f.submitted || ConsultationData?.controls?.videoTo?.touched
+                "
+                class="error-feedback"
+              >
+                <p
+                  *ngIf="ConsultationData?.controls?.videoTo?.errors?.required"
+                >
+                  This Field is required
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="availability__details__days">
+          <div class="input-title input-title--subsection">
+            <h3>Pick Opening Days</h3>
+          </div>
+          <div class="availability__details__days__items">
+            <span
+              class="day active"
+              data-value="Sunday"
+              [ngClass]="{
+                active:
+                  editModeData.video_selected_days.includes('Sunday') ||
+                  editModeData.video_selected_days.includes('sunday')
+              }"
+              (click)="addDay($event)"
+              >Sun</span
+            >
+            <span
+              class="day"
+              data-value="Monday"
+              [ngClass]="{
+                active:
+                  editModeData.video_selected_days.includes('Monday') ||
+                  editModeData.video_selected_days.includes('monday')
+              }"
+              (click)="addDay($event)"
+              >Mon</span
+            >
+            <span
+              class="day"
+              data-value="Tuesday"
+              [ngClass]="{
+                active:
+                  editModeData.video_selected_days.includes('Tuesday') ||
+                  editModeData.video_selected_days.includes('tuesday')
+              }"
+              (click)="addDay($event)"
+              >Tue</span
+            >
+            <span
+              class="day"
+              data-value="Wednesday"
+              [ngClass]="{
+                active:
+                  editModeData.video_selected_days.includes('Wednesday') ||
+                  editModeData.video_selected_days.includes('wednesday')
+              }"
+              (click)="addDay($event)"
+              >Wed</span
+            >
+            <span
+              class="day"
+              data-value="Thursday"
+              [ngClass]="{
+                active:
+                  editModeData.video_selected_days.includes('Thursday') ||
+                  editModeData.video_selected_days.includes('thursday')
+              }"
+              (click)="addDay($event)"
+              >Thu</span
+            >
+            <span
+              class="day"
+              data-value="Friday"
+              [ngClass]="{
+                active:
+                  editModeData.video_selected_days.includes('Friday') ||
+                  editModeData.video_selected_days.includes('friday')
+              }"
+              (click)="addDay($event)"
+              >Fri</span
+            >
+            <span
+              class="day"
+              data-value="Saturday"
+              [ngClass]="{
+                active:
+                  editModeData.video_selected_days.includes('Saturday') ||
+                  editModeData.video_selected_days.includes('saturday')
+              }"
+              (click)="addDay($event)"
+              >Sat</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Fees Per Session-->
+
+    <!--Fees Per Session-->
+    <div
+      class="form-group section-fees input-section"
+      *ngIf="isVideoConsult == true"
+    >
+      <div class="input-title">
+        <h3>Fees Per Session</h3>
+      </div>
+      <div class="section-fees__details wrapper">
+        <div
+          class="
+            section-fees__details section-fees__details__currency
+            input-title input-title--fees
+          "
+        >
+          <h3>Choose Your Currency</h3>
+          <div class="form-group custom-select">
+            <div class="Form-group-wrapper arrow">
+              <select
+                #videoCallCurrency
+                (change)="newItemEventCo(stepThreeObject)"
+                class="form-control custom-select"
+              >
+                <option
+                  value="EGP"
+                  [selected]="
+                    editModeData.video_call_currency == 1 ? true : false
+                  "
+                >
+                  EGP
+                </option>
+                <option
+                  value="US"
+                  [selected]="
+                    editModeData.video_call_currency == 2 ? true : false
+                  "
+                >
+                  US
+                </option>
+                <option
+                  value="EUR"
+                  [selected]="
+                    editModeData.video_call_currency == 3 ? true : false
+                  "
+                >
+                  EUR
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="section-fees__details section-fees__details__fees">
+          <div class="form-group" [class.hasError]="f.submitted === true">
+            <div class="Form-group-wrapper">
+              <label for="">Video Call</label>
+              <input
+                type="text"
+                name="videoCall"
+                id="videoCall"
+                #videoCallfees
+                placeholder="200.00 EGP"
+                class="form-control"
+                (change)="newItemEventCo(stepThreeObject)"
+                formControlName="videoCall"
+                (keydown)="allowOnlyNumber($event)"
+                (keydown)="noSpacesEvent($event)"
+                [(ngModel)]="selectedVideoFee"
+              />
+              <div
+                *ngIf="
+                  f.submitted || ConsultationData?.controls?.videoCall?.errors
+                "
+                class="error-feedback"
+              >
+                <p
+                  *ngIf="
+                    ConsultationData?.controls?.videoCall?.errors?.touched &&
+                    ConsultationData?.controls?.videoCall?.errors?.required
+                  "
+                >
+                  This Field is required
+                </p>
+
+                <p
+                  *ngIf="
+                    ConsultationData?.controls?.videoCall?.dirty &&
+                    ConsultationData?.controls?.videoCall?.errors?.digit
+                  "
+                >
+                  numbers only
+                </p>
+                <p
+                  *ngIf="
+                    ConsultationData?.controls?.videoCall?.dirty &&
+                    ConsultationData?.controls?.videoCall?.errors?.notZero
+                  "
+                >
+                  must greater than 0
+                </p>
+                <p
+                  *ngIf="
+                    ConsultationData?.controls?.videoCall?.dirty &&
+                    ConsultationData?.controls?.videoCall?.errors?.minerror &&
+                    !ConsultationData?.controls?.videoCall?.errors?.required
+                  "
+                >
+                  must greater than 50
+                </p>
+              </div>
+            </div>
+            <!---->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Fees Per Session-->
+  </form>
+</div>

@@ -1,0 +1,93 @@
+<div class="doctor-register-wizard genric-card">
+  <h1 class="main-title">Complete Your Data</h1>
+  <app-loader *ngIf="isLoaderShow"></app-loader>
+  <kendo-stepper
+    #stepper
+    [steps]="steps"
+    stepType="full"
+    [(currentStep)]="currentStep"
+  >
+  </kendo-stepper>
+  <form class="k-form" [formGroup]="form">
+    <register-step-one
+      (newItemEvent)="addStepObject($event)"
+      *ngIf="currentStep === 0"
+      [doctorDetails]="currentGroup"
+    >
+    </register-step-one>
+    <register-step-two
+      (newItemEvent)="addStepTwoObject($event)"
+      [isAddClinicFinish]="isAddClinicFinish"
+      [doctorClinisDataBind]="doctorClinisData"
+      *ngIf="currentStep === 1"
+      [personalDetails]="currentGroup"
+    >
+    </register-step-two>
+    <register-step-three
+      (newItemEvent)="addStepThreeObject($event)"
+      *ngIf="currentStep === 2"
+      [ConsultationData]="currentGroup"
+    >
+    </register-step-three>
+    <register-step-fourth
+      (newItemEvent)="addStepFourObject($event)"
+      *ngIf="currentStep === 3"
+      [signature]="currentGroup"
+    ></register-step-fourth>
+    <register-step-fifth
+      (newItemEvent)="addStepFiveObject($event)"
+      *ngIf="currentStep === 4"
+      [doctorCode]="currentGroup"
+    ></register-step-fifth>
+    <span class="k-form-separator"></span>
+    <div class="k-form-buttons k-buttons-end">
+      <!-- <span class="page">Step {{ currentStep + 1 }} of 3</span> -->
+      <div class="welcome-card__btns">
+        <!--back button-->
+        <button
+          class="k-button prev"
+          (click)="handelBack()"
+          *ngIf="currentStep == 0"
+        >
+          <span class="icon-dropdown-circle"></span>
+        </button>
+
+        <!--back button-->
+        <button
+          class="k-button prev"
+          *ngIf="currentStep !== 0"
+          (click)="prev(); handelBack()"
+        >
+          <span class="icon-dropdown-circle"></span>
+        </button>
+
+        <button
+          class="k-button k-primary custom-btn btn-main-color"
+          (click)="next()"
+          *ngIf="currentStep !== 4"
+        >
+          Save
+        </button>
+
+        <button
+          class="k-button k-primary custom-btn welcome-card__btns__signup"
+          (click)="stepTwoNext()"
+          *ngIf="isClinicRegister && currentStep == 1"
+        >
+          Next
+        </button>
+
+        <!--step 4 button-->
+        <button
+          class="k-button k-primary custom-btn btn-main-color"
+          (click)="submit()"
+          *ngIf="currentStep === 4"
+        >
+          Save
+        </button>
+        <!--step 4 button-->
+      </div>
+    </div>
+  </form>
+</div>
+<app-toast aria-live="polite" aria-atomic="true"></app-toast>

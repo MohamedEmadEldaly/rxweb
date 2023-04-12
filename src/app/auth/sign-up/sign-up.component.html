@@ -1,0 +1,274 @@
+<div class="sign-up-card genric-card">
+  <h3 class="main-title">Sign Up</h3>
+  <app-loader *ngIf="isDetailsLoaderShow"></app-loader>
+
+  <form #f="ngForm" [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+    <div class="form-group" [class.hasError]="f.submitted === true">
+      <div class="Form-group-wrapper">
+        <input
+          type="text"
+          name="en-name"
+          id="english-name"
+          placeholder="Name in English"
+          class="form-control"
+          formControlName="en_name"
+          pattern="[a-zA-Z]+( +[a-zA-Z]+)*"
+          (keydown)="updateRout()"
+          (keydown)="allowEnglishOnly($event)"
+          (keydown)="noSpacesEvent($event)"
+        />
+        <div class="input-icon icon-image">
+          <img src="./../../../assets/images/dr_en.png" alt="" srcset="" />
+        </div>
+        <div
+          *ngIf="f.submitted || reactiveForm.controls.en_name.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="reactiveForm.controls.en_name.errors?.required">
+            This Field is required
+          </p>
+          <p *ngIf="reactiveForm.controls.en_name.errors?.pattern">
+            Please Enter English Only without numbers
+          </p>
+        </div>
+      </div>
+      <!---->
+    </div>
+    <div class="form-group" [class.hasError]="f.submitted === true">
+      <div class="Form-group-wrapper">
+        <input
+          type="text"
+          name="ar-name"
+          id="arabic-name"
+          placeholder="الاسم باللغة العربية"
+          class="form-control form-control--arabic"
+          formControlName="ar_name"
+          pattern="[\u0621-\u064A\u0660-\u0669]+( +[\u0621-\u064A\u0660-\u0669]+)*"
+          (keydown)="updateRout(); allowArabicOnly($event)"
+          (keydown)="noSpacesEvent($event)"
+        />
+        <div class="input-icon icon-image icon-image--arabic">
+          <img src="../../../assets/images/dr_ar.png" alt="" srcset="" />
+        </div>
+        <div
+          *ngIf="f.submitted || reactiveForm.controls.ar_name.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="reactiveForm.controls.ar_name.errors?.required">
+            This Field is required
+          </p>
+          <p *ngIf="reactiveForm.controls.ar_name.errors?.pattern">
+            Please Enter Arabic Only
+          </p>
+          <p
+            *ngIf="
+              reactiveForm.controls.ar_name.errors?.required == undefined &&
+              reactiveForm.controls.ar_name.errors?.whitespace
+            "
+          >
+            Please Enter Arabic Only
+          </p>
+        </div>
+      </div>
+      <!---->
+    </div>
+    <div class="form-group" [class.hasError]="f.submitted === true">
+      <div class="Form-group-wrapper Form-group-wrapper--phone">
+        <!-- <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="preferredCountries"
+        [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+        [selectedCountryISO]="CountryISO.Egypt"
+        [phoneValidation]="true" [separateDialCode]="separateDialCode"
+        [numberFormat]="PhoneNumberFormat.National" name="phone" formControlName="phone">
+      </ngx-intl-tel-input> -->
+        <ngx-intl-tel-input
+          [cssClass]="'form-control'"
+          [preferredCountries]="preferredCountries"
+          [enableAutoCountrySelect]="false"
+          [enablePlaceholder]="true"
+          [searchCountryFlag]="true"
+          [searchCountryField]="[
+            SearchCountryField.Iso2,
+            SearchCountryField.Name
+          ]"
+          [selectFirstCountry]="false"
+          [selectedCountryISO]="CountryISO.Egypt"
+          [phoneValidation]="true"
+          [separateDialCode]="separateDialCode"
+          name="phone"
+          formControlName="phone"
+          (keydown)="updateRout()"
+          (keydown.space)="$event.preventDefault()"
+        >
+        </ngx-intl-tel-input>
+        <!-- <input
+          type="number"
+          name="phone"
+          id="phone"
+          placeholder="Phone Number"
+          class="form-control"
+          formControlName="phone"
+          (keydown)="updateRout()"
+        /> -->
+        <!-- <div class="input-icon">
+          <span class="icon-phone"></span>
+        </div> -->
+        <div
+          *ngIf="f.submitted || reactiveForm.controls.phone.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="!reactiveForm.value.phone">Phone Number Required</p>
+          <p
+            *ngIf="
+              reactiveForm.value.phone && reactiveForm.controls['phone'].errors
+            "
+          >
+            Invalid Phone Number
+          </p>
+
+          <!-- <p *ngIf="reactiveForm.controls.phone.errors?.required">
+            This Field is required
+          </p> -->
+        </div>
+      </div>
+      <!---->
+    </div>
+    <div class="form-group" [class.hasError]="f.submitted === true">
+      <div class="Form-group-wrapper">
+        <input
+          type="text"
+          name="email"
+          id="email"
+          placeholder="E-mail"
+          class="form-control"
+          formControlName="email"
+          (keydown)="updateRout()"
+        />
+        <div class="input-icon">
+          <span class="icon-email"></span>
+        </div>
+        <div
+          *ngIf="f.submitted || reactiveForm.controls.email.touched"
+          class="error-feedback"
+        >
+          <p
+            *ngIf="
+              reactiveForm.controls.email.errors?.required &&
+              reactiveForm.controls.email.pristine
+            "
+          >
+            This Field is required
+          </p>
+          <p
+            *ngIf="
+              reactiveForm.controls.email.dirty &&
+              (reactiveForm.controls.email.errors?.email ||
+                reactiveForm.controls.email.errors?.validEmail)
+            "
+          >
+            Please enter a valid email
+          </p>
+        </div>
+      </div>
+      <!---->
+    </div>
+    <div class="form-group" [class.hasError]="f.submitted === true">
+      <div class="Form-group-wrapper password">
+        <input
+          [type]="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          class="form-control"
+          formControlName="password"
+          (keydown)="updateRout()"
+        />
+        <div class="input-icon" (click)="showPassword()">
+          <span class="icon-show-password"></span>
+        </div>
+
+        <div
+          *ngIf="f.submitted || reactiveForm.controls.password.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="reactiveForm.controls.password.errors?.required">
+            This Field is required
+          </p>
+          <p
+            *ngIf="
+              reactiveForm.controls.password.errors?.required != true &&
+              (reactiveForm.controls.password.errors?.minlength != undefined ||
+                reactiveForm.controls.password.errors?.whitespace)
+            "
+          >
+            Password must be at least 8 characters
+          </p>
+        </div>
+      </div>
+      <!---->
+    </div>
+    <div class="form-group" [class.hasError]="f.submitted === true">
+      <div class="Form-group-wrapper password">
+        <input
+          [type]="confirmPassword"
+          name="password"
+          id="confirm-password"
+          placeholder="Confirm Password"
+          class="form-control"
+          formControlName="confirm_password"
+          (keydown)="updateRout()"
+        />
+        <div class="input-icon" (click)="showConfirmPassword()">
+          <span class="icon-show-password"></span>
+        </div>
+
+        <div
+          *ngIf="
+            f.submitted ||
+            reactiveForm.controls.confirm_password?.errors?.touched
+          "
+          class="error-feedback"
+        >
+          <p *ngIf="reactiveForm.controls.confirm_password?.errors?.required">
+            This Field is required
+          </p>
+          <p
+            *ngIf="
+              reactiveForm.controls.confirm_password?.errors?.confirmedValidator
+            "
+          >
+            The password is not match
+          </p>
+          <!-- <p class="noError"  *ngIf= "this.reactiveForm.controls.password.errors?.minLength?.actualLength < 8">Password should contain 8 characters at least</p> -->
+        </div>
+        <div
+          *ngIf="f.submitted || reactiveForm.controls.confirm_password.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="reactiveForm.controls.confirm_password.errors?.required">
+            This Field is required
+          </p>
+          <p
+            *ngIf="
+              reactiveForm.controls.confirm_password.errors
+                ?.confirmedValidator != undefined
+            "
+          >
+            The password is not match
+          </p>
+        </div>
+      </div>
+      <!---->
+    </div>
+    <div class="welcome-card__btns">
+      <button class="custom-btn--singup custom-btn" type="submit">
+        Sign Up
+      </button>
+    </div>
+    <div class="sign-in-card__signup">
+      <p>Already have an account?</p>
+      <a routerLink="/auth/SignIn"> Sign In </a>
+    </div>
+  </form>
+  <app-toast aria-live="polite" aria-atomic="true"></app-toast>
+</div>

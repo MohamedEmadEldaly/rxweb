@@ -1,0 +1,1016 @@
+<div class="register-step-two">
+  <!--add mode-->
+  <form
+    #f="ngForm"
+    id="step-two"
+    class="steps-form"
+    [formGroup]="personalDetails"
+    *ngIf="editMode == false"
+  >
+    <div class="form-group" [class.hasError]="f.submitted === true">
+      <div class="Form-group-wrapper">
+        <input
+          type="text"
+          #clinicName
+          name="clinicName"
+          id="clinicName"
+          placeholder="Clinic's Name"
+          class="form-control"
+          formControlName="clinicName"
+          (change)="addNewItem(stepTwoObject)"
+          (keydown)="noSpacesEvent($event)"
+        />
+        <div
+          *ngIf="f.submitted || personalDetails?.controls?.clinicName?.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="personalDetails?.controls?.clinicName?.errors?.required">
+            This Field is required
+          </p>
+          <p
+            *ngIf="
+              personalDetails.controls.clinicName.errors?.required ==
+                undefined &&
+              personalDetails.controls.clinicName.errors?.whitespace
+            "
+          >
+            Please Enter Characters
+          </p>
+        </div>
+      </div>
+      <!---->
+    </div>
+
+    <div class="form-group" [class.hasError]="f.submitted === true">
+      <div class="Form-group-wrapper Form-group-wrapper--phone">
+        <ngx-intl-tel-input
+          [cssClass]="'form-control'"
+          [preferredCountries]="preferredCountries"
+          [enableAutoCountrySelect]="true"
+          [enablePlaceholder]="true"
+          [searchCountryFlag]="true"
+          [searchCountryField]="[
+            SearchCountryField.Iso2,
+            SearchCountryField.Name
+          ]"
+          [selectFirstCountry]="false"
+          [selectedCountryISO]="CountryISO.Egypt"
+          [phoneValidation]="true"
+          [separateDialCode]="separateDialCode"
+          #countryCode
+          [numberFormat]="PhoneNumberFormat.National"
+          name="phone"
+          formControlName="clinicPhone"
+          (keydown.space)="$event.preventDefault()"
+          (keydown)="allowOnlyNumber($event)"
+          (keyup)="phoneNumberText($event)"
+          (ngModelChange)="addNewItem(stepTwoObject)"
+        >
+        </ngx-intl-tel-input>
+        <!-- <input
+          type="number"
+          #clinicPhone
+          name="clinicPhone"
+          id="clinicPhone"
+          placeholder="Clinic's Phone Number"
+          class="form-control"
+          formControlName="clinicPhone"
+          (change)="addNewItem(stepTwoObject)"
+        /> -->
+        <div
+          *ngIf="f.submitted || personalDetails?.controls?.clinicPhone?.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="personalDetails?.controls?.clinicPhone?.errors?.required">
+            This Field is required
+          </p>
+          <p
+            *ngIf="
+              personalDetails.value.clinicPhone &&
+              personalDetails.controls['clinicPhone']?.errors
+            "
+          >
+            Invalid Phone Number
+          </p>
+        </div>
+      </div>
+      <!---->
+    </div>
+
+    <div class="form-group pickLocation input-section">
+      <div class="Form-group-wrapper">
+        <input
+          type="text"
+          name="address"
+          #address
+          id="address"
+          placeholder="Type in clinic's street, Area City,Country"
+          class="form-control"
+          formControlName="address"
+          (change)="addNewItem(stepTwoObject)"
+          (keydown)="noSpacesEvent($event)"
+        />
+
+        <div
+          *ngIf="f.submitted || personalDetails?.controls?.address?.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="personalDetails?.controls?.address?.errors?.required">
+            This Field is required
+          </p>
+        </div>
+      </div>
+
+      <agm-map
+        [latitude]="+lat"
+        [longitude]="+lng"
+        (mapClick)="onChooseLocation($event)"
+      >
+        <agm-marker
+          *ngIf="marker"
+          [latitude]="+lat"
+          [longitude]="+lng"
+        ></agm-marker>
+      </agm-map>
+    </div>
+
+    <div class="form-group availability input-section">
+      <div class="input-title">
+        <h3>Availability</h3>
+      </div>
+      <!-- <div class="availability__details">
+        <div class="availability__details">
+          <div
+            class="availability__details__from input-title input-title--subsection"
+          >
+            <h3>From</h3>
+            <div class="form-group custom-select">
+              <div class="Form-group-wrapper arrow">
+                <select
+                  id="pet-select"
+                  [(ngModel)]="selectedFromValue"
+                  formControlName="cityName"
+                  #from
+                  (change)="changeFromTime($event)"
+                  class="form-control custom-select"
+                >
+                  <option
+                    [value]="date"
+                    *ngFor="let date of daties; let i = index"
+                    [id]="i"
+                  >
+                    {{ date }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    f.submitted || personalDetails?.controls?.cityName?.touched
+                  "
+                  class="error-feedback"
+                >
+                  <p
+                    *ngIf="
+                      personalDetails?.controls?.cityName?.errors?.required
+                    "
+                  >
+                    This Field is required
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="availability__details__to input-title input-title--subsection"
+          >
+            <h3>To</h3>
+            <div class="form-group custom-select">
+              <div class="Form-group-wrapper arrow">
+                <select
+                  id="pet-select"
+                  [(ngModel)]="selectedToValue"
+                  formControlName="cityTo"
+                  #to
+                  (change)="changeToTime($event)"
+                  class="form-control custom-select"
+                >
+                  <option
+                    [value]="date"
+                    *ngFor="let date of daties; let i = index"
+                    [id]="i"
+                  >
+                    {{ date }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    f.submitted || personalDetails?.controls?.cityTo?.touched
+                  "
+                  class="error-feedback"
+                >
+                  <p
+                    *ngIf="personalDetails?.controls?.cityTo?.errors?.required"
+                  >
+                    This Field is required
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="availability__details__days">
+          <div class="input-title input-title--subsection">
+            <h3>Pick Opening Days</h3>
+          </div>
+          <div class="availability__details__days__items">
+            <span
+              class="day active"
+              data-value="Sunday"
+              [ngClass]="{ active: isActiveDay('Sunday') }"
+              (click)="addNewDay(0)"
+              >Sun</span
+            >
+            <span
+              class="day"
+              data-value="Monday"
+              [ngClass]="{ active: isActiveDay('Monday') }"
+              (click)="addNewDay(1)"
+              >Mon</span
+            >
+            <span
+              class="day"
+              data-value="Tuesday"
+              [ngClass]="{ active: isActiveDay('Tuesday') }"
+              (click)="addNewDay(2)"
+              >Tue</span
+            >
+            <span
+              class="day"
+              data-value="Wednesday"
+              [ngClass]="{ active: isActiveDay('Wednesday') }"
+              (click)="addNewDay(3)"
+              >Wed</span
+            >
+            <span
+              class="day"
+              data-value="Thursday"
+              [ngClass]="{ active: isActiveDay('Thursday') }"
+              (click)="addNewDay(4)"
+              >Thu</span
+            >
+            <span
+              class="day"
+              data-value="Friday"
+              [ngClass]="{ active:isActiveDay('Friday') }"
+              (click)="addNewDay(5)"
+              >Fri</span
+            >
+            <span
+              class="day"
+              data-value="Saturday"
+              [ngClass]="{ active: isActiveDay('Saturday') }"
+              (click)="addNewDay(6)"
+              >Sat</span
+            >
+          </div>
+        </div>
+      </div> -->
+
+      <ng-container *ngFor="let item of selected_days_new;let i = index">
+        <div>
+          <div class="d-flex justify-content-between">
+            <p class="appointmentday">{{item?.day}}</p>
+            <div class="home-visit generic-switch-btn">
+
+              <label class="switch" for="{{item?.day}}">
+                <input
+                  type="checkbox"
+                  name=""
+                  id="{{item?.day}}"
+                  (change)="addNewDay(i);addNewItem(stepTwoObject)"
+                  [checked]="isActiveDay(item?.day)"
+                />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+
+
+          <div class="d-flex" *ngIf="isActiveDay(item?.day)">
+            <div class="form-group custom-select">
+              <div class="Form-group-wrapper arrow">
+                <select
+                  id="pet-select"
+                  (change)="changeFromTime($event,i);addNewItem(stepTwoObject)"
+                  class="form-control custom-select"
+                >
+                  <!-- <option value="" selected>From...</option> -->
+                  <option
+                    [value]="date"
+                    *ngFor="let date of daties; let i = index"
+                    [id]="i"
+                  >
+                    {{ date }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    f.submitted || personalDetails?.controls?.cityName?.touched
+                  "
+                  class="error-feedback"
+                >
+                  <p
+                    *ngIf="
+                      personalDetails?.controls?.cityName?.errors?.required
+                    "
+                  >
+                    This Field is required
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group custom-select">
+              <div class="Form-group-wrapper arrow">
+                <select
+                  id="pet-select"
+                  (change)="changeToTime($event,i);addNewItem(stepTwoObject)"
+                  class="form-control custom-select"
+                >
+                  <!-- <option value="" selected>To...</option> -->
+                  <option
+                    [value]="date"
+                    *ngFor="let date of daties; let i = index"
+                    [id]="i"
+                  >
+                    {{ date }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    f.submitted || personalDetails?.controls?.cityTo?.touched
+                  "
+                  class="error-feedback"
+                >
+                  <p
+                    *ngIf="personalDetails?.controls?.cityTo?.errors?.required"
+                  >
+                    This Field is required
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      
+
+      </ng-container>
+
+
+    </div>
+
+    <div class="form-group section-fees input-section">
+      <div class="input-title">
+        <h3>Fees Per Session</h3>
+      </div>
+      <div class="section-fees__details wrapper">
+        <div
+          class="section-fees__details section-fees__details__currency input-title input-title--fees"
+        >
+          <h3>Choose Your Currency</h3>
+          <div class="form-group custom-select">
+            <div class="Form-group-wrapper arrow">
+              <select
+                id="pet-select"
+                #currrencyType
+                (change)="addNewItem(stepTwoObject)"
+                class="form-control custom-select"
+              >
+                <option value="EGP">EGP</option>
+                <option value="US">US</option>
+                <option value="EUR">EUR</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="section-fees__details section-fees__details__fees">
+          <div class="form-group" [class.hasError]="f.submitted === true">
+            <div class="Form-group-wrapper">
+              <label for="">Regular</label>
+              <input
+                type="text"
+                name="regularFee"
+                #regularFee
+                id="regularFee"
+                placeholder="200.00 EGP"
+                class="form-control"
+                formControlName="regularFee"
+                (change)="addNewItem(stepTwoObject)"
+                (keydown)="allowOnlyNumber($event)"
+                (keydown)="noSpacesEvent($event)"
+              />
+              <div
+                *ngIf="
+                  f.submitted || personalDetails?.controls?.regularFee?.touched
+                "
+                class="error-feedback"
+              >
+                <p
+                  *ngIf="
+                    personalDetails?.controls?.regularFee?.errors?.required
+                  "
+                >
+                  This Field is required
+                </p>
+
+                <p
+                  *ngIf="
+                    personalDetails.controls.regularFee?.errors?.required ==
+                      undefined &&
+                    personalDetails.controls.regularFee?.errors?.whitespace
+                  "
+                >
+                  Please Enter Numbers
+                </p>
+
+                <p *ngIf="personalDetails.controls.regularFee?.errors?.notZero">
+                  must greater than 0
+                </p>
+              </div>
+            </div>
+            <!---->
+          </div>
+          <div class="form-group">
+            <div class="Form-group-wrapper">
+              <label for="">Urgent</label>
+              <input
+                type="text"
+                name="urgent"
+                id="urgentFee"
+                #urgentFee
+                placeholder="200.00 EGP"
+                class="form-control"
+                (change)="addNewItem(stepTwoObject)"
+                (keydown)="allowOnlyNumber($event)"
+                (keydown)="noSpacesEvent($event)"
+                formControlName="urgent"
+              />
+              <div
+                *ngIf="
+                  f.submitted || personalDetails?.controls?.urgent?.touched
+                "
+                class="error-feedback"
+              >
+                <p *ngIf="personalDetails?.controls?.urgent?.errors?.notZero">
+                  must greater than 0
+                </p>
+              </div>
+            </div>
+            <!---->
+          </div>
+          <div class="form-group">
+            <div class="Form-group-wrapper">
+              <label for="">Recheck</label>
+              <input
+                type="text"
+                name="Consultation"
+                #consulto
+                id="ConsultationFee"
+                placeholder="200.00 EGP"
+                class="form-control"
+                (change)="addNewItem(stepTwoObject)"
+                (keydown)="allowOnlyNumber($event)"
+                (keydown)="noSpacesEvent($event)"
+                formControlName="consultation"
+              />
+              <div
+                *ngIf="
+                  f.submitted ||
+                  personalDetails?.controls?.consultation?.touched
+                "
+                class="error-feedback"
+              >
+                <p
+                  *ngIf="
+                    personalDetails?.controls?.consultation?.errors?.notZero
+                  "
+                >
+                  must greater than 0
+                </p>
+              </div>
+            </div>
+            <!---->
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <!--add mode-->
+
+  <!--edit mode-->
+  <form
+    #f="ngForm"
+    [formGroup]="personalDetails"
+    *ngIf="editMode == true"
+    class="edit-test"
+  >
+  <div class="form-group" [class.hasError]="f.submitted === true">
+    <div class="Form-group-wrapper">
+      <input
+        type="text"
+        #clinicName
+        name="clinicName"
+        id="clinicName"
+        placeholder="Clinic's Name"
+        class="form-control"
+        formControlName="clinicName"
+        (change)="addNewItem(stepTwoObject)"
+        (keydown)="noSpacesEvent($event)"
+      />
+      <div
+        *ngIf="f.submitted || personalDetails?.controls?.clinicName?.touched"
+        class="error-feedback"
+      >
+        <p *ngIf="personalDetails?.controls?.clinicName?.errors?.required">
+          This Field is required
+        </p>
+        <p
+          *ngIf="
+            personalDetails.controls.clinicName.errors?.required ==
+              undefined &&
+            personalDetails.controls.clinicName.errors?.whitespace
+          "
+        >
+          Please Enter Characters
+        </p>
+      </div>
+    </div>
+    <!---->
+  </div>
+
+  <div class="form-group" [class.hasError]="f.submitted === true">
+    <div class="Form-group-wrapper Form-group-wrapper--phone">
+      <ngx-intl-tel-input
+        [cssClass]="'form-control'"
+        [preferredCountries]="preferredCountries"
+        [enableAutoCountrySelect]="true"
+        [enablePlaceholder]="true"
+        [searchCountryFlag]="true"
+        [searchCountryField]="[
+          SearchCountryField.Iso2,
+          SearchCountryField.Name
+        ]"
+        [selectFirstCountry]="false"
+        [selectedCountryISO]="CountryISO.Egypt"
+        [phoneValidation]="true"
+        [separateDialCode]="separateDialCode"
+        #countryCode
+        [numberFormat]="PhoneNumberFormat.National"
+        name="phone"
+        formControlName="clinicPhone"
+        (keydown.space)="$event.preventDefault()"
+        (keydown)="allowOnlyNumber($event)"
+        (keyup)="phoneNumberText($event)"
+        (ngModelChange)="addNewItem(stepTwoObject)"
+      >
+      </ngx-intl-tel-input>
+      <!-- <input
+        type="number"
+        #clinicPhone
+        name="clinicPhone"
+        id="clinicPhone"
+        placeholder="Clinic's Phone Number"
+        class="form-control"
+        formControlName="clinicPhone"
+        (change)="addNewItem(stepTwoObject)"
+      /> -->
+      <div
+        *ngIf="f.submitted || personalDetails?.controls?.clinicPhone?.touched"
+        class="error-feedback"
+      >
+        <p *ngIf="personalDetails?.controls?.clinicPhone?.errors?.required">
+          This Field is required
+        </p>
+        <p
+          *ngIf="
+            personalDetails.value.clinicPhone &&
+            personalDetails.controls['clinicPhone']?.errors
+          "
+        >
+          Invalid Phone Number
+        </p>
+      </div>
+    </div>
+    <!---->
+  </div>
+
+  <div class="form-group pickLocation input-section">
+    <div class="Form-group-wrapper">
+      <input
+        type="text"
+        name="address"
+        #address
+        id="address"
+        placeholder="Type in clinic's street, Area City,Country"
+        class="form-control"
+        formControlName="address"
+        (change)="addNewItem(stepTwoObject)"
+        (keydown)="noSpacesEvent($event)"
+      />
+
+      <div
+        *ngIf="f.submitted || personalDetails?.controls?.address?.touched"
+        class="error-feedback"
+      >
+        <p *ngIf="personalDetails?.controls?.address?.errors?.required">
+          This Field is required
+        </p>
+      </div>
+    </div>
+
+    <agm-map
+      [latitude]="+lat"
+      [longitude]="+lng"
+      (mapClick)="onChooseLocation($event)"
+    >
+      <agm-marker
+        *ngIf="marker"
+        [latitude]="+lat"
+        [longitude]="+lng"
+      ></agm-marker>
+    </agm-map>
+  </div>
+
+  <div class="form-group availability input-section">
+    <div class="input-title">
+      <h3>Availability</h3>
+    </div>
+    <!-- <div class="availability__details">
+      <div class="availability__details">
+        <div
+          class="availability__details__from input-title input-title--subsection"
+        >
+          <h3>From</h3>
+          <div class="form-group custom-select">
+            <div class="Form-group-wrapper arrow">
+              <select
+                id="pet-select"
+                formControlName="cityName"
+                #from
+                (change)="changeFromTime2($event);addNewItem(stepTwoObject)"
+                class="form-control custom-select"
+              >
+                <option
+                  [value]="date"
+                  *ngFor="let date of daties; let i = index"
+                  [id]="i"
+                >
+                  {{ date }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  f.submitted || personalDetails?.controls?.cityName?.touched
+                "
+                class="error-feedback"
+              >
+                <p
+                  *ngIf="
+                    personalDetails?.controls?.cityName?.errors?.required
+                  "
+                >
+                  This Field is required
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="availability__details__to input-title input-title--subsection"
+        >
+          <h3>To</h3>
+          <div class="form-group custom-select">
+            <div class="Form-group-wrapper arrow">
+              <select
+                id="pet-select"
+                formControlName="cityTo"
+                #to
+                (change)="changeToTime2($event);addNewItem(stepTwoObject)"
+                class="form-control custom-select"
+              >
+                <option
+                  [value]="date"
+                  *ngFor="let date of daties; let i = index"
+                  [id]="i"
+                >
+                  {{ date }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  f.submitted || personalDetails?.controls?.cityTo?.touched
+                "
+                class="error-feedback"
+              >
+                <p
+                  *ngIf="personalDetails?.controls?.cityTo?.errors?.required"
+                >
+                  This Field is required
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="availability__details__days">
+        <div class="input-title input-title--subsection">
+          <h3>Pick Opening Days</h3>
+        </div>
+        <div class="availability__details__days__items">
+          <span
+            class="day active"
+            data-value="Sunday"
+            [ngClass]="{ active: isActiveDay2('Sunday') }"
+            (click)="addNewDay2(0);addNewItem(stepTwoObject)"
+            >Sun</span
+          >
+          <span
+            class="day"
+            data-value="Monday"
+            [ngClass]="{ active: isActiveDay2('Monday') }"
+            (click)="addNewDay2(1);addNewItem(stepTwoObject)"
+            >Mon</span
+          >
+          <span
+            class="day"
+            data-value="Tuesday"
+            [ngClass]="{ active: isActiveDay2('Tuesday') }"
+            (click)="addNewDay2(2);addNewItem(stepTwoObject)"
+            >Tue</span
+          >
+          <span
+            class="day"
+            data-value="Wednesday"
+            [ngClass]="{ active: isActiveDay2('Wednesday') }"
+            (click)="addNewDay2(3);addNewItem(stepTwoObject)"
+            >Wed</span
+          >
+          <span
+            class="day"
+            data-value="Thursday"
+            [ngClass]="{ active: isActiveDay2('Thursday') }"
+            (click)="addNewDay2(4);addNewItem(stepTwoObject)"
+            >Thu</span
+          >
+          <span
+            class="day"
+            data-value="Friday"
+            [ngClass]="{ active:isActiveDay2('Friday') }"
+            (click)="addNewDay2(5);addNewItem(stepTwoObject)"
+            >Fri</span
+          >
+          <span
+            class="day"
+            data-value="Saturday"
+            [ngClass]="{ active: isActiveDay2('Saturday') }"
+            (click)="addNewDay2(6);addNewItem(stepTwoObject)"
+            >Sat</span
+          >
+        </div>
+      </div>
+    </div> -->
+
+    <ng-container *ngFor="let item of selected_days_new2;let i = index">
+      <div>
+        <div class="d-flex justify-content-between">
+          <p class="appointmentday">{{item?.day}}</p>
+          <div class="home-visit generic-switch-btn">
+
+            <label class="switch" for="{{item?.day}}">
+              <input
+                type="checkbox"
+                name=""
+                id="{{item?.day}}"
+                (change)="addNewDay2(i);addNewItem(stepTwoObject)"
+                [checked]="isActiveDay2(item?.day)"
+              />
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+
+
+        <div class="d-flex" *ngIf="isActiveDay2(item?.day)">
+          <div class="form-group custom-select">
+            <div class="Form-group-wrapper arrow">
+              <select
+                id="pet-select"
+                (change)="changeFromTime2($event,i);addNewItem(stepTwoObject)"
+                class="form-control custom-select"
+              >
+                <!-- <option value="" selected>From...</option> -->
+                <option
+                  [value]="date"
+                  *ngFor="let date of daties; let i = index"
+                  [id]="i"
+                  [selected]="item.from == date"
+                >
+                  {{ date }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  f.submitted || personalDetails?.controls?.cityName?.touched
+                "
+                class="error-feedback"
+              >
+                <p
+                  *ngIf="
+                    personalDetails?.controls?.cityName?.errors?.required
+                  "
+                >
+                  This Field is required
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group custom-select">
+            <div class="Form-group-wrapper arrow">
+              <select
+                id="pet-select"
+                (change)="changeToTime2($event,i);addNewItem(stepTwoObject)"
+                class="form-control custom-select"
+              >
+                <!-- <option value="" selected>To...</option> -->
+                <option
+                  [value]="date"
+                  *ngFor="let date of daties; let i = index"
+                  [id]="i"
+                  [selected]="item.to == date"
+                >
+                  {{ date }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  f.submitted || personalDetails?.controls?.cityTo?.touched
+                "
+                class="error-feedback"
+              >
+                <p
+                  *ngIf="personalDetails?.controls?.cityTo?.errors?.required"
+                >
+                  This Field is required
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    
+
+    </ng-container>
+
+
+  </div>
+
+  <div class="form-group section-fees input-section">
+    <div class="input-title">
+      <h3>Fees Per Session</h3>
+    </div>
+    <div class="section-fees__details wrapper">
+      <div
+        class="section-fees__details section-fees__details__currency input-title input-title--fees"
+      >
+        <h3>Choose Your Currency</h3>
+        <div class="form-group custom-select">
+          <div class="Form-group-wrapper arrow">
+            <select
+              id="pet-select"
+              #currrencyType
+              (change)="addNewItem(stepTwoObject)"
+              class="form-control custom-select"
+            >
+              <option value="EGP">EGP</option>
+              <option value="US">US</option>
+              <option value="EUR">EUR</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="section-fees__details section-fees__details__fees">
+        <div class="form-group" [class.hasError]="f.submitted === true">
+          <div class="Form-group-wrapper">
+            <label for="">Regular</label>
+            <input
+              type="text"
+              name="regularFee"
+              #regularFee
+              id="regularFee"
+              placeholder="200.00 EGP"
+              class="form-control"
+              formControlName="regularFee"
+              (change)="addNewItem(stepTwoObject)"
+              (keydown)="allowOnlyNumber($event)"
+              (keydown)="noSpacesEvent($event)"
+            />
+            <div
+              *ngIf="
+                f.submitted || personalDetails?.controls?.regularFee?.touched
+              "
+              class="error-feedback"
+            >
+              <p
+                *ngIf="
+                  personalDetails?.controls?.regularFee?.errors?.required
+                "
+              >
+                This Field is required
+              </p>
+
+              <p
+                *ngIf="
+                  personalDetails.controls.regularFee?.errors?.required ==
+                    undefined &&
+                  personalDetails.controls.regularFee?.errors?.whitespace
+                "
+              >
+                Please Enter Numbers
+              </p>
+
+              <p *ngIf="personalDetails.controls.regularFee?.errors?.notZero">
+                must greater than 0
+              </p>
+            </div>
+          </div>
+          <!---->
+        </div>
+        <div class="form-group">
+          <div class="Form-group-wrapper">
+            <label for="">Urgent</label>
+            <input
+              type="text"
+              name="urgent"
+              id="urgentFee"
+              #urgentFee
+              placeholder="200.00 EGP"
+              class="form-control"
+              (change)="addNewItem(stepTwoObject)"
+              (keydown)="allowOnlyNumber($event)"
+              (keydown)="noSpacesEvent($event)"
+              formControlName="urgent"
+            />
+            <div
+              *ngIf="
+                f.submitted || personalDetails?.controls?.urgent?.touched
+              "
+              class="error-feedback"
+            >
+              <p *ngIf="personalDetails?.controls?.urgent?.errors?.notZero">
+                must greater than 0
+              </p>
+            </div>
+          </div>
+          <!---->
+        </div>
+        <div class="form-group">
+          <div class="Form-group-wrapper">
+            <label for="">Recheck</label>
+            <input
+              type="text"
+              name="Consultation"
+              #consulto
+              id="ConsultationFee"
+              placeholder="200.00 EGP"
+              class="form-control"
+              (change)="addNewItem(stepTwoObject)"
+              (keydown)="allowOnlyNumber($event)"
+              (keydown)="noSpacesEvent($event)"
+              formControlName="consultation"
+            />
+            <div
+              *ngIf="
+                f.submitted ||
+                personalDetails?.controls?.consultation?.touched
+              "
+              class="error-feedback"
+            >
+              <p
+                *ngIf="
+                  personalDetails?.controls?.consultation?.errors?.notZero
+                "
+              >
+                must greater than 0
+              </p>
+            </div>
+          </div>
+          <!---->
+        </div>
+      </div>
+    </div>
+  </div>
+  </form>
+  <!--edit mode-->
+</div>

@@ -1,0 +1,57 @@
+<app-loader *ngIf="isLoaderShow"></app-loader>
+<div class="main-content__details details genric-card contact-us">
+  <div class="contact-box">
+    <h3 class="heaser">
+      <span class="icon-call"></span> contact us via whatsapp
+    </h3>
+    <a href="https://wa.me/201204760000" target="_blank">
+      <img
+        src="/assets/images/WhatsApp_icon.png"
+        alt="whatsapp"
+        style="width: 35px; height: 35px"
+      />
+    </a>
+    <!-- <span>+20 1006760032</span>
+    <span>+20 1006760032</span> -->
+  </div>
+  <div class="contact-box Message">
+    <div class="massages-wrapper">
+      <span class="icon-message"></span>
+      <form #contact="ngForm" [formGroup]="contactForm">
+        <textarea
+          #messageValue
+          id=""
+          (keydown)="changeText()"
+          placeholder="Send Message"
+          formControlName="messageArea"
+        ></textarea>
+        <div
+          *ngIf="contact.submitted || contactForm.controls.messageArea.touched"
+          class="error-feedback"
+        >
+          <p
+            *ngIf="
+              contactForm.controls.messageArea.errors?.required &&
+              contactForm.controls.messageArea.pristine
+            "
+          >
+            This Field is required
+          </p>
+          <p *ngIf="contactForm.controls.messageArea.errors?.minlength">
+            at least 50 characters
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="welcome-card__btns" [ngClass]="{ active: messageSend }">
+    <button
+      class="custom-btn--singup custom-btn btn-main-color"
+      type="submit"
+      (click)="sendMessage()"
+      [disabled]="contactForm.invalid"
+    >
+      Send
+    </button>
+  </div>
+</div>

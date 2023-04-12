@@ -1,0 +1,56 @@
+.clinic-register {
+  margin-bottom: 15px;
+  .clinic-register__item {
+    border-radius: 9px;
+    border: solid 1px #d6d6d6;
+    background-color: #ffffff;
+    transition: all 0.5s ease;
+    font-family: "poppins-regular";
+    padding: 10px;
+    font-size: 18px;
+    line-height: 1.5;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  .new-clinic-title--second {
+    margin-top: 0;
+  }
+}
+
+.pickLocation {
+  agm-map {
+    display: block;
+    height: 200px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+.pickLocation {
+  .form-control {
+    padding: 5px;
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid #d6d6d6;
+  }
+  .Form-group-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+    label {
+      font-family: "poppins-regular";
+      font-size: 18px;
+      font-weight: normal;
+      color: #313450;
+    }
+  }
+
+  .form-control.ng-invalid.ng-touched {
+    margin-bottom: 0 !important;
+  }
+  .error-feedback {
+    font-size: 13px;
+  }
+}

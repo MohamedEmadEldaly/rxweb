@@ -1,0 +1,13 @@
+<div class="notification-container">
+  <div
+    class="notification-card"
+    [ngClass]="{ active: $currentMessage | async }"
+  >
+    <p class="notification-card__head">
+      <img src="/assets/images/logo-image.png" alt="logo" />
+      <span>RxDoctor</span>
+    </p>
+    <p class="notification-title">{{ message?.title }}</p>
+    <p class="notification-card__message">{{ message?.message }}</p>
+  </div>
+</div>

@@ -1,0 +1,1107 @@
+<div class="appointments-page">
+  <div class="row">
+    <div class="col-lg-7 order-lg-1 order-2 list">
+      <div class="main-content__list">
+        <div class="header">
+          <div class="header-title">
+            <h3 class="main-title" *ngIf="isPatientPrescriptions == false">
+              Appointments
+            </h3>
+            <p
+              class="header-title__brief"
+              *ngIf="isPatientPrescriptions == false"
+            >
+              Check Your Appointments details
+            </p>
+            <h3 class="main-title" *ngIf="isPatientPrescriptions == true">
+              Patient Prescriptions
+            </h3>
+            <ul
+              *ngIf="isPatientPrescriptions == true"
+              class="prescription-breadcrumb"
+            >
+              <li class="first" (click)="returnToAppointment()">
+                Appointments
+              </li>
+              <li>> Patient Prescriptions</li>
+            </ul>
+          </div>
+          <div class="header-search">
+            <form>
+              <input
+                type="text"
+                (keydown)="updateSerachWord($event)"
+                #searchInput
+                class="form-control search-input"
+                placeholder="Search"
+                name=""
+                id="search"
+              />
+              <span class="icon-search" (click)="searchPatientNumber()"></span>
+              <!-- (click)="searchPatientNumber()" -->
+            </form>
+          </div>
+        </div>
+
+        <div class="clinic-list" *ngIf="isPatientPrescriptions == false">
+          <ul class="clinic-list__menu">
+            <li
+              class="clinic-list__item active"
+              [ngClass]="{ active: selectedItem == item }"
+              *ngFor="let item of filterList"
+              (click)="listClick($event, item)"
+            >
+              {{ item }}
+            </li>
+          </ul>
+          <div class="doctor-clinic">
+            <select
+              name="clinics"
+              class="form-control custom-select"
+              #doctorClinic
+              id="doctorClinic"
+              (change)="clinicSearch()"
+            >
+              <!-- <option value="" disabled selected hidden>All Clinics</option> -->
+              <option
+                *ngFor="let clinic of doctorClinisData; let i = index"
+                [value]="clinic.id"
+                [id]="i"
+              >
+                {{ clinic.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div
+          class="list-container"
+          *ngIf="isPatientPrescriptions == false"
+          [ngClass]="noDataFound ? 'not-found' : ''"
+        >
+          <div
+            class="generic-card generic-card--appointment"
+            *ngFor="let appointment of appointmemtsList; let i = index"
+            [ngClass]="{ active: selectedCard == appointment }"
+            (click)="listDetailsClick($event, appointment, i)"
+          >
+
+            <!--appointment-->
+            <div class="row">
+              <div class="col-sm-2 col-12">
+                <img
+                  src="../../../assets/images/patient-image.png"
+                  alt=""
+                  *ngIf="appointment.patient.gender == 'Male'"
+                />
+                <img
+                  src="../../../assets/images/femal-image.png"
+                  alt=""
+                  *ngIf="appointment.patient.gender != 'Male'"
+                />
+              </div>
+
+              <div class="col-sm-9 col-12">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row">
+                      <div class="col-sm-9 col-12">
+                        <span class="generic-card-name generic-style">{{
+                          appointment.patient.name
+                        }}</span>
+                      </div>
+
+                      <div class="col-sm-3 col-12">
+                        <span class="generic-card-fees generic-style"
+                          >{{ appointment.appointment.fees }}
+                          {{
+                            currencyType(appointment.appointment.fees_currency)
+                          }}</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="row">
+                      <div class="col-sm-6 col-12">
+                        <span
+                          class="generic-card-type generic-style"
+                          [ngClass]="
+                            appointmentTypeClass(
+                              appointment.appointment.fees_type
+                            )
+                          "
+                          >{{
+                            appointmentType(appointment.appointment.fees_type)
+                          }}</span
+                        >
+                      </div>
+                      <div class="col-sm-3 col-12">
+                        <span class="generic-card-type generic-style">
+                          {{ appointment.appointment.date }}
+                        </span>
+                      </div>
+                      <div class="col-sm-3 col-12">
+                        <span class="generic-card-payment-type generic-style">
+                          <span
+                            class="payment-icon"
+                            [ngClass]="
+                              appointment.appointment.payment_method == 'cash'
+                                ? 'icon-cash'
+                                : 'icon-visa'
+                            "
+                          ></span>
+                          {{ appointment.appointment.payment_method }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="col-sm-1 col-12 d-flex justify-sm-content-end justify-content-center"
+                [ngClass]="selectedItem == 'Current' ? 'current-delete' : ''"
+              >
+                <span
+                  class="icon-delete"
+                  (click)="open(deleteAppointmentDialog, i)"
+                ></span>
+                <!-- (click)="deleteAppointment($event, i)" -->
+              </div>
+
+              <ng-template
+                #deleteAppointmentDialog
+                let-modal
+                class="confirm-out"
+              >
+                <div
+                  class="
+                    modal-header
+                    confirm-out__header confirm-out__header--assistant
+                  "
+                >
+                  <h4 class="modal-title" id="modal-basic-title">
+                    Do You Want To Delete This Appointment?
+                  </h4>
+                  <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button> -->
+                </div>
+                <div class="modal-body confirm-out__body">
+                  <div class="welcome-card__btns">
+                    <button
+                      class="custom-btn--singup custom-btn btn-main-color"
+                      (click)="
+                        confirmDeleteAppointment($event);
+                        modal.close('Cross click')
+                      "
+                    >
+                      Delete
+                    </button>
+                    <button
+                      class="custom-btn--singup custom-btn custom-btn--print"
+                      (click)="modal.close('Cross click')"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </ng-template>
+              <!-- <div class="col-2 delete" *ngIf="selectedItem == 'Upcoming'">
+                <span
+                  class="icon-delete"
+                  (click)="open(deleteAppointmentDialog, i)"
+                ></span>
+              </div> -->
+            </div>
+            <!--appointment-->
+
+          </div>
+
+          <div class="oberver-item"></div>
+          <app-loader *ngIf="isLoaderShow"></app-loader>
+          <div class="delete-loader" *ngIf="isDeleteLoaderShow">
+            <app-loader></app-loader>
+          </div>
+
+          <app-not-found *ngIf="noDataFound == true"></app-not-found>
+        </div>
+
+        <div
+          class="list-container prescription-list"
+          *ngIf="isPatientPrescriptions == true"
+          [ngClass]="noDataFound ? 'not-found' : ''"
+        >
+          <div
+            class="generic-card generic-card--appointment"
+            *ngFor="let item of prescriptionHistory; let i = index"
+            [ngClass]="{ active: selectedHistory == item }"
+            (click)="historyDetailsClick($event, item, i)"
+          >
+            <div class="row">
+              <div class="col-4">
+                <span class="icon-notes-medical"></span>
+                <span class="generic-card-name generic-style">{{
+                  getdate(item.appointment.appointment_date)
+                }}</span>
+              </div>
+              <div class="col-8">
+                <span class="generic-card-type generic-style"
+                  >Patient Name: {{ item.patient.patient_name }}</span
+                >
+              </div>
+            </div>
+          </div>
+          <app-loader *ngIf="isLoaderShow"></app-loader>
+          <app-not-found *ngIf="noDataFound == true"></app-not-found>
+        </div>
+
+        <div class="oberver-item"></div>
+      </div>
+    </div>
+
+    <div class="col-lg-5 order-lg-1 order-1 details">
+      <div
+        class="
+          main-content__details
+          details
+          genric-card
+          patient-details
+          genric-card--appointment
+          no-top-radius
+        "
+      >
+        <app-loader *ngIf="isDetailsLoaderShow"></app-loader>
+
+        <div class="appointments-img" *ngIf="welcomeImage == true">
+          <img src="../../../assets/images/appiontment-image.png" alt="" />
+        </div>
+
+        <div class="upcoming-details" *ngIf="upcomingDetails == true">
+          <div class="upcoming-details-personal">
+            <div class="row">
+              <div class="col-3">
+                <div class="upcoming-details-personal__img">
+                  <img
+                    src="../../../assets/images/prfile-image.png"
+                    alt=""
+                    *ngIf="selectedAppointmentDetail.patient.gender == 'Male'"
+                  />
+                  <img
+                    src="../../../assets/images/femal-profile-image.png"
+                    alt=""
+                    *ngIf="selectedAppointmentDetail.patient.gender != 'Male'"
+                  />
+                </div>
+              </div>
+              <div class="col-9">
+                <div class="upcoming-details-personal__info">
+                  <div
+                    class="upcoming-details-personal__info__item details-item"
+                  >
+                    <span class="info-style info-header">Name:</span>
+                    <span class="info-style">
+                      {{ selectedAppointmentDetail.patient.name }}</span
+                    >
+                  </div>
+                  <div
+                    class="upcoming-details-personal__info__item details-item"
+                    *ngIf="selectedAppointmentDetail.patient.age != ''"
+                  >
+                    <span class="info-style info-header">Age:</span>
+                    <span class="info-style">{{
+                      calculateAge(selectedAppointmentDetail.patient.age)
+                    }}</span>
+                  </div>
+                  <div
+                    class="upcoming-details-personal__info__item details-item"
+                  >
+                    <span class="info-style info-header">Mobile Number:</span>
+                    <span class="info-style"
+                      >{{ selectedAppointmentDetail.patient.countryCode
+                      }}{{ selectedAppointmentDetail.patient.phone }}</span
+                    >
+                  </div>
+                  <div
+                    class="upcoming-details-personal__info__item details-item"
+                  >
+                    <span class="info-style info-header">Gender:</span>
+                    <span class="info-style">{{
+                      selectedAppointmentDetail.patient.gender
+                    }}</span>
+                  </div>
+                </div>
+                <!-- <div class="upcoming-details-personal__msg">
+                                    <button type="button">Message <span class="icon-messages"></span></button>
+                                </div> -->
+              </div>
+            </div>
+            <div
+              class="generic-card generic-card--appointment generic-card--info"
+            >
+              <div class="row">
+                <div class="col-4">
+                  <span
+                    class="generic-card-type generic-style"
+                    [ngClass]="
+                      appointmentTypeClass(
+                        selectedAppointmentDetail.appointment.fees_type
+                      )
+                    "
+                    >{{
+                      appointmentType(
+                        selectedAppointmentDetail.appointment.fees_type
+                      )
+                    }}</span
+                  >
+                </div>
+                <div class="col-4">
+                  <span class="generic-card-payment-type generic-style">
+                    <span class="icon-visa payment-icon"></span>
+                    {{ selectedAppointmentDetail.appointment.payment_method }}
+                  </span>
+                </div>
+                <div class="col-4">
+                  <span class="generic-card-type generic-style home-visit">
+                    {{ selectedAppointmentDetail.appointment.date }}</span
+                  >
+                </div>
+              </div>
+            </div>
+            <a
+              class="
+                generic-card generic-card--appointment
+                prescription
+                info-box
+                generic-card--info
+              "
+              (click)="directToAppointment()"
+            >
+              <div class="patient-prescription">
+                <h3>patient Appointments</h3>
+                <p>You can view patient appointments here</p>
+              </div>
+              <div class="info-arrow">
+                <span class="icon-arrow-blue"></span>
+              </div>
+            </a>
+            <a
+              (click)="prescriptionShow()"
+              class="
+                generic-card generic-card--appointment
+                prescription
+                info-box
+                generic-card--info
+              "
+            >
+              <div class="patient-prescription">
+                <h3>Patient Prescriptions</h3>
+                <p>
+                  Check your all patients RX, Labs & Scans written previously
+                </p>
+              </div>
+              <div class="info-arrow">
+                <span class="icon-arrow-blue"></span>
+              </div>
+            </a>
+            <div
+              class="upcoming-details-personal__msg"
+              *ngIf="isPrescriptionBtnShow == true"
+              (click)="addPrescription()"
+            >
+              <button type="button">
+                <span class="icon-add">
+                  <span class="path1"></span>
+                  <span class="path2"></span>
+                </span>
+                Add Prescription
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!--appointment show-->
+        <div class="search-patient-result" *ngIf="isAppointmentShow == true">
+          <button class="back-btn" (click)="appointmentBack()">
+            <span class="back-btn__icon">
+              <span class="icon-arrow-blue"></span>
+            </span>
+            <span class="back-btn__text">back</span>
+          </button>
+
+          <!--new design-->
+          <div
+            class="upcoming-details appointment-list appointment-list-padding"
+            *ngIf="SelectedAppointmentList.length > 0; else noResult"
+          >
+            <div
+              class="generic-card generic-card--appointment"
+              *ngFor="let item of SelectedAppointmentList; let i = index"
+            >
+              <div class="row appointment-item">
+                <div class="col-2">
+                  <img
+                    src="../../../assets/images/patient-image.png"
+                    alt=""
+                    *ngIf="item?.patient.gender == 'Male'"
+                  />
+                  <img
+                    src="../../../assets/images/femal-image.png"
+                    alt=""
+                    *ngIf="item?.patient.gender != 'Male'"
+                  />
+                </div>
+
+                <div class="col-10">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        <div class="col-8" style="height: 33px">
+                          <span class="generic-card-name generic-style">{{
+                            item?.patient.name
+                          }}</span>
+                        </div>
+
+                        <div class="col-4">
+                          <span class="generic-card-fees generic-style"
+                            >{{ item.appointment.fees }}
+                            {{
+                              currencyType(item.appointment.fees_currency)
+                            }}</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="row">
+                        <div class="col-3">
+                          <span
+                            class="generic-card-type generic-style"
+                            [ngClass]="
+                              appointmentTypeClass(item.appointment.fees_type)
+                            "
+                            >{{
+                              appointmentType(item.appointment.fees_type)
+                            }}</span
+                          >
+                        </div>
+                        <div class="col-5">
+                          <span class="generic-card-type generic-style">
+                            {{ item.appointment.date }}
+                          </span>
+                        </div>
+                        <div class="col-4">
+                          <span class="generic-card-payment-type generic-style">
+                            <span
+                              class="payment-icon"
+                              [ngClass]="
+                                item.appointment.payment_method == 'cash'
+                                  ? 'icon-cash'
+                                  : 'icon-visa'
+                              "
+                            ></span>
+                            {{ item.appointment.payment_method }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--new design-->
+
+          <ng-template #noResult>
+            <div class="no-result">no result found</div>
+          </ng-template>
+        </div>
+        <!--appointment show-->
+
+        <!--add add-prescription-->
+        <div class="add-prescription" *ngIf="addPrescriptionShow == true">
+          <form #f="ngForm" [formGroup]="addPrescriptionForm" action="">
+            <div *ngIf="addPrescriptionForm.errors" class="error-feedback">
+              <p
+                class=""
+                *ngIf="
+                  addPrescriptionForm.dirty &&
+                  addPrescriptionForm.errors?.atleastOne
+                "
+              >
+                fill at least one field
+              </p>
+              <p
+                class=""
+                *ngIf="
+                  addPrescriptionForm.dirty &&
+                  addPrescriptionForm.errors?.nospace
+                "
+              >
+                space not allowed expect between words
+              </p>
+            </div>
+
+            <div class="add-prescription__note">
+              <h5 class="prescription-title">Notes</h5>
+              <textarea
+                type="text"
+                #prescriptionNote
+                name="note"
+                [(ngModel)]="prescriptionNoteEditValue"
+                id="note"
+                placeholder="Write here ..."
+                appTextarearesize
+                formControlName="notes"
+              ></textarea>
+            </div>
+            <div class="add-prescription__rx">
+              <h5 class="prescription-title">
+                <span class="icon-rx"></span>RX
+              </h5>
+              <textarea
+                type="text"
+                #prescriptionRx
+                name="rx"
+                [(ngModel)]="prescriptionRxEditValue"
+                id="rx"
+                placeholder="Antinal twice a day  "
+                appTextarearesize
+                formControlName="rx"
+              ></textarea>
+            </div>
+            <div class="add-prescription__lab">
+              <h5 class="prescription-title">
+                <span class="icon-lab"></span> LABS
+              </h5>
+              <textarea
+                type="text"
+                #prescriptionLab
+                name="lab"
+                [(ngModel)]="prescriptionLabEditValue"
+                id="lab"
+                placeholder="Write here ..."
+                appTextarearesize
+                formControlName="labs"
+              ></textarea>
+            </div>
+            <div class="add-prescription__scan">
+              <h5 class="prescription-title">
+                <span class="icon-scan"
+                  ><span class="path1"></span><span class="path2"></span
+                  ><span class="path3"></span><span class="path4"></span
+                  ><span class="path5"></span><span class="path6"></span
+                  ><span class="path7"></span><span class="path8"></span
+                  ><span class="path9"></span><span class="path10"></span
+                  ><span class="path11"></span><span class="path12"></span
+                  ><span class="path13"></span><span class="path14"></span
+                  ><span class="path15"></span><span class="path16"></span
+                  ><span class="path17"></span><span class="path18"></span
+                  ><span class="path19"></span><span class="path20"></span
+                  ><span class="path21"></span><span class="path22"></span
+                  ><span class="path23"></span><span class="path24"></span
+                  ><span class="path25"></span><span class="path26"></span
+                  ><span class="path27"></span><span class="path28"></span
+                  ><span class="path29"></span><span class="path30"></span
+                  ><span class="path31"></span></span
+                >SCANS
+              </h5>
+              <textarea
+                type="text"
+                name="scan"
+                [(ngModel)]="prescriptionScanEditValue"
+                #prescriptionScan
+                id="scan"
+                placeholder="Write here ..."
+                appTextarearesize
+                formControlName="scan"
+              ></textarea>
+            </div>
+            <div class="welcome-card__btns">
+              <button
+                class="custom-btn--singup custom-btn btn-main-color"
+                type="submit"
+                (click)="sendPrescription()"
+                [disabled]="addPrescriptionForm.errors?.atleastOne"
+              >
+                Save & Send
+              </button>
+            </div>
+          </form>
+        </div>
+        <!--add-prescription-->
+
+        <div class="appointments-details" *ngIf="prescriptionDetails == true">
+          <div class="appointments-details__title">
+            <div class="name">
+              <h5 class="prescription-title prescription-title--name">
+                {{ prescriptionDetailsPrint.patient.patient_name }}
+              </h5>
+              <span class="icon-phone"></span>
+              <span class="phone"
+                >{{ prescriptionDetailsPrint.patient.patient_countryCode
+                }}{{ prescriptionDetailsPrint.patient.patient_phone }}</span
+              >
+            </div>
+            <!-- <div class="qrcode">
+              <span class="icon-qrcode"></span>
+
+            </div> -->
+          </div>
+          <div class="appointments-doctor-details">
+            <div class="doctor">
+              <span class="doctor-name"
+                >Dr. {{ prescriptionDetailsPrint.doctor.name_en }}</span
+              >
+              <span class="doctor-title">{{
+                prescriptionDetailsPrint.doctor.degree_en
+              }}</span>
+              <span class="doctor-address">{{
+                prescriptionDetailsPrint.doctor.speciality_en
+              }}</span>
+              <div class="details-item">
+                <span class="info-style info-header">Patient Name:</span>
+                <span class="info-style">{{
+                  selectedAppointmentDetail.patient.name
+                }}</span>
+              </div>
+              <div class="details-item">
+                <span class="info-style info-header">Age:</span>
+                <span class="info-style">
+                  {{
+                    calculateAge(selectedAppointmentDetail.patient.age)
+                  }}</span
+                >
+              </div>
+            </div>
+            <!-- <div class="connection">
+              <span class="icon-tel-square">
+                <span class="path1"></span>
+                <span class="path2"></span>
+
+              </span>
+              <span class="icon-whatsapp-square"></span>
+
+            </div> -->
+          </div>
+
+          <div
+            class="add-prescription__note"
+            *ngIf="prescriptionDetailsPrint.appointment.diagnosis != ''"
+          >
+            <h5 class="prescription-title">Notes</h5>
+            <p>{{ prescriptionDetailsPrint.appointment.diagnosis }}</p>
+          </div>
+          <div
+            class="add-prescription__rx"
+            *ngIf="prescriptionDetailsRxData.length != 0"
+          >
+            <h5 class="prescription-title"><span class="icon-rx"></span>RX</h5>
+            <p *ngFor="let rx of prescriptionDetailsRxData">
+              <span>{{ rx.rx }}</span>
+            </p>
+          </div>
+
+          <div
+            class="add-prescription__lab"
+            *ngIf="prescriptionDetailsLabData.length != 0"
+          >
+            <h5 class="prescription-title">
+              <span class="icon-lab"></span> LABS
+            </h5>
+            <p *ngFor="let lab of prescriptionDetailsLabData">
+              <span>{{ lab.lab }}</span>
+            </p>
+          </div>
+
+          <div
+            class="add-prescription__scan"
+            *ngIf="prescriptionDetailsScanData.length != 0"
+          >
+            <h5 class="prescription-title">
+              <span class="icon-scan"
+                ><span class="path1"></span><span class="path2"></span
+                ><span class="path3"></span><span class="path4"></span
+                ><span class="path5"></span><span class="path6"></span
+                ><span class="path7"></span><span class="path8"></span
+                ><span class="path9"></span><span class="path10"></span
+                ><span class="path11"></span><span class="path12"></span
+                ><span class="path13"></span><span class="path14"></span
+                ><span class="path15"></span><span class="path16"></span
+                ><span class="path17"></span><span class="path18"></span
+                ><span class="path19"></span><span class="path20"></span
+                ><span class="path21"></span><span class="path22"></span
+                ><span class="path23"></span><span class="path24"></span
+                ><span class="path25"></span><span class="path26"></span
+                ><span class="path27"></span><span class="path28"></span
+                ><span class="path29"></span><span class="path30"></span
+                ><span class="path31"></span></span
+              >SCANS
+            </h5>
+            <p *ngFor="let scan of prescriptionDetailsScanData">
+              <span>{{ scan.scan }}</span>
+            </p>
+          </div>
+
+          <div class="doctor-signature">
+            <img
+              [src]="generateimageUrl(personalDataObject.signature_image)"
+              alt=""
+            />
+          </div>
+
+          <div
+            class="welcome-card__btns"
+            [ngClass]="isPatientPrescriptions ? '' : 'current-prescription'"
+          >
+            <button
+              class="custom-btn--singup custom-btn btn-main-color"
+              *ngIf="isPatientPrescriptions == false"
+              type="submit"
+              (click)="prescriptionEdit()"
+            >
+              Edit
+            </button>
+            <button
+              class="custom-btn--singup custom-btn custom-btn--print"
+              (click)="covertToRxFormat()"
+              type="submit"
+            >
+              RX-Format
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="appointments-details doctor-prescription"
+          *ngIf="printPdfDetails == true"
+        >
+          <div class="print-view-container" id="print-container">
+            <div class="prescription-print-details">
+              <div class="english-doctor-details">
+                <h5 class="prescription-title prescription-title--print">
+                  Dr. {{ personalDataObject.en_name }}
+                </h5>
+                <p class="mb-0 p-print">
+                  {{ personalDataObject.speciality_en }}
+                </p>
+                <p class="mb-0 p-print">{{ personalDataObject.degre_en }}</p>
+              </div>
+              <div class="arabic-doctor-details">
+                <h5 class="prescription-title prescription-title--print">
+                  د. {{ personalDataObject.ar_name }}
+                </h5>
+                <p class="mb-0 p-print">
+                  {{ personalDataObject.speciality_ar }}
+                </p>
+                <p class="mb-0 p-print">{{ personalDataObject.degre_ar }}</p>
+              </div>
+              <div class="doctor-prescription__date">
+                <span>{{
+                  prescriptionDetailsPrint.appointment.appointment_date
+                }}</span>
+                <span class="date-word">التاريخ</span>
+                <span class="doctor-prescription__date__line"></span>
+              </div>
+              <div class="doctor-prescription__pitent-details">
+                <div class="doctor-prescription__pitent-details__name">
+                  <span>{{ selectedAppointmentDetail.patient.name }}</span>
+                  <span> :الاسم</span>
+                </div>
+                <div class="doctor-prescription__pitent-details__age">
+                  <span>{{
+                    calculateAge(selectedAppointmentDetail.patient.age)
+                  }}</span>
+                  <span> :السن</span>
+                </div>
+              </div>
+            </div>
+            <div class="prescription-print-body">
+              <div
+                class="add-prescription__rx"
+                *ngIf="prescriptionDetailsRxData.length != 0"
+              >
+                <h5 class="prescription-title">RX</h5>
+                <p *ngFor="let rx of prescriptionDetailsRxData">
+                  <span>{{ rx.rx }}</span>
+                </p>
+                <!--*ngFor="let rx of prescriptionDetailsRxData"-->
+              </div>
+
+              <div
+                class="add-prescription__lab"
+                *ngIf="prescriptionDetailsLabData.length != 0"
+              >
+                <h5 class="prescription-title">LABS</h5>
+                <p *ngFor="let lab of prescriptionDetailsLabData">
+                  <span>{{ lab.lab }}</span>
+                </p>
+                <!-- *ngFor="let lab of prescriptionDetailsLabData"-->
+              </div>
+
+              <div
+                class="add-prescription__scan"
+                *ngIf="prescriptionDetailsScanData.length != 0"
+              >
+                <h5 class="prescription-title">SCANS</h5>
+                <p *ngFor="let scan of prescriptionDetailsScanData">
+                  <span>{{ scan.scan }}</span>
+                </p>
+                <!-- *ngFor="let scan of prescriptionDetailsScanData"-->
+              </div>
+
+              <!-- <img src="../../../../../rxwebapp/src/assets/images/loader.gif" alt=""> -->
+            </div>
+            <div class="prescription-print-footer">
+              <div class="clinic-phone">
+                <div class="phone-container">
+                  <span class="icon-call"></span>
+                  <span>{{ prescriptionDetailsPrint.clinic.phone }}</span>
+                </div>
+                <div class="doctor-signature">
+                  <img
+                    [src]="generateimageUrl(personalDataObject.signature_image)"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div class="clinic-address">
+                <span
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="13.26"
+                    height="16.336"
+                    viewBox="0 0 13.26 16.336"
+                  >
+                    <defs>
+                      <style>
+                        .cls-1 {
+                          fill: #fff;
+                        }
+                      </style>
+                    </defs>
+                    <g id="Group_1461" transform="translate(-287.389 -1164.13)">
+                      <path
+                        id="Path_3879"
+                        d="M299.461 1166.98a6.618 6.618 0 0 0-10.881 0 6.616 6.616 0 0 0-.77 6.1 5.244 5.244 0 0 0 .963 1.593l4.73 5.555a.678.678 0 0 0 1.033 0l4.728-5.555a5.225 5.225 0 0 0 .964-1.59 6.622 6.622 0 0 0-.767-6.103zm-.5 5.626a3.917 3.917 0 0 1-.714 1.173l-4.224 4.961-4.217-4.952a3.943 3.943 0 0 1-.723-1.186 5.265 5.265 0 0 1 .616-4.851 5.261 5.261 0 0 1 8.648 0 5.267 5.267 0 0 1 .612 4.855z"
+                        class="cls-1"
+                      />
+                      <path
+                        id="Path_3880"
+                        d="M295.006 1168.472a3.248 3.248 0 1 0 3.248 3.248 3.252 3.252 0 0 0-3.248-3.248zm1.9 3.248a1.9 1.9 0 1 1-1.9-1.9 1.9 1.9 0 0 1 1.9 1.9z"
+                        class="cls-1"
+                        transform="translate(-.986 -.987)"
+                      />
+                    </g>
+                  </svg>
+                  <span>
+                    {{ prescriptionDetailsPrint.clinic.address }}
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="welcome-card__btns">
+            <button
+              class="custom-btn--singup custom-btn custom-btn--print"
+              (click)="printPrescription()"
+              type="submit"
+            >
+              Print
+            </button>
+            <!-- -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-toast aria-live="polite" aria-atomic="true"></app-toast>
+
+<ng-template #doctorCode let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Access Code</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body doctor-code-modal">
+    <div class="form-group">
+      <form #f="ngForm" [formGroup]="accessCodeForm" (ngSubmit)="enterCode()">
+        <div class="doctor-code-inputs">
+          <div class="one code-input">
+            <input
+              class="form-control"
+              type="text"
+              name="codeOne"
+              id="codeOne"
+              #codeOne
+              formControlName="codeOne"
+              placeholder="0"
+              maxlength="1"
+              autocomplete="off"
+              (keydown.space)="$event.preventDefault()"
+              appNextInput
+              (keydown)="allowOnlyNumber($event)"
+            />
+            <div
+              *ngIf="f.submitted || accessCodeForm?.controls?.codeOne?.touched"
+              class="error-feedback"
+            >
+              <p *ngIf="accessCodeForm?.controls?.codeOne?.errors?.required">
+                required
+              </p>
+              <p *ngIf="accessCodeForm?.controls?.codeOne?.errors?.digit">
+                numbers only
+              </p>
+            </div>
+          </div>
+          <div class="two code-input">
+            <input
+              class="form-control"
+              type="text"
+              name="codeTwo"
+              id="codeTwo"
+              #codeTwo
+              formControlName="codeTwo"
+              maxlength="1"
+              placeholder="0"
+              autocomplete="off"
+              (keydown.space)="$event.preventDefault()"
+              appNextInput
+              (keydown)="allowOnlyNumber($event)"
+            />
+
+            <div
+              *ngIf="f.submitted || accessCodeForm?.controls?.codeTwo?.touched"
+              class="error-feedback"
+            >
+              <p *ngIf="accessCodeForm?.controls?.codeOne?.errors?.required">
+                required
+              </p>
+
+              <p *ngIf="accessCodeForm?.controls?.codeTwo?.errors?.digit">
+                numbers only
+              </p>
+            </div>
+          </div>
+          <div class="three code-input">
+            <input
+              class="form-control"
+              type="text"
+              name="codeThree"
+              id="codeThree"
+              #codeThree
+              formControlName="codeThree"
+              placeholder="0"
+              maxlength="1"
+              autocomplete="off"
+              (keydown.space)="$event.preventDefault()"
+              appNextInput
+              (keydown)="allowOnlyNumber($event)"
+            />
+
+            <div
+              *ngIf="
+                f.submitted || accessCodeForm?.controls?.codeThree?.touched
+              "
+              class="error-feedback"
+            >
+              <p *ngIf="accessCodeForm?.controls?.codeOne?.errors?.required">
+                required
+              </p>
+              <p *ngIf="accessCodeForm?.controls?.codeThree?.errors?.digit">
+                numbers only
+              </p>
+            </div>
+          </div>
+          <div class="four code-input">
+            <input
+              class="form-control"
+              type="text"
+              name="codeFour"
+              id="codeFour"
+              #codeFour
+              formControlName="codeFour"
+              placeholder="0"
+              maxlength="1"
+              autocomplete="off"
+              (keydown.space)="$event.preventDefault()"
+              appNextInput
+              (keydown)="allowOnlyNumber($event)"
+            />
+
+            <div
+              *ngIf="f.submitted || accessCodeForm?.controls?.codeFour?.touched"
+              class="error-feedback"
+            >
+              <p *ngIf="accessCodeForm?.controls?.codeOne?.errors?.required">
+                required
+              </p>
+              <p *ngIf="accessCodeForm?.controls?.codeFour?.errors?.digit">
+                numbers only
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <ng-template *ngIf="accessCodeForm.errors">
+          <div
+            *ngIf="
+              f.submitted ||
+              accessCodeForm.controls.codeOne.touched ||
+              accessCodeForm.controls.codeTwo.touched ||
+              accessCodeForm.controls.codeThree.touched ||
+              accessCodeForm.controls.codeFour.touched
+            "
+            class="error-feedback"
+          >
+            <p
+              *ngIf="
+                accessCodeForm?.controls?.codeOne?.errors?.required ||
+                accessCodeForm?.controls?.codeTwo?.errors?.required ||
+                accessCodeForm?.controls?.codeThree?.errors?.required ||
+                accessCodeForm?.controls?.codeFour?.errors?.required
+              "
+            >
+              required
+            </p>
+            <p
+              *ngIf="
+                accessCodeForm.controls.codeOne.errors?.required == undefined &&
+                accessCodeForm.controls.codecodeTwoOne.errors?.required ==
+                  undefined &&
+                accessCodeForm.controls.codeThree.errors?.required ==
+                  undefined &&
+                accessCodeForm.controls.codeFour.errors?.required ==
+                  undefined &&
+                accessCodeForm?.controls?.codeOne?.errors?.whitespace
+              "
+            >
+              Please remove space and edit number
+            </p>
+          </div>
+        </ng-template>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="welcome-card__btns active">
+      <button
+        type="submit"
+        class="custom-btn--singup custom-btn"
+        (click)="enterCode(); changedoctorChange(); modal.close('Cross click')"
+        [disabled]="f.invalid"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,38 @@
+@import '../../../assets/scss/Abstract/variables';
+@import "../../../assets/scss/Abstract/mixins.scss";
+
+
+.sign-up-card {
+  padding: 60px 65px 55px;
+
+
+  @include screen-md{
+    padding: 60px 25px 55px  25px;
+    margin: 20px 0;
+  }
+
+
+
+
+  &.genric-card {
+    height: auto;
+  }
+
+  .main-title {
+    margin-bottom: 25px;
+  }
+  .form-group {
+    &:last-child {
+      margin-bottom: 10px;
+    }
+  }
+  .custom-btn--singup  {
+    color: $white;
+    background-color: $primary;
+    margin-bottom: 15px;
+  }
+  .icon-show-password {
+    cursor: pointer;
+  }
+
+}

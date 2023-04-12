@@ -1,0 +1,377 @@
+<div class="register-step-one">
+  <form #f="ngForm" [formGroup]="doctorDetails" *ngIf="editMode == false">
+    <div
+      class="form-group custom-select"
+      [class.hasError]="f.submitted === true"
+    >
+      <div class="upload-image-container">
+        <div class="upload-image-container__image" id="preview">
+          <img #image src="../../../../assets/images/upload-photo.png" />
+        </div>
+        <div class="upload-image-container__icon" (click)="uploadImage.click()">
+          <span class="icon-upload"></span>
+          <p>Upload Your Profile Picture</p>
+        </div>
+      </div>
+      <div class="Form-group-wrapper image">
+        <input
+          class="form-control d-none"
+          type="file"
+          data-name="first_input"
+          name="firstInput"
+          id="personalImage"
+          #uploadImage
+          accept="image/*"
+          (change)="fileChange($event); addNewItem(stepOneObject)"
+          formControlName="image"
+        />
+        <div
+          *ngIf="f.submitted || doctorDetails.controls.image.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="doctorDetails?.controls?.image?.errors?.required">
+            This Field is required
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="form-group custom-select"
+      [class.hasError]="f.submitted === true"
+    >
+      <div class="Form-group-wrapper arrow">
+        <select
+          name="specialty"
+          class="form-control custom-select"
+          #specialty
+          id="specialty"
+          (change)="addNewItem(stepOneObject)"
+          required
+          formControlName="specialty"
+        >
+          <option value="" disabled selected hidden>Your Specialty</option>
+          <option
+            [value]="specialty"
+            *ngFor="let specialty of specialties; let i = index"
+            [id]="i"
+          >
+            {{ specialty }}
+          </option>
+        </select>
+        <div
+          *ngIf="f.submitted || doctorDetails.controls.specialty.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="doctorDetails?.controls?.specialty?.errors?.required">
+            This Field is required
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="form-group custom-select"
+      [class.hasError]="f.submitted === true"
+    >
+      <div class="Form-group-wrapper arrow">
+        <select
+          name="degree"
+          (change)="onChange($event)"
+          class="form-control custom-select"
+          id="degree"
+          (change)="addNewItem(stepOneObject)"
+          #degree
+          required
+          formControlName="degree"
+        >
+          <option value="" disabled selected hidden>Your Degree</option>
+          <option
+            [value]="degree"
+            *ngFor="let degree of degrees; let i = index"
+            [id]="i"
+          >
+            {{ degree }}
+          </option>
+        </select>
+        <div
+          *ngIf="f.submitted || doctorDetails.controls.degree.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="doctorDetails?.controls?.degree?.errors?.required">
+            This Field is required
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" [class.hasError]="f.submitted === true">
+      <div class="Form-group-wrapper">
+        <input
+          type="text"
+          #university
+          name="university"
+          id="university"
+          placeholder="University"
+          class="form-control"
+          (change)="addNewItem(stepOneObject)"
+          (keydown)="noSpaceEvent($event)"
+          formControlName="university"
+        />
+        <!-- <div class="input-icon">
+          <span class="icon-email"></span>
+        </div> -->
+        <div
+          *ngIf="f.submitted || doctorDetails.controls.university.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="doctorDetails?.controls?.university?.errors?.required">
+            This Field is required
+          </p>
+          <p *ngIf="doctorDetails?.controls?.university?.errors?.maxlength">
+            university can't be more 50 Characters
+          </p>
+        </div>
+
+        <!-- <div *ngIf="reactiveForm.get('email').invalid && (reactiveForm.get('email').dirty || reactiveForm.get('email').touched)">
+          Please provide a valid email address.
+        </div> -->
+      </div>
+      <!---->
+    </div>
+
+    <div class="form-group" [class.hasError]="f.submitted === true">
+      <div class="Form-group-wrapper">
+        <textarea
+          #note
+          name="note"
+          id="note"
+          placeholder="bio"
+          class="form-control"
+          (change)="addNewItem(stepOneObject)"
+          (keydown)="noSpaceEvent($event)"
+          formControlName="note"
+        >
+        </textarea>
+        <!-- <div class="input-icon">
+          <span class="icon-email"></span>
+        </div> -->
+        <div
+          *ngIf="f.submitted || doctorDetails.controls.note.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="doctorDetails?.controls?.note?.errors?.required">
+            This Field is required
+          </p>
+          <p *ngIf="doctorDetails?.controls?.note?.errors?.maxlength">
+            note can't be more 50 Characters
+          </p>
+        </div>
+
+        <!-- <div *ngIf="reactiveForm.get('email').invalid && (reactiveForm.get('email').dirty || reactiveForm.get('email').touched)">
+          Please provide a valid email address.
+        </div> -->
+      </div>
+      <!---->
+    </div>
+  </form>
+
+  <form #f="ngForm" [formGroup]="doctorDetails" *ngIf="editMode == true">
+    <div
+      class="form-group custom-select"
+      [class.hasError]="f.submitted === true"
+    >
+      <div class="upload-image-container">
+        <div class="upload-image-container__image" id="preview">
+          <img #image src="../../../../assets/images/upload-photo.png" />
+        </div>
+        <div class="upload-image-container__icon" (click)="uploadImage.click()">
+          <span class="icon-upload"></span>
+          <p>Upload Your Profile Picture</p>
+        </div>
+      </div>
+
+      <div class="Form-group-wrapper image">
+        <input
+          class="form-control d-none"
+          type="file"
+          data-name="first_input"
+          name="firstInput"
+          id="personalImage"
+          #uploadImage
+          accept="image/*"
+          (change)="fileChange($event); addNewItem(stepOneObject)"
+          formControlName="image"
+        />
+        <div
+          *ngIf="f.submitted || doctorDetails.controls.image.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="doctorDetails?.controls?.image?.errors?.required">
+            This Field is required
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="form-group custom-select"
+      [class.hasError]="f.submitted === true"
+    >
+      <div class="Form-group-wrapper arrow">
+        <select
+          name="specialty"
+          class="form-control custom-select"
+          #specialty
+          [(ngModel)]="specialtyValue"
+          id="specialty"
+          (change)="addNewItem(stepOneObject)"
+          required
+          formControlName="specialty"
+        >
+          <!-- <option value="" disabled selected hidden>Your Specialty edit</option>  personalDoctorInfo-->
+          <option
+            [value]="specialty"
+            *ngFor="let specialty of specialties; let i = index"
+            [id]="i"
+            [attr.selected]="checkSpecialty(specialty) ? true : null"
+          >
+            {{ specialty }}
+          </option>
+        </select>
+        <div
+          *ngIf="f.submitted || doctorDetails.controls.specialty.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="doctorDetails?.controls?.specialty?.errors?.required">
+            This Field is required
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="form-group custom-select"
+      [class.hasError]="f.submitted === true"
+    >
+      <div class="Form-group-wrapper arrow">
+        <select
+          name="degree"
+          (change)="onChange($event)"
+          class="form-control custom-select"
+          [(ngModel)]="degreeValue"
+          id="degree"
+          (change)="addNewItem(stepOneObject)"
+          #degree
+          required
+          formControlName="degree"
+        >
+          <option value="" disabled selected hidden>Your Degree</option>
+          <option
+            [value]="degree"
+            *ngFor="let degree of degrees; let i = index"
+            [id]="i"
+          >
+            {{ degree }}
+          </option>
+        </select>
+        <div
+          *ngIf="f.submitted || doctorDetails.controls.degree.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="doctorDetails?.controls?.degree?.errors?.required">
+            This Field is required
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" [class.hasError]="f.submitted === true">
+      <div class="Form-group-wrapper">
+        <input
+          type="text"
+          #university
+          name="university"
+          id="university"
+          placeholder="University"
+          class="form-control"
+          [value]="universityValue"
+          [ngModel]="universityValue"
+          (change)="addNewItem(stepOneObject)"
+          (keydown)="noSpaceEvent($event)"
+          formControlName="university"
+        />
+        <!-- <div class="input-icon">
+          <span class="icon-email"></span>
+        </div> -->
+        <div
+          *ngIf="f.submitted || doctorDetails.controls.university.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="doctorDetails?.controls?.university?.errors?.required">
+            This Field is required
+          </p>
+          <p *ngIf="doctorDetails?.controls?.university?.errors?.maxlength">
+            university can't be more 50 Characters
+          </p>
+        </div>
+
+        <!-- <div *ngIf="reactiveForm.get('email').invalid && (reactiveForm.get('email').dirty || reactiveForm.get('email').touched)">
+          Please provide a valid email address.
+        </div> -->
+      </div>
+      <!---->
+    </div>
+
+    <div class="form-group" [class.hasError]="f.submitted === true">
+      <div class="Form-group-wrapper">
+        <textarea
+          #note
+          name="note"
+          id="note"
+          placeholder="bio"
+          class="form-control"
+          (change)="addNewItem(stepOneObject)"
+          (keydown)="noSpaceEvent($event)"
+          formControlName="note"
+          [ngModel]="noteValue"
+        >
+        </textarea>
+        <!-- <div class="input-icon">
+          <span class="icon-email"></span>
+        </div> -->
+        <div
+          *ngIf="f.submitted || doctorDetails.controls.note.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="doctorDetails?.controls?.note?.errors?.required">
+            This Field is required
+          </p>
+          <p *ngIf="doctorDetails?.controls?.note?.errors?.maxlength">
+            note can't be more 50 Characters
+          </p>
+        </div>
+
+        <!-- <div *ngIf="reactiveForm.get('email').invalid && (reactiveForm.get('email').dirty || reactiveForm.get('email').touched)">
+          Please provide a valid email address.
+        </div> -->
+      </div>
+      <!---->
+    </div>
+  </form>
+
+  <div
+    class="consolto-participate generic-switch-btn"
+    *ngIf="isConsoltoParticipate == true"
+  >
+    <p>Participate In Consolto</p>
+    <label class="switch">
+      <input
+        type="checkbox"
+        name=""
+        id="consolto"
+        (change)="addNewItem(stepOneObject); toggleCheck($event)"
+        [checked]="doctorConsoltoValue === 1"
+      />
+      <span class="slider round"></span>
+    </label>
+  </div>
+</div>

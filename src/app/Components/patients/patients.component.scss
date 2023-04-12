@@ -1,0 +1,725 @@
+
+@import "../../../assets/scss/Abstract/mixins";
+
+.main-content__details {
+  @include screen-md{
+    margin-bottom: 40px !important;
+  }
+
+ 
+
+  
+  &.patient-details {
+    padding: 0px;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+
+    .welcome-card__btns {
+      margin-bottom: 20px;
+    }
+    .iti__selected-flag {
+      width: 110px;
+    }
+  }
+  .form-group {
+    margin-bottom: 80px;
+  }
+  .add-new-patient {
+    padding: 50px 30px;
+    // margin-top: 17px;
+    .form-group {
+      &.gender {
+        position: relative;
+        .form-control {
+          padding: 20px 20px 15px;
+        }
+      }
+      &.age {
+        position: relative;
+        input {
+          padding: 20px 20px 15px;
+        }
+      }
+    }
+    .genric-card-title {
+      margin-bottom: 15px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+  }
+  .search-patient {
+    margin-top: 90px;
+    padding: 30px;
+    .welcome-card__btns {
+      margin-bottom: 250px;
+    }
+    .genric-card-title {
+      margin-bottom: 90px;
+    }
+
+    
+  }
+  .search-result__img {
+    display: flex;
+    justify-content: center;
+  }
+  .search-patient-result {
+    padding-top: 0;
+    .custom-btn {
+      padding: 13px 20px;
+    }
+    .search-result__content {
+      margin-bottom: 50px;
+
+      .result-item {
+        border-bottom: solid 1px #dfdfdf;
+        padding-bottom: 10px;
+        .lable,
+        .text {
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 1.56;
+          font-family: "poppins-regular";
+          margin-right: 7px;
+        }
+        .text {
+          color: #313450;
+        }
+        .lable {
+          color: #514ee5;
+        }
+      }
+    }
+  }
+  .patient-book {
+    padding-top: 0;
+    .welcome-card__btns {
+      margin-bottom: 20px;
+    }
+    .patient-book__img {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      img {
+        max-height: 98px;
+        max-width: 98px;
+      }
+      h5 {
+        margin-top: -5px;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 1.56;
+        font-family: "poppins-regular";
+      }
+    }
+    .check-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0px;
+      label {
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 1.56;
+        font-family: "poppins-regular";
+        color: #313450;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+      }
+      input {
+        width: 18px;
+        height: 18px;
+      }
+    }
+    .book-details {
+      .book-details__box {
+        border: solid 1px #514ee5;
+        border-radius: 9px;
+        padding: 4px 15px 5px;
+        margin-bottom: 15px;
+        &.avial-daies {
+          padding: 4px 0px 5px 15px;
+          .box-title {
+            margin-right: 15px;
+          }
+        }
+        .box-title {
+          color: #514ee5;
+          font-size: 18px;
+          font-weight: normal;
+          line-height: 1.56;
+          font-family: "poppins-regular";
+          border-bottom: solid 1px #dfdfdf;
+          margin-bottom: 13px;
+          padding-bottom: 5px;
+        }
+      }
+    }
+    .day-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0;
+      border-radius: 5px;
+      border: solid 1px #d6d6d6;
+      background: #f6f6f6;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      &.active {
+        background: #514ee5;
+        h3,
+        span {
+          color: #fff;
+        }
+      }
+      h3,
+      span {
+        font-family: "poppins-regular";
+        font-size: 10px;
+        color: #878787;
+        pointer-events: none;
+        transition: all 0.4s ease;
+      }
+      h3 {
+        margin-bottom: 7px;
+        color: #575757;
+        margin-top: 7px;
+      }
+      span {
+        margin-bottom: 7px;
+      }
+    }
+    .avialable-daies {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+
+.main-content__list{
+  .generic-card{
+    @include screen-xs{
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 20px;
+    }
+  
+    .generic-card-name{
+      @include screen-xs{
+        min-width: unset;
+        text-align: center;
+      }
+    }
+  
+    img{
+      @include screen-xs{
+       margin-right: 0;
+      }
+    }
+  }
+
+  .header{
+    @include screen-xs{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .header .header-search{
+    @include screen-xs{
+      width: 100%;
+      position: relative;
+    }
+  }
+
+
+  .header .header-search .icon-search {
+    @include screen-xs{
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+
+
+.book-details__box {
+  &.avial-daies {
+    padding: 4px 0px 5px 15px;
+    .box-title {
+      margin-right: 15px;
+    }
+  }
+}
+
+.clinic-list__menu {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  border-radius: 22px;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
+  margin-bottom: 35px;
+  overflow-x: scroll;
+  // width: 100%;k
+  // width: max-content;
+  .swiper-slide {
+    display: flex;
+  }
+  li {
+    display: inline-flex;
+    padding: 7px;
+    min-width: 150px;
+    text-align: center;
+    font-family: "poppins-regular";
+    font-size: 18px;
+    color: #333348;
+    line-height: 1.33;
+    transition: all 0.5s ease;
+    border-radius: 22px;
+    cursor: pointer;
+    align-items: center;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // white-space: nowrap;
+    margin-right: 10px;
+
+    &.active {
+      background-color: #514ee5;
+      color: #fff;
+    }
+  }
+}
+.oberver-item {
+  min-height: 20px;
+  width: 100%;
+}
+.patient-page {
+  .generic-card {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.upcoming-details-personal .prescription {
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.upcoming-details {
+  padding-top: 5px;
+}
+
+.patient-book {
+  padding: 25px;
+}
+
+.upcoming-details-personal__msg {
+  button {
+    min-width: 210px;
+  }
+}
+
+.upcoming-details-personal > .upcoming-details-personal__msg {
+  margin-bottom: 20px;
+}
+
+.back-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  font-size: 17px;
+  margin: 20px 0 0 20px;
+
+  &__icon {
+    transform: rotate(180deg);
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &__text {
+    margin-left: 10px;
+  }
+}
+
+.no-result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+
+.appointment-list {
+  padding: 30px;
+}
+
+.appointments-details {
+  padding: 20px 28px;
+
+  .welcome-card__btns {
+    justify-content: flex-end;
+    &.current-prescription {
+      justify-content: space-between;
+    }
+
+    .custom-btn--print {
+      min-width: 165px;
+    }
+  }
+  .appointments-details__title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 15px;
+    &::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 1px;
+      background-color: #d6d6d6;
+      position: absolute;
+      bottom: 0;
+    }
+    .icon-phone {
+      &::before {
+        font-size: 20px;
+      }
+    }
+    .phone {
+      font-size: 14px;
+      font-family: "poppins-regular";
+      color: #313450;
+      line-height: 1.5;
+    }
+    .icon-qrcode {
+      &::before {
+        font-size: 43px;
+      }
+    }
+    .name {
+      margin-bottom: 5px;
+      position: relative;
+      &::before {
+        content: "";
+        width: 100%;
+        display: block;
+        height: 3px;
+        background-color: #97b2de;
+        bottom: -5.5px;
+        z-index: 99;
+        position: absolute;
+      }
+    }
+  }
+  p {
+    font-family: "poppins-regular";
+    font-size: 14px;
+    color: #313450;
+    line-height: 1.43;
+    margin-bottom: 5px;
+    span {
+      font-family: "poppins-regular";
+      font-size: 14px;
+      color: #313450;
+      line-height: 1.43;
+    }
+  }
+  .prescription-title--name {
+    margin-bottom: 0px;
+    color: #313450;
+  }
+  .appointments-doctor-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d6d6d6;
+    margin-bottom: 15px;
+  }
+
+  .doctor {
+    display: flex;
+    flex-direction: column;
+    .doctor-name,
+    .doctor-title,
+    .doctor-address {
+      color: #313450;
+      font-size: 14px;
+      font-family: "poppins-regular";
+    }
+  }
+  .connection {
+    display: flex;
+  }
+  .icon-tel-square {
+    margin-right: 10px;
+    .path1,
+    .path2 {
+      font-family: "icomoon" !important;
+      &::before {
+        font-size: 35px;
+      }
+    }
+  }
+  .icon-whatsapp-square {
+    &::before {
+      font-size: 35px;
+    }
+  }
+  .prescription-title {
+    margin-bottom: 5px;
+  }
+  .doctor-signature {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+    // position: absolute;
+    right: 15px;
+    bottom: 36px;
+    img {
+      max-width: 125px;
+      max-height: 50px;
+    }
+  }
+}
+
+.doctor-prescription {
+  padding: 0;
+  background-image: url(/assets/images/bg-rosh.jpeg);
+  background-position: bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.p-print {
+  font-size: 18px;
+}
+
+.no-top-radius {
+  border-radius: 0 0 40px 40px !important;
+}
+
+#print-container {
+  // padding: 40px 0 20px;
+  position: relative;
+  .prescription-print-body,
+  .prescription-print-details {
+    padding: 0 20px;
+  }
+
+  &::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 20px;
+    background-color: #514ee5;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .english-doctor-details {
+    position: relative;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    padding-top: 40px;
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 80%;
+      height: 1px;
+      background-color: #514ee5;
+      bottom: 0;
+    }
+  }
+  .doctor-prescription__date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: flex-end;
+    span {
+      font-size: 15px;
+    }
+    .date-word {
+      display: inline-block;
+      margin-left: 5px;
+      color: #787ba0;
+    }
+  }
+  .doctor-prescription__date__line {
+    display: inline-block;
+    width: 50%;
+    height: 1px;
+    background-color: #514ee5;
+    margin-left: 10px;
+  }
+  .doctor-prescription__pitent-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    span {
+      font-size: 16px;
+      display: inline-block;
+      margin-left: 7px;
+    }
+    .doctor-prescription__pitent-details__name,
+    .doctor-prescription__pitent-details__age {
+      display: flex;
+      span:last-child {
+        color: #787ba0;
+      }
+    }
+  }
+}
+.doctor-prescription {
+  .welcome-card__btns {
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+}
+
+.arabic-doctor-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.prescription-title--print {
+  font-size: 24px;
+  margin-bottom: 0;
+}
+.prescription-print-footer {
+  .clinic-phone {
+    /* width: 50%; */
+    /* height: 45px; */
+    border-top-right-radius: 15px;
+    /* background-image: linear-gradient(#619CFF, #48EBE7); */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 18px;
+    justify-content: space-between;
+    .phone-container {
+      display: flex;
+      width: 44%;
+      height: 43px;
+      background-image: linear-gradient(#6f6fe0, #514ee5);
+      justify-content: center;
+      align-items: center;
+      border-top-right-radius: 47px;
+    }
+    span {
+      color: white;
+    }
+    .doctor-signature {
+      display: flex;
+      /* justify-content: flex-end; */
+      margin-bottom: 15px;
+      margin-right: 15px;
+      /* right: 15px; */
+      /* bottom: 36px;*/
+    }
+  }
+  .clinic-address {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 10px 10px 38px;
+    background-image: linear-gradient(#6f6fe0, #514ee5);
+    span {
+      font-size: 16px;
+      color: white;
+      svg {
+        margin-right: 10px;
+      }
+    }
+  }
+  .icon-call {
+    margin-right: 8px;
+    &::before {
+      color: #fff;
+    }
+  }
+}
+
+.oberver-item {
+  min-height: 20px;
+  width: 100%;
+}
+
+// \e939
+
+.clinic-list__menu {
+  // max-width: 66%;
+  margin: 0 25px;
+  overflow-x: scroll;
+  @include screen-1200 {
+    margin: 0;
+  }
+}
+
+.doctor-code-modal {
+  .form-group .form-control {
+    padding: 15px 6px !important;
+  }
+}
+
+.error-feedback {
+  position: static !important;
+}
+
+.back-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  font-size: 17px;
+  margin: 20px 0 0 20px;
+
+  &__icon {
+    transform: rotate(180deg);
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &__text {
+    margin-left: 10px;
+  }
+}
+
+.no-result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+
+.appointment-list-padding {
+  padding: 20px;
+}
+
+.upcoming-details.appointment-list {
+  .generic-card .generic-card-name {
+    min-width: unset;
+    min-width: unset;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+  }
+}

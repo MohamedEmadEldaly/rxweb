@@ -1,0 +1,1540 @@
+<div class="row profile-page">
+  <!--tab items-->
+  <div class="col-lg-7">
+    <div class="main-content__list">
+      <div class="header">
+        <div class="header-title">
+          <h3 class="main-title">Profile</h3>
+          <p class="header-title__brief">All Your Info Here</p>
+        </div>
+      </div>
+      <div class="profile">
+        <!--tab items-->
+        <div
+          class="main-content__items__card profile__item"
+          [ngClass]="{ active: selectedItem == item }"
+          *ngFor="let item of prfileItems; let i = index"
+          (click)="profileInfoClick(i, item)"
+        >
+          <h4 class="main-content__items__card__header">{{ item }}</h4>
+        </div>
+        <div
+          (click)="open(assistantOutDialog)"
+          class="main-content__items__card profile__item doctor-assistant d-flex align-items-center"
+        >
+          <!-- <a> -->
+          <span class="icon-logout"></span>
+          <h4 class="main-content__items__card__header">Assistant</h4>
+          <!-- </a> -->
+        </div>
+
+        <ng-template #assistantOutDialog let-modal class="confirm-out">
+          <div
+            class="modal-header confirm-out__header confirm-out__header--assistant"
+          >
+            <h4 class="modal-title" id="modal-basic-title">
+              Do You Want To Switch to Assistant's Mode?
+            </h4>
+            <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button> -->
+          </div>
+          <div class="modal-body confirm-out__body">
+            <div class="welcome-card__btns">
+              <button
+                class="custom-btn--singup custom-btn btn-main-color"
+                (click)="doctorAssistant(); modal.close('Cross click')"
+              >
+                Switch
+              </button>
+              <button
+                class="custom-btn--singup custom-btn custom-btn--print"
+                (click)="modal.close('Cross click')"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </ng-template>
+
+        <!--tab items-->
+      </div>
+    </div>
+  </div>
+  <!--tab items-->
+
+  <!--info board-->
+  <div class="col-lg-5">
+    <app-loader *ngIf="isDetailsLoaderShow || isLoaderShow"></app-loader>
+    <!-- </div> -->
+    <div
+      class="main-content__details details genric-card welcome-image patient-details"
+      *ngIf="welcomeImage == true"
+    >
+      <div class="appointments-img">
+        <img src="../../../assets/images/appiontment-image.png" alt="" />
+      </div>
+    </div>
+
+    <div
+      class="main-content__details details genric-card personal-info"
+      *ngIf="personalInfoShow == true"
+    >
+      <div class="main-content__details__image" id="change-image">
+        <img
+          #imageChange
+          [src]="generateimageUrl(personalDataObject.user.image)"
+          alt=""
+        />
+      </div>
+      <div class="upload-image-container__icon" (click)="changeImage.click()">
+        <!--(click)="uploadImage.click()"-->
+        <span class="icon-upload"></span>
+        <p>Change image</p>
+      </div>
+      <div class="Form-group-wrapper image">
+        <input
+          class="form-control d-none"
+          type="file"
+          data-name="first_input"
+          name="firstInput"
+          id="personalImage"
+          #changeImage
+          accept="image/*"
+          (change)="fileImageChange($event)"
+        />
+      </div>
+      <div class="details__item">
+        <ng-template #englishName let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Name in English</h4>
+            <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              (click)="modal.dismiss('Cross click')"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form #engName="ngForm" [formGroup]="engNameForm">
+              <div class="form-group">
+                <input
+                  class="form-control"
+                  type="text"
+                  #englishNameValue
+                  (keyup)="englishNameText($event)"
+                  (keydown)="noSpacesEvent($event)"
+                  (keydown)="allowOnlyEnglish($event)"
+                  pattern="[a-zA-Z]+( +[a-zA-Z]+)*"
+                  name=""
+                  [value]="personalDataObject.user.en_name"
+                  formControlName="engNameF"
+                />
+              </div>
+              <div
+                *ngIf="
+                  engName.submitted || engNameForm.controls.engNameF.touched
+                "
+                class="error-feedback"
+              >
+                <p *ngIf="engNameForm.controls.engNameF.errors?.required">
+                  This Field is required
+                </p>
+                <p *ngIf="engNameForm.controls.engNameF.errors?.pattern">
+                  Please Enter English Only without numbers
+                </p>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <div
+              class="welcome-card__btns"
+              [ngClass]="{ active: changeEnglishName }"
+            >
+              <button
+                type="button"
+                class="custom-btn--singup custom-btn"
+                (click)="englishNameChange(); modal.close('Cross click')"
+                [disabled]="engName.invalid"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </ng-template>
+        <label for="">Name In English</label>
+        <div class="Form-group-wrapper">
+          <input
+            class="form-control"
+            type="text"
+            readonly
+            name=""
+            [value]="personalDataObject.user.en_name"
+          />
+          <div class="input-icon" (click)="open(englishName)">
+            <span class="icon-edit"></span>
+          </div>
+        </div>
+
+        <ng-template #arabicName let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Name in Arabic</h4>
+            <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              (click)="modal.dismiss('Cross click')"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form #arName="ngForm" [formGroup]="arNameForm">
+              <div class="form-group">
+                <input
+                  class="form-control form-control--arabic"
+                  type="text"
+                  #arabicNameValue
+                  (keyup)="arabicNameText($event)"
+                  (keydown)="allowOnlyArabic($event)"
+                  (keydown)="noSpacesEvent($event)"
+                  pattern="[\u0621-\u064A\u0660-\u0669]+( +[\u0621-\u064A\u0660-\u0669]+)*"
+                  style="direction: rtl"
+                  name=""
+                  [value]="personalDataObject.user.ar_name"
+                  formControlName="arNameF"
+                />
+              </div>
+              <div
+                *ngIf="arName.submitted || arNameForm.controls.arNameF.touched"
+                class="error-feedback"
+              >
+                <p *ngIf="arNameForm.controls.arNameF.errors?.required">
+                  This Field is required
+                </p>
+                <p *ngIf="arNameForm.controls.arNameF.errors?.pattern">
+                  Please Enter arabic Only without numbers
+                </p>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <div
+              class="welcome-card__btns"
+              [ngClass]="{ active: changeArabicName }"
+            >
+              <button
+                type="button"
+                class="custom-btn--singup custom-btn"
+                (click)="arabicNameChange(); modal.close('Cross click')"
+                [disabled]="arName.invalid"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </ng-template>
+        <label for="">Name In Arabic</label>
+        <div class="Form-group-wrapper">
+          <input
+            class="form-control"
+            type="text"
+            name=""
+            readonly
+            [value]="personalDataObject.user.ar_name"
+          />
+          <div class="input-icon" (click)="open(arabicName)">
+            <span class="icon-edit"></span>
+          </div>
+        </div>
+        <ng-template #phoneNumber let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Phone Number</h4>
+            <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              (click)="modal.dismiss('Cross click')"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body phone-modal">
+            <div class="form-group">
+              <!-- <input
+                class="form-control"
+                type="text"
+                #phoneNumberValue
+                (keydown)="phoneNumberText($event)"
+                name=""
+                [value]="personalDataObject.user.phone"
+              /> -->
+              <form #f="ngForm" [formGroup]="phoneGroup">
+                <ngx-intl-tel-input
+                  [cssClass]="'form-control'"
+                  [preferredCountries]="preferredCountries"
+                  [enableAutoCountrySelect]="false"
+                  [enablePlaceholder]="true"
+                  [searchCountryFlag]="true"
+                  [searchCountryField]="[
+                    SearchCountryField.Iso2,
+                    SearchCountryField.Name
+                  ]"
+                  [selectFirstCountry]="false"
+                  [selectedCountryISO]="CountryISO.Egypt"
+                  [phoneValidation]="true"
+                  [separateDialCode]="separateDialCode"
+                  name="phone"
+                  (keydown)="allowOnlyNumber($event)"
+                  (keydown.space)="$event.preventDefault()"
+                  #phoneNumberValue
+                  (keyup)="phoneNumberText($event)"
+                  formControlName="phone"
+                >
+                </ngx-intl-tel-input>
+
+                <div
+                  *ngIf="f.submitted || phoneGroup.controls.phone.touched"
+                  class="error-feedback"
+                >
+                  <p *ngIf="!phoneGroup.value.phone">Phone Number Required</p>
+                  <p
+                    *ngIf="
+                      phoneGroup.value.phone &&
+                      phoneGroup.controls['phone'].errors
+                    "
+                  >
+                    Invalid Phone Number
+                  </p>
+
+                  <!-- <p *ngIf="reactiveForm.controls.phone.errors?.required">
+            This Field is required
+          </p> -->
+                </div>
+              </form>
+
+              <!-- <ngx-intl-tel-input [cssClass]="'form-control'" [preferredCountries]="preferredCountries"
+                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+                [selectedCountryISO]="CountryISO.Egypt" [phoneValidation]="true" [separateDialCode]="separateDialCode"
+                [ngModel]="phoneNumberBind"  (keydown)="phoneNumberText($event)"
+                name="phone" formControlName="doctorPhone">
+              </ngx-intl-tel-input> -->
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div
+              class="welcome-card__btns"
+              [ngClass]="{ active: changePhoneNumber }"
+            >
+              <button
+                type="button"
+                class="custom-btn--singup custom-btn"
+                [disabled]="phoneGroup?.controls?.phone?.invalid"
+                (click)="phoneNumberChange(); modal.close('Cross click')"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </ng-template>
+        <label for="">Phone Number</label>
+        <div class="Form-group-wrapper">
+          <input
+            class="form-control"
+            readonly
+            type="text"
+            name=""
+            [placeholder]="finalUserPhone"
+            [value]="finalUserPhone"
+          />
+          <div class="input-icon" (click)="open(phoneNumber)">
+            <span class="icon-edit"></span>
+          </div>
+        </div>
+        <ng-template #email let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Email</h4>
+            <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              (click)="modal.dismiss('Cross click')"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body phone-modal">
+            <div class="form-group">
+              <form #f="ngForm" [formGroup]="phoneGroup">
+                <input
+                  class="form-control"
+                  type="text"
+                  #emailValue
+                  (keydown)="emailText($event)"
+                  name=""
+                  [value]="personalDataObject.user.email"
+                  formControlName="email"
+                />
+                <div
+                  *ngIf="f.submitted || phoneGroup.controls.email.touched"
+                  class="error-feedback"
+                >
+                  <p
+                    *ngIf="
+                      phoneGroup.controls.email.errors?.required &&
+                      phoneGroup.controls.email.pristine
+                    "
+                  >
+                    This Field is required
+                  </p>
+                  <p
+                    *ngIf="
+                      phoneGroup.controls.email.dirty &&
+                      (phoneGroup.controls.email.errors?.email ||
+                        phoneGroup.controls.email.errors?.validEmail)
+                    "
+                  >
+                    Please enter a valid email
+                  </p>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="welcome-card__btns" [ngClass]="{ active: changeEmail }">
+              <button
+                type="button"
+                [disabled]="phoneGroup?.controls?.email?.invalid"
+                class="custom-btn--singup custom-btn"
+                (click)="emailChange(); modal.close('Cross click')"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </ng-template>
+        <label for="">Email</label>
+        <div class="Form-group-wrapper">
+          <input
+            class="form-control"
+            readonly
+            type="text"
+            name=""
+            [value]="personalDataObject.user.email"
+          />
+          <div class="input-icon" (click)="open(email)">
+            <span class="icon-edit"></span>
+          </div>
+        </div>
+        <ng-template #password let-modal class="reset-password-modal">
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">
+              Reset Your Password
+            </h4>
+            <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              (click)="modal.dismiss('Cross click')"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form
+              #f="ngForm"
+              [formGroup]="resetPassword"
+              (ngSubmit)="onSubmitPassword()"
+            >
+              <div class="form-group" [class.hasError]="f.submitted === true">
+                <div class="Form-group-wrapper password">
+                  <input
+                    [type]="passwordShow"
+                    name="password"
+                    id="password"
+                    placeholder="Old Password"
+                    class="form-control"
+                    formControlName="oldPasswordValue"
+                  />
+                  <div class="input-icon" (click)="showPassword()">
+                    <span class="icon-show-password"></span>
+                  </div>
+                  <div
+                    *ngIf="
+                      f.submitted ||
+                      (resetPassword.controls.oldPasswordValue?.touched &&
+                        resetPassword.controls.oldPasswordValue?.errors)
+                    "
+                    class="error-feedback"
+                  >
+                    <p
+                      *ngIf="
+                        resetPassword.controls.oldPasswordValue?.errors
+                          ?.required
+                      "
+                    >
+                      This Field is required
+                    </p>
+                    <!-- <p class="noError"  *ngIf= "this.reactiveForm.controls.password.errors?.minLength?.actualLength < 8">Password should contain 8 characters at least</p> -->
+                  </div>
+                </div>
+                <!---->
+              </div>
+              <div class="form-group" [class.hasError]="f.submitted === true">
+                <div class="Form-group-wrapper password">
+                  <input
+                    [type]="newPassword"
+                    name="password"
+                    id="newpassword"
+                    placeholder="New Password"
+                    class="form-control"
+                    formControlName="newPasswordValue"
+                  />
+                  <div class="input-icon" (click)="shownewPassword()">
+                    <span class="icon-show-password"></span>
+                  </div>
+
+                  <div
+                    *ngIf="
+                      f.submitted ||
+                      (resetPassword.controls.newPasswordValue?.touched &&
+                        resetPassword.controls.newPasswordValue?.errors)
+                    "
+                    class="error-feedback"
+                  >
+                    <p
+                      *ngIf="
+                        resetPassword.controls.newPasswordValue?.errors
+                          ?.required
+                      "
+                    >
+                      This Field is required
+                    </p>
+
+                    <p
+                      *ngIf="
+                        resetPassword.controls.newPasswordValue?.errors
+                          ?.minlength
+                      "
+                    >
+                      The password must be more than 8
+                    </p>
+
+                    <!-- <p class="noError"  *ngIf= "this.reactiveForm.controls.password.errors?.minLength?.actualLength < 8">Password should contain 8 characters at least</p> -->
+                  </div>
+                </div>
+                <!---->
+              </div>
+              <div class="form-group" [class.hasError]="f.submitted === true">
+                <div class="Form-group-wrapper password">
+                  <input
+                    [type]="confirmPassword"
+                    name="password"
+                    id="confirm-password"
+                    placeholder="Confirm Password"
+                    class="form-control"
+                    formControlName="confirmPasswordValue"
+                  />
+                  <div class="input-icon" (click)="showConfirmPassword()">
+                    <span class="icon-show-password"></span>
+                  </div>
+
+                  <div
+                    *ngIf="
+                      f.submitted ||
+                      (resetPassword.controls.confirmPasswordValue?.touched &&
+                        resetPassword.controls.confirmPasswordValue?.errors)
+                    "
+                    class="error-feedback"
+                  >
+                    <p
+                      *ngIf="
+                        resetPassword.controls.confirmPasswordValue?.errors
+                          ?.required
+                      "
+                    >
+                      This Field is required
+                    </p>
+                    <p
+                      *ngIf="
+                        resetPassword.controls.confirmPasswordValue?.errors
+                          ?.confirmedValidator
+                      "
+                    >
+                      The password is not match
+                    </p>
+
+                    <p
+                      *ngIf="
+                        resetPassword.controls.confirmPasswordValue?.errors
+                          ?.minlength
+                      "
+                    >
+                      The password must be more than 8
+                    </p>
+                    <!-- <p class="noError"  *ngIf= "this.reactiveForm.controls.password.errors?.minLength?.actualLength < 8">Password should contain 8 characters at least</p> -->
+                  </div>
+                </div>
+                <!---->
+              </div>
+              <div class="reset-password-modal">
+                <div class="welcome-card__btns">
+                  <button
+                    type="submit"
+                    class="custom-btn--singup custom-btn"
+                    (click)="modal.dismiss('Cross click')"
+                    [disabled]="f.invalid"
+                  >
+                    Save
+                  </button>
+                  <!-- modal.close('Cross click') -->
+                </div>
+              </div>
+            </form>
+          </div>
+        </ng-template>
+        <label for="">Password</label>
+        <div class="Form-group-wrapper">
+          <input
+            class="form-control"
+            readonly
+            type="password"
+            name=""
+            value="5555nnnn"
+          />
+          <div class="input-icon" (click)="open(password)">
+            <span class="icon-edit"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--doctor info details-->
+    <div
+      class="main-content__details details genric-card doctor-info"
+      *ngIf="doctorInfoShow == true"
+    >
+      <div class="doctor-info-details" *ngIf="doctorInfoDetails == true">
+        <div class="main-content__details__image">
+          <img src="../../../assets/images/doctor-data.png" alt="" />
+        </div>
+        <div class="details__item">
+          <label for="">Specialty</label>
+          <div class="Form-group-wrapper">
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              name=""
+              id=""
+              [value]="personalDataObject.user.speciality_en"
+            />
+            <!-- <div class="input-icon" (click)="open(content)">
+            <span class="icon-edit"></span>
+          </div> -->
+          </div>
+          <label for="">Degree</label>
+          <div class="Form-group-wrapper">
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              name=""
+              id=""
+              [value]="personalDataObject.user.degre_en"
+            />
+            <!-- <div class="input-icon">
+            <span class="icon-edit"></span>
+          </div> -->
+          </div>
+          <label for="">University</label>
+          <div class="Form-group-wrapper">
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              name=""
+              id=""
+              [value]="personalDataObject.user.university"
+            />
+            <!-- <div class="input-icon">
+            <span class="icon-edit"></span>
+          </div> -->
+          </div>
+          <label for="">Bio</label>
+          <div class="Form-group-wrapper">
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              name=""
+              id=""
+              [value]="personalDataObject.user.note"
+            />
+            <!-- <div class="input-icon">
+            <span class="icon-edit"></span>
+          </div> -->
+          </div>
+          <div
+            class="consalto switch-wrapper"
+            *ngIf="personalDataObject.user.degre_en == 'Proffesor'"
+          >
+            <label for="">Participate in consolto</label>
+            <div class="generic-switch-btn">
+              <label class="switch">
+                <input
+                  type="checkbox"
+                  name=""
+                  readonly
+                  [checked]="personalDataObject.user.consolto == true"
+                  id="videoCheck"
+                />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+          <div class="welcome-card__btns" (click)="showDocotorEditMode()">
+            <button
+              class="custom-btn--singup custom-btn btn-main-color"
+              type="submit"
+            >
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="doctor-info-edit" *ngIf="doctorInfoEdit == true">
+        <app-loader *ngIf="isLoaderShow"></app-loader>
+        <register-step-one
+          [editMode]="changeStepOneMode"
+          [personalDoctorInfo]="personalDoctorInfo"
+          (newItemEvent)="addStepOneObject($event)"
+          [doctorDetails]="currentGroup"
+        >
+        </register-step-one>
+        <div class="welcome-card__btns">
+          <button
+            class="welcome-card__btns__signup custom-btn btn-main-color"
+            (click)="editDoctorData()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--doctor info details-->
+
+    <!--clinic tab-->
+    <div
+      class="main-content__details details genric-card clinic-info"
+      *ngIf="clinicInfoShow == true"
+    >
+      <div class="add-new-clinic" *ngIf="addClinic == true">
+        <app-loader *ngIf="isLoaderShow"></app-loader>
+
+        <app-step-two-profile
+          [markedAllTouched]="markedAllTouched"
+          (newItemEvent)="addStepTwoObject($event)"
+          [isAddClinicFinish]="isAddClinicFinish"
+          [item]="currentItem"
+        >
+        </app-step-two-profile>
+
+        <!-- <app-step-two-profile></app-step-two-profile> -->
+        <div class="welcome-card__btns">
+          <button
+            class="welcome-card__btns__signup custom-btn btn-main-color"
+            (click)="addNewClinic()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+
+      <div class="add-new-clinic" *ngIf="editClinic == true">
+        <app-loader *ngIf="isLoaderShow"></app-loader>
+        <app-step-two-profile
+          (newItemEvent)="addStepTwoObject($event)"
+          (newItemEvent)="isFormValid($event)"
+          [editMode]="true"
+          [selectedClinicData]="selectedClinicData"
+          [item]="currentItem"
+        >
+        </app-step-two-profile>
+        <div class="welcome-card__btns">
+          <button
+            class="welcome-card__btns__signup custom-btn btn-main-color"
+            (click)="addNewClinic()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+
+      <div class="details__item" *ngIf="registerClinicDetails == true">
+        <label for="">Clinics</label>
+
+        <div class="form-group custom-select">
+          <div class="Form-group-wrapper arrow">
+            <select
+              id="pet-select"
+              #clinicList
+              class="form-control custom-select"
+              (change)="showClickSelectedDetails($event)"
+            >
+              <option
+                [value]="clinic.name"
+                *ngFor="let clinic of clinicsData; let i = index"
+              >
+                {{ clinic?.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <label for="">Clinic Name</label>
+        <div class="Form-group-wrapper">
+          <input
+            class="form-control"
+            type="text"
+            name=""
+            readonly
+            [value]="selectedClinicData?.name"
+          />
+        </div>
+
+        <label for="">Clinic Phone Number</label>
+        <div class="Form-group-wrapper">
+          <input
+            class="form-control"
+            type="text"
+            name=""
+            [value]="
+              (selectedClinicData?.country_code
+                ? selectedClinicData?.country_code
+                : '') +
+              (selectedClinicData?.phone
+                ? selectedClinicData?.phone.replace(' ', '')
+                : '01000323222')
+            "
+            readonly
+          />
+        </div>
+
+        <label for="">Address</label>
+        <div class="Form-group-wrapper">
+          <input
+            class="form-control"
+            type="text"
+            name=""
+            id=""
+            [value]="selectedClinicData?.address"
+            readonly
+          />
+
+          <agm-map
+            [latitude]="+selectedClinicData?.lat"
+            [longitude]="+selectedClinicData?.lng"
+          >
+            <agm-marker
+              [latitude]="+selectedClinicData?.lat"
+              [longitude]="+selectedClinicData?.lng"
+            ></agm-marker>
+          </agm-map>
+        </div>
+
+        <label for="" class="">Availability</label>
+
+        <div class="Form-group-wrapper header-underline">
+
+          <div class="time">
+
+            
+
+            <div class="time__from">
+              <span class="generic-details header d-flex">day</span>
+            </div>
+
+            <div class="time__from">
+              <span class="generic-details header  d-flex">From</span>
+            </div>
+            <div class="time__from">
+              <span class="generic-details header  d-flex">To</span>
+            </div>
+          
+          </div>
+
+          <ng-container *ngFor="let clinic of selectedClinicData?.selected_days">
+
+          <div class="time">
+
+            
+
+            <div class="time__from">
+              <!-- <span class="generic-details header d-flex">day</span>
+              <br> -->
+              <span class="generic-details">{{
+                clinic?.day | slice:0:3
+              }}</span>
+            </div>
+
+            <div class="time__from">
+              <!-- <span class="generic-details header  d-flex">From</span>
+              <br> -->
+              <span class="generic-details">{{
+                clinic?.from
+              }}</span>
+            </div>
+            <div class="time__from">
+              <!-- <span class="generic-details header  d-flex">To</span>
+              <br> -->
+              <span class="generic-details">{{ clinic?.to }}</span>
+            </div>
+          
+          </div>
+        </ng-container>
+
+          <!-- <div class="days">
+            <span class="generic-details header">Pick Opening Days</span>
+            <span
+              class="generic-details"
+              *ngFor="let day of selectedClinicData?.selected_days"
+            >
+              {{ day.substring(0, 3) }}</span
+            >
+          </div> -->
+        </div>
+
+        <label for="" class="">Fees Per Session</label>
+        <div class="Form-group-wrapper header-underline">
+          <div class="session-fees">
+            <div class="regular">
+              <span class="generic-details header">Regular </span>
+              <span class="generic-details"
+                >{{ selectedClinicData?.fees_regular }}
+                {{ currencyType(selectedClinicData?.currency) }}</span
+              >
+            </div>
+            <div class="urgent" *ngIf="selectedClinicData?.fees_urgent != null">
+              <span class="generic-details header">Urgent </span>
+              <span class="generic-details"
+                >{{ selectedClinicData?.fees_urgent }}
+                {{ currencyType(selectedClinicData?.currency) }}</span
+              >
+            </div>
+            <div
+              class="consulto"
+              *ngIf="selectedClinicData?.fees_recheck != null"
+            >
+              <span class="generic-details header">Recheck </span>
+              <span class="generic-details"
+                >{{ selectedClinicData?.fees_recheck }}
+                {{ currencyType(selectedClinicData?.currency) }}</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="btns">
+          <div class="icon" (click)="showAddNewClinic()">
+            <span class="icon-add-blue">
+              <span class="path1"></span>
+              <span class="path2"></span>
+            </span>
+          </div>
+          <div class="welcome-card__btns" (click)="showEditClinic()">
+            <button
+              class="custom-btn--singup custom-btn btn-main-color"
+              type="submit"
+            >
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--clinic tab-->
+
+    <div
+      class="main-content__details details genric-card consulto-info"
+      *ngIf="consultoShow == true"
+    >
+      <div class="consulto-details" *ngIf="consultoDetails == true">
+        <div class="main-content__details__image">
+          <img src="../../../assets/images/consulto-img.png" alt="" />
+        </div>
+        <div class="details__item">
+          <div class="home switch-wrapper">
+            <label for="">Home</label>
+            <div class="generic-switch-btn">
+              <label class="switch">
+                <input
+                  type="checkbox"
+                  name=""
+                  [checked]="consultoData?.is_home_visit == 1"
+                  id="homr"
+                />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+          <div
+            class="Form-group-wrapper header-underline"
+            *ngIf="consultoData?.is_home_visit == 1"
+          >
+            <div class="session-fees">
+              <div class="regular">
+                <span class="generic-details header">Fees Per Session </span>
+                <span class="generic-details"
+                  >{{ consultoData?.fees_home_visit }}
+                  {{ currencyType(consultoData.currency) }}</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="consalto switch-wrapper">
+            <label for="">Video Consult Availability</label>
+            <div class="generic-switch-btn">
+              <label class="switch">
+                <input
+                  type="checkbox"
+                  name=""
+                  [checked]="consultoData.is_video_call == 1"
+                  id="availability"
+                />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+          <div
+            class="Form-group-wrapper header-underline"
+            *ngIf="consultoData.is_video_call == 1"
+          >
+            <div class="time">
+              <div class="time__from">
+                <span class="generic-details header">From</span>
+                <span class="generic-details">{{
+                  consultoData.video_from
+                }}</span>
+              </div>
+              <div class="time__to">
+                <span class="generic-details header">To</span>
+                <span class="generic-details">{{ consultoData.video_to }}</span>
+              </div>
+            </div>
+            <div class="days">
+              <span class="generic-details header">Pick Opening Days</span>
+              <span
+                class="generic-details"
+                *ngFor="let day of consultoData.video_selected_days"
+              >
+                {{ day.substring(0, 3) }}</span
+              >
+            </div>
+          </div>
+          <div
+            class="Form-group-wrapper consulto-info__avail-fees"
+            *ngIf="consultoData.is_video_call == 1"
+          >
+            <div class="session-fees">
+              <div class="regular">
+                <span class="generic-details header">Fees Per Session </span>
+                <span class="generic-details"
+                  >{{ consultoData.fees_video_call }}
+                  {{ currencyType(consultoData.video_call_currency) }}</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="welcome-card__btns">
+            <button
+              class="custom-btn--singup custom-btn btn-main-color"
+              (click)="changeConsultoEdit()"
+              [disabled]="canNotEnter"
+            >
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="consulto-edit" *ngIf="consultoEdit == true">
+        <app-loader *ngIf="isLoaderShow"></app-loader>
+        <register-step-three
+          (newItemEventCon)="addStepThreeObject($event)"
+          [ConsultationData]="currentGroup"
+          [editMode]="changeEditMode"
+          [editModeData]="consultoData"
+        ></register-step-three>
+        <div class="welcome-card__btns">
+          <button
+            class="welcome-card__btns__signup custom-btn btn-main-color"
+            (click)="addNewConsulto()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="main-content__details details genric-card signature-info"
+      *ngIf="signatureShow == true"
+    >
+      <div class="main-content__details__image">
+        <img src="../../../assets/images/signature.png" alt="" />
+      </div>
+      <div class="details__item">
+        <ng-template #signature let-modal class="signature-modal">
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Signature</h4>
+            <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              (click)="modal.dismiss('Cross click')"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body signature-modal">
+            <form
+              #f="ngForm"
+              [formGroup]="resetSignature"
+              (ngSubmit)="onSubmitSignature()"
+            >
+              <div class="signature--upload__image Form-group-wrapper">
+                <div class="signature--upload" (click)="signatureImage.click()">
+                  <img
+                    #image
+                    (change)="imageChange($event)"
+                    [src]="
+                      generateimageUrl(personalDataObject.user.signature_image)
+                    "
+                    alt=""
+                    srcset=""
+                  />
+                </div>
+                <input
+                  class="form-control d-none"
+                  type="file"
+                  data-name="first_input"
+                  name="firstInput"
+                  id="signatureIamge"
+                  #signatureImage
+                  accept="image/*"
+                  (change)="fileChange($event)"
+                  formControlName="signatureImage"
+                />
+                <div
+                  *ngIf="
+                    f.submitted ||
+                    resetSignature.controls.signatureImage.touched
+                  "
+                  class="error-feedback"
+                >
+                  <p
+                    *ngIf="
+                      resetSignature?.controls?.signatureImage?.errors?.required
+                    "
+                  >
+                    This Field is required
+                  </p>
+                </div>
+              </div>
+
+              <div class="reset-password-modal">
+                <div class="welcome-card__btns">
+                  <button
+                    type="submit"
+                    class="custom-btn--singup custom-btn"
+                    (click)="onSubmitSignature(); modal.dismiss('Cross click')"
+                  >
+                    Save
+                  </button>
+                  <!-- modal.close('Cross click') -->
+                </div>
+              </div>
+            </form>
+          </div>
+        </ng-template>
+        <label for="">Doctor's Signature</label>
+        <div class="Form-group-wrapper">
+          <!-- <input class="form-control" type="text" name="" id="" value="Doctor's Signature"> -->
+          <img
+            class="doctor-signature-image"
+            [src]="generateimageUrl(personalDataObject.user.signature_image)"
+            alt=""
+          />
+
+          <div class="input-icon" (click)="open(signature)">
+            <span class="icon-edit"></span>
+          </div>
+        </div>
+        <ng-template #doctorCodeModel let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Doctor Code</h4>
+            <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              (click)="modal.dismiss('Cross click')"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form
+              #f="ngForm"
+              [formGroup]="accessCodeForm"
+              (ngSubmit)="enterCode()"
+            >
+              <div class="doctor-code-inputs">
+                <div class="one code-input">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="codeOne"
+                    id="codeOne"
+                    #codeOne
+                    formControlName="codeOne"
+                    placeholder="0"
+                    maxlength="1"
+                    autocomplete="off"
+                    (keydown.space)="$event.preventDefault()"
+                    appNextInput
+                    (keydown)="allowOnlyNumber($event)"
+                  />
+                  <div
+                    *ngIf="
+                      f.submitted || accessCodeForm?.controls?.codeOne?.touched
+                    "
+                    class="error-feedback"
+                  >
+                    <p
+                      *ngIf="
+                        accessCodeForm?.controls?.codeOne?.errors?.required
+                      "
+                    >
+                      required
+                    </p>
+                    <p *ngIf="accessCodeForm?.controls?.codeOne?.errors?.digit">
+                      numbers only
+                    </p>
+                  </div>
+                </div>
+                <div class="two code-input">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="codeTwo"
+                    id="codeTwo"
+                    #codeTwo
+                    formControlName="codeTwo"
+                    maxlength="1"
+                    placeholder="0"
+                    autocomplete="off"
+                    (keydown.space)="$event.preventDefault()"
+                    appNextInput
+                    (keydown)="allowOnlyNumber($event)"
+                  />
+
+                  <div
+                    *ngIf="
+                      f.submitted || accessCodeForm?.controls?.codeTwo?.touched
+                    "
+                    class="error-feedback"
+                  >
+                    <p
+                      *ngIf="
+                        accessCodeForm?.controls?.codeOne?.errors?.required
+                      "
+                    >
+                      required
+                    </p>
+
+                    <p *ngIf="accessCodeForm?.controls?.codeTwo?.errors?.digit">
+                      numbers only
+                    </p>
+                  </div>
+                </div>
+                <div class="three code-input">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="codeThree"
+                    id="codeThree"
+                    #codeThree
+                    formControlName="codeThree"
+                    placeholder="0"
+                    maxlength="1"
+                    autocomplete="off"
+                    (keydown.space)="$event.preventDefault()"
+                    appNextInput
+                    (keydown)="allowOnlyNumber($event)"
+                  />
+
+                  <div
+                    *ngIf="
+                      f.submitted ||
+                      accessCodeForm?.controls?.codeThree?.touched
+                    "
+                    class="error-feedback"
+                  >
+                    <p
+                      *ngIf="
+                        accessCodeForm?.controls?.codeOne?.errors?.required
+                      "
+                    >
+                      required
+                    </p>
+                    <p
+                      *ngIf="accessCodeForm?.controls?.codeThree?.errors?.digit"
+                    >
+                      numbers only
+                    </p>
+                  </div>
+                </div>
+                <div class="four code-input">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="codeFour"
+                    id="codeFour"
+                    #codeFour
+                    formControlName="codeFour"
+                    placeholder="0"
+                    maxlength="1"
+                    autocomplete="off"
+                    (keydown.space)="$event.preventDefault()"
+                    appNextInput
+                    (keydown)="allowOnlyNumber($event)"
+                  />
+
+                  <div
+                    *ngIf="
+                      f.submitted || accessCodeForm?.controls?.codeFour?.touched
+                    "
+                    class="error-feedback"
+                  >
+                    <p
+                      *ngIf="
+                        accessCodeForm?.controls?.codeOne?.errors?.required
+                      "
+                    >
+                      required
+                    </p>
+                    <p
+                      *ngIf="accessCodeForm?.controls?.codeFour?.errors?.digit"
+                    >
+                      numbers only
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <ng-template *ngIf="accessCodeForm.errors">
+                <div
+                  *ngIf="
+                    f.submitted ||
+                    accessCodeForm.controls.codeOne.touched ||
+                    accessCodeForm.controls.codeTwo.touched ||
+                    accessCodeForm.controls.codeThree.touched ||
+                    accessCodeForm.controls.codeFour.touched
+                  "
+                  class="error-feedback"
+                >
+                  <p
+                    *ngIf="
+                      accessCodeForm?.controls?.codeOne?.errors?.required ||
+                      accessCodeForm?.controls?.codeTwo?.errors?.required ||
+                      accessCodeForm?.controls?.codeThree?.errors?.required ||
+                      accessCodeForm?.controls?.codeFour?.errors?.required
+                    "
+                  >
+                    required
+                  </p>
+                  <p
+                    *ngIf="
+                      accessCodeForm.controls.codeOne.errors?.required ==
+                        undefined &&
+                      accessCodeForm.controls.codecodeTwoOne.errors?.required ==
+                        undefined &&
+                      accessCodeForm.controls.codeThree.errors?.required ==
+                        undefined &&
+                      accessCodeForm.controls.codeFour.errors?.required ==
+                        undefined &&
+                      accessCodeForm?.controls?.codeOne?.errors?.whitespace
+                    "
+                  >
+                    Please remove space and edit number
+                  </p>
+                </div>
+              </ng-template>
+            </form>
+
+            <!-- <form #f="ngForm" [formGroup]="resetDoctorCode">
+              <div class="doctor-code-inputs">
+                <div class="one code-input">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="codeOne"
+                    id="codeOne"
+                    #doctorCodeOne
+                    formControlName="resetDoctorCodeValue"
+                    (keydown)="changeDoctorCodeText()"
+                    placeholder="0"
+                    maxlength="1"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="two code-input">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="codeTwo"
+                    id="codeTwo"
+                    #doctorCodeTwo
+                    formControlName="resetDoctorCodeValue"
+                    (keydown)="changeDoctorCodeText()"
+                    maxlength="1"
+                    placeholder="0"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="three code-input">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="codeThree"
+                    id="codeThree"
+                    #doctorCodeThree
+                    formControlName="resetDoctorCodeValue"
+                    (keydown)="changeDoctorCodeText()"
+                    placeholder="0"
+                    maxlength="1"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="four code-input">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="codeFour"
+                    id="codeFour"
+                    #doctorCodeFour
+                    formControlName="resetDoctorCodeValue"
+                    (keydown)="changeDoctorCodeText()"
+                    placeholder="0"
+                    maxlength="1"
+                    autocomplete="off"
+                  />
+                </div>
+                <div
+                  *ngIf="
+                    f.submitted ||
+                    resetDoctorCode.controls.resetDoctorCodeValue.touched
+                  "
+                  class="error-feedback"
+                >
+                  <p
+                    *ngIf="
+                      resetDoctorCode?.controls?.resetDoctorCodeValue?.errors
+                        ?.whitespace
+                    "
+                  >
+                    Please remove space and edit number
+                  </p>
+                </div>
+              </div>
+            </form> -->
+          </div>
+          <div class="modal-footer">
+            <div class="welcome-card__btns active">
+              <button
+                type="button"
+                class="custom-btn--singup custom-btn"
+                [disabled]="f.invalid"
+                (click)="enterCode(); modal.close('Cross click')"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </ng-template>
+        <label for="">Doctor's Code</label>
+        <div class="Form-group-wrapper">
+          <input
+            class="form-control"
+            type="password"
+            name=""
+            readonly
+            id=""
+            [value]="latestAccessCode"
+          />
+          <div class="input-icon" (click)="open(doctorCodeModel)">
+            <span class="icon-edit"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="main-content__details details genric-card contact-us"
+      *ngIf="contactUsShow == true"
+    >
+      <div class="contact-box">
+        <h3 class="heaser"><span class="icon-call"></span> Call us on</h3>
+        <span>+20 1006760032</span>
+        <span>+20 1006760032</span>
+      </div>
+      <div class="contact-box Message">
+        <div class="massages-wrapper">
+          <span class="icon-message"></span>
+          <form #contact="ngForm" [formGroup]="contactForm">
+            <textarea
+              #messageValue
+              id=""
+              (keydown)="changeText()"
+              placeholder="Send Message"
+              formControlName="messageArea"
+            ></textarea>
+            <div
+              *ngIf="
+                contact.submitted || contactForm.controls.messageArea.touched
+              "
+              class="error-feedback"
+            >
+              <p
+                *ngIf="
+                  contactForm.controls.messageArea.errors?.required &&
+                  contactForm.controls.messageArea.pristine
+                "
+              >
+                This Field is required
+              </p>
+              <p *ngIf="contactForm.controls.messageArea.errors?.minlength">
+                at least 50 characters
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="welcome-card__btns" [ngClass]="{ active: messageSend }">
+        <button
+          class="custom-btn--singup custom-btn btn-main-color"
+          type="submit"
+          (click)="sendMessage()"
+          [disabled]="contactForm.invalid"
+        >
+          Send
+        </button>
+      </div>
+    </div>
+  </div>
+  <!--info board-->
+</div>
+<app-toast aria-live="polite" aria-atomic="true"></app-toast>
+<!-- <router-outlet ></router-outlet> -->

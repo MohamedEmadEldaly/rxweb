@@ -1,0 +1,7 @@
+<router-outlet *ngIf="!showMobileApps"></router-outlet>
+
+<app-notification *ngIf="$currentMessage | async"></app-notification>
+<app-splash *ngIf="splash"></app-splash>
+<app-loading-spinner *ngIf="$loadingSpinner | async"> </app-loading-spinner>
+
+<app-mobile-screen *ngIf="showMobileApps"></app-mobile-screen>

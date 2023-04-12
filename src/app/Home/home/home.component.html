@@ -1,0 +1,460 @@
+<div class="mobile-navbar">
+  <button class="mobile-navbar__btn" (click)="openMenu()">
+    menu
+  </button>
+
+</div>
+
+<!--sidebar-->
+<div class="sidebar-overlay" [ngClass]="{'active' : sideMenu$ | async}" (click)="closeMenu()">
+  <div class="sidenav">
+    <div class="sidenav-menu">
+      <div class="sidenav-menu__logo">
+        <img src="../../../assets/images/logo-white.png" alt="" />
+      </div>
+      <a
+        class="sidenav-item item-7amda"
+        (click)="selectProfile($event, 'Patients');closeMenu()"
+        #Patients
+        [ngClass]="selected == 'Patients' ? 'active' : ''"
+      >
+        <span
+          class="icon-patient"
+          (click)="selectProfile($event, 'Patients')"
+        ></span>
+        <span class="sidenav-item__word"> Patient Card</span>
+      </a>
+      <a
+        class="sidenav-item"
+        #Appointments
+        (click)="selectProfile($event, 'Appointments');closeMenu()"
+        [ngClass]="selected == 'Appointments' ? 'active' : ''"
+      >
+        <span
+          class="icon-appointment"
+          (click)="selectProfile($event, 'Appointments')"
+        ></span>
+        <span class="sidenav-item__word"> Appointments</span>
+      </a>
+  
+      <a
+        class="sidenav-item"
+        #Appointments
+        (click)="selectProfile($event, 'Consultation');closeMenu()"
+        [ngClass]="selected == 'Consultation' ? 'active' : ''"
+      >
+        <span
+          class="consult-icon"
+          (click)="selectProfile($event, 'Consultation')"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="21.695"
+            height="24.105"
+            viewBox="0 0 21.695 24.105"
+          >
+            <path
+              d="M21.374 12.347H9.321v2.411h12.053zm2.411-8.437h-1.206V1.5h-2.411v2.411h-9.642V1.5h-2.41v2.411H6.911a2.4 2.4 0 0 0-2.4 2.411L4.5 23.195a2.41 2.41 0 0 0 2.411 2.411h16.873a2.418 2.418 0 0 0 2.411-2.411V6.321a2.418 2.418 0 0 0-2.411-2.41zm0 19.284H6.911V9.937h16.873zm-6.026-6.026H9.321v2.411h8.437z"
+              transform="translate(-4.5 -1.5)"
+            />
+          </svg>
+        </span>
+        <span class="sidenav-item__word"> Consultation</span>
+      </a>
+  
+      <!-- <a class="sidenav-item Perscription-side-menu" routerLink="Perscription" [routerLinkActive]="['active']" #prescription (click)="select(appointments)" [ngClass]="{active: isActive(appointments)}">
+        <span class="icon-appointment"></span>
+        <span class="sidenav-item__word"> Perscription</span>
+      </a> -->
+      <a
+        class="sidenav-item"
+        #Notifications
+        (click)="selectProfile($event, 'Notifications');closeMenu()"
+        [ngClass]="selected == 'Notifications' ? 'active' : ''"
+      >
+        <span
+          class="icon-notifications"
+          (click)="selectProfile($event, 'Notifications')"
+        ></span>
+        <span class="sidenav-item__word"> Notifications</span>
+      </a>
+      <!-- <a class="sidenav-item" #Messages (click)="selectProfile(Messages,$event)" [ngClass]="selected == 'Messages'? 'active' : '' ">
+        <span class="icon-messages"></span>
+        <span class="sidenav-item__word"> Messages</span>
+      </a> -->
+      <a
+        class="sidenav-item"
+        #Profile
+        (click)="selectProfile($event, 'Profile');closeMenu()"
+        [ngClass]="selected == 'Profile' ? 'active' : ''"
+      >
+        <!--[ngClass]="{active: isActive(Profile)}"-->
+        <span class="icon-user" (click)="selectProfile($event, 'Profile')"></span>
+        <span class="sidenav-item__word"> Profile</span>
+      </a>
+  
+      <a
+        class="sidenav-item"
+        #Profile
+        (click)="selectProfile($event, 'Contact');closeMenu()"
+        [ngClass]="selected == 'Contact' ? 'active' : ''"
+      >
+        <!--[ngClass]="{active: isActive(Profile)}"-->
+        <span
+          class="icon-messages"
+          (click)="selectProfile($event, 'Contact')"
+        ></span>
+        <span class="sidenav-item__word"> contact us</span>
+      </a>
+  
+      <a
+        class="sidenav-item"
+        #Profile
+        (click)="selectProfile($event, 'About');closeMenu()"
+        [ngClass]="selected == 'About' ? 'active' : ''"
+      >
+        <!--[ngClass]="{active: isActive(Profile)}"-->
+        <span
+          class="consult-icon larger"
+          (click)="selectProfile($event, 'About')"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="64.5"
+            height="74.65"
+            viewBox="0 0 64.5 74.65"
+          >
+            <defs>
+              <!-- <style>
+                    .cls-2{fill:#fff}
+                </style> -->
+            </defs>
+            <g id="Group_1658" transform="translate(-135.04 -343.806)">
+              <path
+                id="Path_3280"
+                fill="none"
+                stroke-width="1.5px"
+                d="M5536.709 3033.11l31.94-18.283 31.06 18.283v36.126l-31.06 18.5-31.94-18.5z"
+                transform="translate(-5400.919 -2670.153)"
+              />
+              <g id="Group_1640" transform="translate(147.477 360.081)">
+                <g id="Group_345" transform="translate(1.298 7.315)">
+                  <path
+                    id="Path_949"
+                    d="M113.835 151.535s11.576.05 13.016-.045c1.19-.078 3.3-.7 3.407-3.025l4.088 5.447a5.2 5.2 0 0 1-3.181 2.432l6.094 8.463h-7.766l-4.1-6.89-6 .028.012 6.862h-5.875z"
+                    class="cls-2"
+                    transform="translate(-113.529 -138.726)"
+                  />
+                  <g id="Group_344" transform="translate(8.953 21.426)">
+                    <path
+                      id="Path_950"
+                      d="M142.811 187.973l3.444-4.656 2.758 4.656z"
+                      class="cls-2"
+                      transform="translate(-142.811 -183.317)"
+                    />
+                  </g>
+                  <path
+                    id="Path_951"
+                    d="M176.314 170.6l2.183-2.77-1.358-1.769a4.3 4.3 0 0 1-2.5 2.363z"
+                    class="cls-2"
+                    transform="translate(-155.957 -150.424)"
+                  />
+                  <path
+                    id="Path_952"
+                    d="M192.041 119.42h8.2L189.4 132.279l-4.16-4.24z"
+                    class="cls-2"
+                    transform="translate(-163.314 -119.42)"
+                  />
+                  <path
+                    id="Path_953"
+                    d="M135.524 126.262l.7-6.739s6.385-.156 7.41-.039 2.468-.052 3.721 1.241c.639.659.691.843 4.044 5.031 3.375 4.214 8.6 11.073 10.052 13.02s5.426 6.739 5.426 6.739h-8.2s-9.491-12.732-11.379-15.129-2.48-4.194-5.339-4.194-6.435.07-6.435.07z"
+                    class="cls-2"
+                    transform="translate(-128.799 -119.434)"
+                  />
+                </g>
+                <g id="Group_348">
+                  <path
+                    id="Path_959"
+                    d="M101.855 122.042s1.132-3.825 3.1-5.466c0 0 2.553-2.069 3.247-2.484 5.305-3.178 7.946-12 4.033-17.959 0 0-.547 1.739-4.279 4.982a37.77 37.77 0 0 0-5.189 5.393 10.337 10.337 0 0 0-2.137 6.332c.217 3.416.318 4 .318 4a46.728 46.728 0 0 1 2.464-5.884c.977-1.617 3.011-4.813 5.4-5.912 0 0-2.737 3.952-3.572 5.266a38.306 38.306 0 0 0-2.862 5.609 35 35 0 0 0-2 7.383c-.144 1.475-.223 5.343 1.8 7.521l1.166 1.123a18.539 18.539 0 0 1-1.706-4.9 11.613 11.613 0 0 1 .217-5.004z"
+                    class="cls-2"
+                    transform="translate(-99.858 -96.133)"
+                  />
+                  <path
+                    id="Path_960"
+                    d="M100.224 124.017s1.159-3.411 2.953-4.788c0 0 2.325-1.731 2.951-2.068 4.782-2.579 7.481-10.448 4.319-16.088 0 0-.555 1.549-3.963 4.279a32.911 32.911 0 0 0-4.778 4.6 9.454 9.454 0 0 0-2.149 5.631c.039 3.117.1 3.657.1 3.657a42.637 42.637 0 0 1 2.416-5.2c.926-1.413 2.846-4.2 4.985-5.059 0 0-2.569 3.433-3.357 4.578a34.641 34.641 0 0 0-2.751 4.931 32.369 32.369 0 0 0-2.077 6.594c-.191 1.332-.43 4.843 1.242 6.941l.971 1.089a17.584 17.584 0 0 1-1.277-4.556 10.926 10.926 0 0 1 .415-4.541z"
+                    class="cls-2"
+                    transform="translate(-98.74 -99.449)"
+                  />
+                </g>
+              </g>
+            </g>
+          </svg>
+        </span>
+        <span class="sidenav-item__word"> About RX</span>
+      </a>
+    </div>
+    <div class="sidenav-logout">
+      <a (click)="open(logOutDialog);closeMenu()">
+        <span class="icon-logout"></span>
+        <span class="sidenav-logout">Logout</span>
+      </a>
+    </div>
+  
+    <ng-template #logOutDialog let-modal class="confirm-out">
+      <div class="modal-header confirm-out__header">
+        <h4 class="modal-title" id="modal-basic-title">
+          Do You Want To Log Out?
+        </h4>
+        <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+      <div class="modal-body confirm-out__body">
+        <div class="welcome-card__btns">
+          <button
+            class="custom-btn--singup custom-btn btn-main-color"
+            (click)="logOut(); modal.close('Cross click')"
+          >
+            Log Out
+          </button>
+          <button
+            class="custom-btn--singup custom-btn custom-btn--print"
+            (click)="modal.close('Cross click')"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  
+    <ng-template #assistantOutDialog let-modal class="confirm-out">
+      <div
+        class="modal-header confirm-out__header confirm-out__header--assistant"
+      >
+        <h4 class="modal-title" id="modal-basic-title">
+          Do You Want To Switch to Assistant's Mode?
+        </h4>
+        <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+      <div class="modal-body confirm-out__body">
+        <div class="welcome-card__btns">
+          <button
+            class="custom-btn--singup custom-btn btn-main-color"
+            (click)="doctorAssistant(); modal.close('Cross click')"
+          >
+            Switch
+          </button>
+          <button
+            class="custom-btn--singup custom-btn custom-btn--print"
+            (click)="modal.close('Cross click')"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<!--sidebar-->
+
+<!--main content-->
+<div class="main-content main" [ngClass]="{'overflow-hidden-m' : sideMenu$ | async}">
+  <router-outlet></router-outlet>
+  <div class="doctor-assistant d-none">
+    <a (click)="open(assistantOutDialog)">
+      <span class="icon-logout"></span>
+      <span class="sidenav-logout">Assistant</span>
+    </a>
+  </div>
+</div>
+<!--main content-->
+
+
+<ng-template #doctorCode let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Access Code</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body doctor-code-modal">
+    <div class="form-group">
+      <form #f="ngForm" [formGroup]="accessCodeForm">
+        <div class="doctor-code-inputs">
+          <div class="one code-input">
+            <input
+              class="form-control"
+              type="text"
+              name="codeOne"
+              id="codeOne"
+              #codeOne
+              formControlName="codeOne"
+              placeholder="0"
+              maxlength="1"
+              autocomplete="off"
+              (keydown.space)="$event.preventDefault()"
+              appNextInput
+              (keydown)="allowOnlyNumber($event)"
+            />
+            <div
+              *ngIf="f.submitted || accessCodeForm?.controls?.codeOne?.touched"
+              class="error-feedback"
+            >
+              <p *ngIf="accessCodeForm?.controls?.codeOne?.errors?.required">
+                required
+              </p>
+              <p *ngIf="accessCodeForm?.controls?.codeOne?.errors?.digit">
+                numbers only
+              </p>
+            </div>
+          </div>
+          <div class="two code-input">
+            <input
+              class="form-control"
+              type="text"
+              name="codeTwo"
+              id="codeTwo"
+              #codeTwo
+              formControlName="codeTwo"
+              maxlength="1"
+              placeholder="0"
+              autocomplete="off"
+              (keydown.space)="$event.preventDefault()"
+              appNextInput
+              (keydown)="allowOnlyNumber($event)"
+            />
+
+            <div
+              *ngIf="f.submitted || accessCodeForm?.controls?.codeTwo?.touched"
+              class="error-feedback"
+            >
+              <p *ngIf="accessCodeForm?.controls?.codeOne?.errors?.required">
+                required
+              </p>
+
+              <p *ngIf="accessCodeForm?.controls?.codeTwo?.errors?.digit">
+                numbers only
+              </p>
+            </div>
+          </div>
+          <div class="three code-input">
+            <input
+              class="form-control"
+              type="text"
+              name="codeThree"
+              id="codeThree"
+              #codeThree
+              formControlName="codeThree"
+              placeholder="0"
+              maxlength="1"
+              autocomplete="off"
+              (keydown.space)="$event.preventDefault()"
+              appNextInput
+              (keydown)="allowOnlyNumber($event)"
+            />
+
+            <div
+              *ngIf="
+                f.submitted || accessCodeForm?.controls?.codeThree?.touched
+              "
+              class="error-feedback"
+            >
+              <p *ngIf="accessCodeForm?.controls?.codeOne?.errors?.required">
+                required
+              </p>
+              <p *ngIf="accessCodeForm?.controls?.codeThree?.errors?.digit">
+                numbers only
+              </p>
+            </div>
+          </div>
+          <div class="four code-input">
+            <input
+              class="form-control"
+              type="text"
+              name="codeFour"
+              id="codeFour"
+              #codeFour
+              formControlName="codeFour"
+              placeholder="0"
+              maxlength="1"
+              autocomplete="off"
+              (keydown.space)="$event.preventDefault()"
+              appNextInput
+              (keydown)="allowOnlyNumber($event)"
+            />
+
+            <div
+              *ngIf="f.submitted || accessCodeForm?.controls?.codeFour?.touched"
+              class="error-feedback"
+            >
+              <p *ngIf="accessCodeForm?.controls?.codeOne?.errors?.required">
+                required
+              </p>
+              <p *ngIf="accessCodeForm?.controls?.codeFour?.errors?.digit">
+                numbers only
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <ng-template *ngIf="accessCodeForm.errors">
+          <div
+            *ngIf="
+              f.submitted ||
+              accessCodeForm.controls.codeOne.touched ||
+              accessCodeForm.controls.codeTwo.touched ||
+              accessCodeForm.controls.codeThree.touched ||
+              accessCodeForm.controls.codeFour.touched
+            "
+            class="error-feedback"
+          >
+            <p
+              *ngIf="
+                accessCodeForm?.controls?.codeOne?.errors?.required ||
+                accessCodeForm?.controls?.codeTwo?.errors?.required ||
+                accessCodeForm?.controls?.codeThree?.errors?.required ||
+                accessCodeForm?.controls?.codeFour?.errors?.required
+              "
+            >
+              required
+            </p>
+            <p
+              *ngIf="
+                accessCodeForm.controls.codeOne.errors?.required == undefined &&
+                accessCodeForm.controls.codecodeTwoOne.errors?.required ==
+                  undefined &&
+                accessCodeForm.controls.codeThree.errors?.required ==
+                  undefined &&
+                accessCodeForm.controls.codeFour.errors?.required ==
+                  undefined &&
+                accessCodeForm?.controls?.codeOne?.errors?.whitespace
+              "
+            >
+              Please remove space and edit number
+            </p>
+          </div>
+        </ng-template>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="welcome-card__btns active">
+      <button
+        type="submit"
+        class="custom-btn--singup custom-btn"
+        (click)="enterCode(); changedoctorChange(); modal.close('Cross click')"
+        [disabled]="f.invalid"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,775 @@
+
+@import "../../../assets/scss/Abstract/mixins";
+
+.appointments-page {
+  .generic-card.generic-card--appointment {
+    .col-4 {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .home-visit {
+      margin-right: 0;
+      width: auto;
+    }
+  }
+  .genric-card--appointment {
+    padding: 0px 0px;
+  }
+  .main-content__details {
+    min-height: 600px;
+    display: flex;
+    // justify-content: center;
+    align-items: center;
+    .appointments-img {
+      display: flex;
+      justify-content: center;
+      margin: auto;
+      img{
+        @include screen-sm{
+          max-width: 100%;
+
+        }
+      }
+    }
+  }
+  .clinic-list {
+    display: flex;
+    justify-content: space-between;
+    .doctor-clinic {
+      position: relative;
+      &::before {
+        content: "\e939";
+        display: inline-block;
+        position: absolute;
+        top: 9px;
+        font-size: 16px;
+        height: auto;
+        right: 10px;
+        pointer-events: none;
+        font-family: "icomoon" !important;
+      }
+      .form-control {
+        padding: 6px 42px 6px 25px;
+        border-radius: 22px;
+        border: 0;
+        box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
+      }
+    }
+  }
+  .current-delete {
+    display: flex;
+  }
+}
+
+.main-content__details {
+  @include screen-md{
+    margin-bottom: 40px !important;
+  }
+
+}
+
+.main-content__list{
+  .generic-card{
+    @include screen-xs{
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 20px;
+    }
+  
+    .generic-card-name{
+      @include screen-xs{
+        min-width: unset;
+        text-align: center;
+      }
+    }
+  
+    img{
+      @include screen-xs{
+       margin-right: 0;
+      }
+    }
+  }
+
+  .header{
+    @include screen-xs{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .header .header-search{
+    @include screen-xs{
+      width: 100%;
+      position: relative;
+    }
+  }
+
+
+  .header .header-search .icon-search {
+    @include screen-xs{
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+
+.upcoming-details-personal {
+  .row {
+    > div {
+      padding: 0;
+      &:last-child {
+        padding-left: 15px;
+      }
+    }
+  }
+  .generic-card--appointment {
+    text-decoration: none;
+  }
+}
+.generic-card--appointment {
+  .row {
+    width: 100%;
+    > div {
+      padding: 0;
+    }
+  }
+  .delete {
+    display: flex;
+    justify-content: flex-end;
+    .icon-delete {
+      cursor: pointer;
+      &::before {
+        font-size: 21px;
+      }
+    }
+  }
+}
+.add-prescription {
+  padding: 35px 28px 25px;
+  > form > div {
+    margin-bottom: 10px;
+    textarea {
+      border: 0;
+      border-bottom: solid 1px #d6d6d6;
+      font-family: "poppins-regular";
+      padding: 2px 0;
+      width: 100%;
+      font-size: 16px;
+      line-height: 1.5;
+      height: 32px;
+      &:focus-visible {
+        outline: 0;
+      }
+      &::placeholder {
+        /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: #898a8f;
+      }
+
+      &:-ms-input-placeholder {
+        /* Internet Explorer 10-11 */
+        color: #898a8f;
+      }
+
+      &::-ms-input-placeholder {
+        /* Microsoft Edge */
+        color: #898a8f;
+      }
+    }
+  }
+  // h5 {
+  // }
+}
+
+.upcoming-details-personal__info {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 10px 10px 0;
+}
+.upcoming-details-personal {
+  .generic-card--info {
+    margin: 16px 20px 0;
+    padding: 12px 20px;
+  }
+  .prescription {
+    padding: 18px 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+  .documents {
+    padding: 18px 20px;
+  }
+  > .upcoming-details-personal__msg {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 35px;
+    button {
+      display: flex;
+      align-items: center;
+      border-radius: 25px;
+      padding: 0 10px 0 0;
+    }
+  }
+  .info-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h3 {
+      font-size: 18px;
+      font-family: "poppins-regular";
+      font-weight: 500;
+      color: #313450;
+      margin-bottom: 5px;
+    }
+    p {
+      margin-bottom: 0;
+      font-size: 12px;
+      font-family: "poppins-regular";
+      color: #898a8f;
+      line-height: 1.5;
+      width: 60%;
+    }
+    .info-arrow {
+      display: flex;
+    }
+  }
+  .patient-documents {
+    p {
+      width: 100%;
+    }
+  }
+  .icon-add {
+    display: flex;
+    flex-direction: row;
+    padding-top: 5px;
+    margin-right: 5px;
+    .path1,
+    .path2 {
+      font-family: "icomoon" !important;
+      display: inline-flex;
+      &::before {
+        font-size: 46px;
+      }
+    }
+  }
+  .info-box--info {
+    margin-bottom: 50px;
+  }
+}
+.list-container {
+  .generic-card--appointment {
+    padding: 0 20px 0 0;
+  }
+}
+.not-visable {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: -10;
+}
+.appointments-details {
+  padding: 20px 28px;
+
+  .welcome-card__btns {
+    justify-content: flex-end;
+    &.current-prescription {
+      justify-content: space-between;
+    }
+
+    .custom-btn--print {
+      min-width: 165px;
+    }
+  }
+  .appointments-details__title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 15px;
+    &::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 1px;
+      background-color: #d6d6d6;
+      position: absolute;
+      bottom: 0;
+    }
+    .icon-phone {
+      &::before {
+        font-size: 20px;
+      }
+    }
+    .phone {
+      font-size: 14px;
+      font-family: "poppins-regular";
+      color: #313450;
+      line-height: 1.5;
+    }
+    .icon-qrcode {
+      &::before {
+        font-size: 43px;
+      }
+    }
+    .name {
+      margin-bottom: 5px;
+      position: relative;
+      &::before {
+        content: "";
+        width: 100%;
+        display: block;
+        height: 3px;
+        background-color: #97b2de;
+        bottom: -5.5px;
+        z-index: 99;
+        position: absolute;
+      }
+    }
+  }
+  p {
+    font-family: "poppins-regular";
+    font-size: 14px;
+    color: #313450;
+    line-height: 1.43;
+    margin-bottom: 5px;
+    span {
+      font-family: "poppins-regular";
+      font-size: 14px;
+      color: #313450;
+      line-height: 1.43;
+    }
+  }
+  .prescription-title--name {
+    margin-bottom: 0px;
+    color: #313450;
+  }
+  .appointments-doctor-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d6d6d6;
+    margin-bottom: 15px;
+  }
+
+  .doctor {
+    display: flex;
+    flex-direction: column;
+    .doctor-name,
+    .doctor-title,
+    .doctor-address {
+      color: #313450;
+      font-size: 14px;
+      font-family: "poppins-regular";
+    }
+  }
+  .connection {
+    display: flex;
+  }
+  .icon-tel-square {
+    margin-right: 10px;
+    .path1,
+    .path2 {
+      font-family: "icomoon" !important;
+      &::before {
+        font-size: 35px;
+      }
+    }
+  }
+  .icon-whatsapp-square {
+    &::before {
+      font-size: 35px;
+    }
+  }
+  .prescription-title {
+    margin-bottom: 5px;
+  }
+  .doctor-signature {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+    // position: absolute;
+    right: 15px;
+    bottom: 36px;
+    img {
+      max-width: 125px;
+      max-height: 50px;
+    }
+  }
+}
+.prescription-breadcrumb {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  .first {
+    cursor: pointer;
+  }
+  li {
+    font-family: "poppins-regular";
+    font-size: 16px;
+    line-height: 0.9;
+    color: #514ee5;
+    &:first-child {
+      color: #a8a8a8;
+      margin-right: 4px;
+    }
+  }
+}
+.prescription-list {
+  .generic-card--appointment {
+    padding: 20px 25px;
+    .icon-notes-medical {
+      margin-right: 15px;
+    }
+    .generic-style {
+      margin-top: 5px;
+    }
+    .row {
+      div {
+        &:first-child {
+          display: flex;
+          flex-direction: row;
+        }
+      }
+    }
+  }
+}
+.doctor-prescription {
+  padding: 0;
+  background-image: url(/assets/images/bg-rosh.jpeg);
+  background-position: bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.p-print {
+  font-size: 18px;
+}
+
+.no-top-radius {
+  border-radius: 0 0 40px 40px !important;
+}
+
+#print-container {
+  // padding: 40px 0 20px;
+  position: relative;
+  .prescription-print-body,
+  .prescription-print-details {
+    padding: 0 20px;
+  }
+
+  &::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 20px;
+    background-color: #514ee5;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .english-doctor-details {
+    position: relative;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    padding-top: 40px;
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 80%;
+      height: 1px;
+      background-color: #514ee5;
+      bottom: 0;
+    }
+  }
+  .doctor-prescription__date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: flex-end;
+    span {
+      font-size: 15px;
+    }
+    .date-word {
+      display: inline-block;
+      margin-left: 5px;
+      color: #787ba0;
+    }
+  }
+  .doctor-prescription__date__line {
+    display: inline-block;
+    width: 50%;
+    height: 1px;
+    background-color: #514ee5;
+    margin-left: 10px;
+  }
+  .doctor-prescription__pitent-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    span {
+      font-size: 16px;
+      display: inline-block;
+      margin-left: 7px;
+    }
+    .doctor-prescription__pitent-details__name,
+    .doctor-prescription__pitent-details__age {
+      display: flex;
+      span:last-child {
+        color: #787ba0;
+      }
+    }
+  }
+}
+.doctor-prescription {
+  .welcome-card__btns {
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+}
+
+.arabic-doctor-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.prescription-title--print {
+  font-size: 24px;
+  margin-bottom: 0;
+}
+.prescription-print-footer {
+  .clinic-phone {
+    /* width: 50%; */
+    /* height: 45px; */
+    border-top-right-radius: 15px;
+    /* background-image: linear-gradient(#619CFF, #48EBE7); */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 18px;
+    justify-content: space-between;
+    .phone-container {
+      display: flex;
+      width: 44%;
+      height: 43px;
+      background-image: linear-gradient(#6f6fe0, #514ee5);
+      justify-content: center;
+      align-items: center;
+      border-top-right-radius: 47px;
+    }
+    span {
+      color: white;
+    }
+    .doctor-signature {
+      display: flex;
+      /* justify-content: flex-end; */
+      margin-bottom: 15px;
+      margin-right: 15px;
+      /* right: 15px; */
+      /* bottom: 36px;*/
+    }
+  }
+  .clinic-address {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 10px 10px 38px;
+    background-image: linear-gradient(#6f6fe0, #514ee5);
+    span {
+      font-size: 16px;
+      color: white;
+      svg {
+        margin-right: 10px;
+      }
+    }
+  }
+  .icon-call {
+    margin-right: 8px;
+    &::before {
+      color: #fff;
+    }
+  }
+}
+
+.oberver-item {
+  min-height: 20px;
+  width: 100%;
+}
+
+// \e939
+
+.clinic-list__menu {
+  // max-width: 66%;
+
+  max-width: 470px;
+  margin: 0 25px;
+  overflow-x: scroll;
+
+  @include screen-xs {
+    margin: 0;
+  }
+}
+
+.doctor-code-modal {
+  .form-group .form-control {
+    padding: 15px 6px !important;
+  }
+}
+
+.error-feedback {
+  position: static !important;
+}
+
+.back-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  font-size: 17px;
+  margin: 20px 0 0 20px;
+
+  &__icon {
+    transform: rotate(180deg);
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &__text {
+    margin-left: 10px;
+  }
+}
+
+.no-result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+
+.appointment-list-padding {
+  padding: 20px;
+  .generic-card .generic-card-name {
+    min-width: unset;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+  }
+}
+
+
+// responsive style
+.list-container{
+  .generic-card.generic-card--appointment{
+    span{
+      @include screen-xs{
+        margin: 0;
+        width: auto;
+      }
+     
+    }
+    div[class*="col"]{
+      @include screen-xs{
+        display: flex;
+      justify-content: center;
+      }
+     
+    }
+    @include screen-xs {
+      padding-bottom:20px !important;
+      padding-right: 0 !important;
+      width: auto;
+    }
+  }
+}
+
+
+.upcoming-details{
+  .upcoming-details-personal__img{
+    img{
+      @include screen-sm{
+        max-width: 100%;
+      }
+    }
+  }
+
+  .upcoming-details-personal{
+    & > .row {
+      @include screen-400{
+        flex-direction: column;
+        align-items: center;
+      }
+
+      [class*="col-"]{
+        @include screen-400{
+         width: 100%;
+        }
+      }
+    }
+
+
+  }
+
+  .appointment-item{
+  
+
+    @include screen-xs{
+      flex-direction: column;
+      align-items: center;
+     }
+    span{
+      &:not([class*="payment"]){
+        @include screen-xs{
+          margin: 0;
+          width: 100%;
+          justify-content: center;
+          text-align: center;
+
+        }
+
+      }
+    }
+
+    .col-2{
+      img{
+        @include screen-xs{
+         margin-right: 0;
+        }
+      }
+    }
+
+
+    .col-4{
+      .generic-card-payment-type{
+        @include screen-xs{
+          justify-content: center;
+        }
+      }
+    }
+
+    div[class*="col"]{
+      @include screen-xs{
+        display: flex;
+        justify-content: center;
+        width: 100% !important;
+      }
+     
+    }
+    @include screen-xs {
+      padding-bottom:20px !important;
+      padding-right: 0 !important;
+      width: auto;
+    }
+  }
+
+
+}

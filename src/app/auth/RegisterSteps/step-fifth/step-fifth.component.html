@@ -1,0 +1,172 @@
+<div class="register-step-four register-step-five">
+  <form #f="ngForm" [formGroup]="doctorCode">
+    <div class="signature">
+      <div class="input-title input-title--subsection">
+        <h3>Doctor's Code</h3>
+      </div>
+    </div>
+    <div class="content">
+      <p class="first-paragraph">
+        Gives you full access to the app's feautures & both account & clinic
+        settings
+      </p>
+      <p class="second-paragraph">
+        Requires access code created by you & can be changed from your settings
+      </p>
+    </div>
+    <div class="doctor-code-inputs">
+      <div class="one code-input">
+        <input
+          class="form-control"
+          type="text"
+          name="codeOne"
+          id="codeOne"
+          #codeOne
+          formControlName="codeOne"
+          (change)="addNewItem(doctorCodeValue)"
+          placeholder="0"
+          maxlength="1"
+          autocomplete="off"
+          (keydown.space)="$event.preventDefault()"
+          appNextInput
+          (keydown)="allowOnlyNumber($event)"
+        />
+        <div
+          *ngIf="f.submitted || doctorCode?.controls?.codeOne?.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="doctorCode?.controls?.codeOne?.errors?.required">
+            required
+          </p>
+          <p *ngIf="doctorCode?.controls?.codeOne?.errors?.digit">
+            numbers only
+          </p>
+        </div>
+      </div>
+      <div class="two code-input">
+        <input
+          class="form-control"
+          type="text"
+          name="codeTwo"
+          id="codeTwo"
+          #codeTwo
+          formControlName="codeTwo"
+          (change)="addNewItem(doctorCodeValue)"
+          maxlength="1"
+          placeholder="0"
+          autocomplete="off"
+          (keydown.space)="$event.preventDefault()"
+          appNextInput
+          (keydown)="allowOnlyNumber($event)"
+        />
+
+        <div
+          *ngIf="f.submitted || doctorCode?.controls?.codeTwo?.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="doctorCode?.controls?.codeOne?.errors?.required">
+            required
+          </p>
+
+          <p *ngIf="doctorCode?.controls?.codeTwo?.errors?.digit">
+            numbers only
+          </p>
+        </div>
+      </div>
+      <div class="three code-input">
+        <input
+          class="form-control"
+          type="text"
+          name="codeThree"
+          id="codeThree"
+          #codeThree
+          formControlName="codeThree"
+          (change)="addNewItem(doctorCodeValue)"
+          placeholder="0"
+          maxlength="1"
+          autocomplete="off"
+          (keydown.space)="$event.preventDefault()"
+          appNextInput
+          (keydown)="allowOnlyNumber($event)"
+        />
+
+        <div
+          *ngIf="f.submitted || doctorCode?.controls?.codeThree?.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="doctorCode?.controls?.codeOne?.errors?.required">
+            required
+          </p>
+          <p *ngIf="doctorCode?.controls?.codeThree?.errors?.digit">
+            numbers only
+          </p>
+        </div>
+      </div>
+      <div class="four code-input">
+        <input
+          class="form-control"
+          type="text"
+          name="codeFour"
+          id="codeFour"
+          #codeFour
+          (change)="addNewItem(doctorCodeValue)"
+          formControlName="codeFour"
+          placeholder="0"
+          maxlength="1"
+          autocomplete="off"
+          (keydown.space)="$event.preventDefault()"
+          appNextInput
+          (keydown)="allowOnlyNumber($event)"
+        />
+
+        <div
+          *ngIf="f.submitted || doctorCode?.controls?.codeFour?.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="doctorCode?.controls?.codeOne?.errors?.required">
+            required
+          </p>
+          <p *ngIf="doctorCode?.controls?.codeFour?.errors?.digit">
+            numbers only
+          </p>
+        </div>
+      </div>
+
+      <ng-template *ngIf="doctorCode.errors">
+        <div
+          *ngIf="
+            f.submitted ||
+            doctorCode.controls.codeOne.touched ||
+            doctorCode.controls.codeTwo.touched ||
+            doctorCode.controls.codeThree.touched ||
+            doctorCode.controls.codeFour.touched
+          "
+          class="error-feedback"
+        >
+          <p
+            *ngIf="
+              doctorCode?.controls?.codeOne?.errors?.required ||
+              doctorCode?.controls?.codeTwo?.errors?.required ||
+              doctorCode?.controls?.codeThree?.errors?.required ||
+              doctorCode?.controls?.codeFour?.errors?.required
+            "
+          >
+            required
+          </p>
+          <p
+            *ngIf="
+              doctorCode.controls.codeOne.errors?.required == undefined &&
+              doctorCode.controls.codecodeTwoOne.errors?.required ==
+                undefined &&
+              doctorCode.controls.codeThree.errors?.required == undefined &&
+              doctorCode.controls.codeFour.errors?.required == undefined &&
+              doctorCode?.controls?.codeOne?.errors?.whitespace
+            "
+          >
+            Please remove space and edit number
+          </p>
+        </div>
+      </ng-template>
+    </div>
+  </form>
+</div>

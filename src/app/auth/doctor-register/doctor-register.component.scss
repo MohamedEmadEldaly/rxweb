@@ -1,0 +1,206 @@
+@import "../../../assets/scss/Abstract/variables";
+@import "../../../assets/scss/Abstract/mixins";
+
+app-doctor-register {
+  display: block;
+  margin-bottom: 35px;
+  height: 100%;
+}
+.doctor-register-wizard {
+  height: 97%;
+  padding: 60px 66px 40px;
+
+
+  @include screen-xs {
+    padding: 60px 25px 55px  25px;
+    margin: 0;
+  }
+
+
+  position: relative;
+  .loader {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    align-items: center;
+    top: 0;
+    border-radius: 37px;
+    // opacity: 0.1;
+    z-index: 9999;
+    // background: #000;
+    &::before {
+      content: "";
+      display: flex;
+      width: 100%;
+      position: absolute;
+      height: 100%;
+      background: white;
+      z-index: 2;
+      opacity: 0.4;
+    }
+    img {
+      height: 75px;
+    }
+  }
+  .form-group {
+    .form-control {
+      padding: 20px 20px 15px 20px;
+    }
+  }
+}
+.k-step-list {
+  list-style: none;
+  padding: 0;
+  .k-step {
+    display: inline-block;
+    margin-right: 10px;
+    &.k-step-current {
+      .k-step-link {
+        color: $primary;
+        .k-step-indicator {
+          &::before {
+            border: 1px solid $primary;
+            background-color: $primary;
+          }
+        }
+      }
+    }
+    &.k-step-done {
+      .k-step-link {
+        color: $primary;
+
+        &::before {
+          background-color: $primary;
+        }
+
+        .k-step-indicator {
+          &::before {
+            border: 1px solid $primary;
+            background-color: $primary;
+          }
+          &::after {
+            font-family: "icomoon" !important;
+            color: #fff;
+            content: "\e907";
+            position: absolute;
+            font-size: 12px;
+            width: auto;
+            height: auto;
+            right: -6.5px;
+          }
+        }
+      }
+    }
+    &:last-child {
+      margin-right: 0;
+      .k-step-link {
+        &::before {
+          content: unset;
+        }
+      }
+    }
+    .k-step-link {
+      text-decoration: unset;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: "poppins-regular";
+      font-size: 14px;
+      @include screen-xs {
+        font-size: 10px;
+        text-align: center;
+      }
+      color: #898a8f;
+      line-height: 1.5;
+      transition: all 0.5s ease;
+      position: relative;
+      &::before {
+        content: "";
+        display: block;
+        width: 110%;
+        height: 1px;
+        position: absolute;
+        background-color: #898a8f;
+        left: calc(50% + 9px);
+        top: 8.5px;
+        transition: all 0.5s ease;
+      }
+
+      .k-step-indicator {
+        display: block;
+        position: relative;
+        margin-bottom: 20px;
+        &::before {
+          content: "";
+          display: block;
+          width: 17px;
+          height: 17px;
+          border-radius: 50%;
+          border: 1px solid #898a8f;
+          position: absolute;
+          top: 0;
+          right: calc(50% - 9px);
+          transition: all 0.5s ease;
+          background: #f6f6f6;
+          // z-index: 999;
+        }
+        .k-step-indicator-text {
+          display: none;
+        }
+      }
+    }
+    &[data-kendo-stepper-index="3"] {
+      .k-step-link {
+        &::before {
+          width: 115%;
+        }
+      }
+    }
+  }
+}
+.k-stepper {
+  align-self: center;
+  width: 105%;
+  margin: 0 auto;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 27px;
+  .k-step-list {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 0;
+  }
+}
+.k-button.prev {
+  margin-right: 16px;
+  border: 0;
+  background: transparent;
+  height: fit-content;
+  position: absolute;
+  top: 60px;
+  left: 60px;
+
+  @include screen-xs {
+    display: none;
+  }
+  .icon-dropdown-circle {
+    &:before {
+      font-size: 31px;
+    }
+  }
+}
+.k-form-buttons {
+  .welcome-card__btns__signup {
+    // min-width: 145px;
+    // position: absolute;
+    // top: 265px;
+    // left: calc(50% - 72.5px);
+    margin-left: 20px;
+  }
+}

@@ -1,0 +1,390 @@
+@import "./../../../assets/scss/Abstract/variables";
+@import "./../../../assets/scss/Abstract/mixins";
+
+
+
+.mobile-navbar{
+  display: none;
+  padding: 20px 15px;
+
+  @include screen-1200 {
+    display: block;
+  }
+  &__btn{
+    border: none;
+    background: #514ee5;
+    color: #FFF;
+    border-radius: 3px;
+    padding: 5px 10pxs;
+  }
+}
+
+.sidenav {
+  min-height: 100vh;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: $primary;
+  overflow-x: hidden;
+  padding: 40px 0 30px 0px;
+  border-top-right-radius: 50px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+
+  transition: transform .3s ease-in-out;
+
+  @include screen-1200 {
+    transform: translateX(-100%);
+  }
+
+
+
+  .sidenav-menu__logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 55px;
+  }
+
+  .sidenav-menu {
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+    &::-webkit-scrollbar-track {
+      background: #7876d3;
+      visibility: hidden;
+    }
+
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        visibility: visible;
+      }
+      &::-webkit-scrollbar-track {
+        visibility: visible;
+      }
+    }
+  }
+
+  .sidenav-item {
+    font-size: 16px;
+    font-family: "poppins-regular";
+    font-weight: normal;
+    line-height: 1.56;
+    color: #fff;
+    display: flex;
+    text-decoration: none;
+    cursor: pointer;
+    align-items: center;
+    margin-bottom: 50px;
+    transition: all 0.5s ease;
+    margin-left: 25px;
+    [class^="icon-"],
+    [class*=" icon-"] {
+      &::before {
+        color: #fff;
+        font-size: 23px;
+        transition: all 0.5s ease;
+      }
+    }
+
+    .consult-icon {
+      svg {
+        height: 20px;
+        width: 20px;
+        fill: #fff;
+        stroke: #fff;
+        &.larger {
+          height: 24px;
+          width: 24px;
+        }
+      }
+    }
+    .sidenav-item__word {
+      display: flex;
+      margin-left: 5px;
+      margin-top: 4px;
+      transition: all 0.5s ease;
+    }
+    &.active {
+      background: #fff;
+      border-top-left-radius: 22px;
+      border-bottom-left-radius: 22px;
+      padding: 11px 0 11px 12px;
+      margin-left: 13px;
+
+      .consult-icon {
+        svg {
+          fill: #514ee5;
+          stroke: #514ee5;
+        }
+      }
+
+      .sidenav-item__word {
+        color: $primary;
+      }
+      [class^="icon-"],
+      [class*=" icon-"] {
+        &::before {
+          color: $primary;
+        }
+      }
+    }
+  }
+  .sidenav-logout {
+    display: flex;
+    flex-direction: row;
+    margin-left: 25px;
+    a {
+      text-decoration: none;
+      margin-bottom: 0;
+      display: flex;
+      cursor: pointer;
+    }
+    .icon-logout:before {
+      font-size: 24px;
+    }
+    .sidenav-logout {
+      font-size: 16px;
+      font-family: "poppins-regular";
+      font-weight: normal;
+      line-height: 1.56;
+      color: #fff;
+      margin-left: 5px;
+    }
+  }
+}
+
+.doctor-code-modal {
+  .form-group .form-control {
+    padding: 10px 5px;
+    &.ng-invalid.ng-touched {
+      margin-bottom: 20px !important;
+    }
+    &.ng-invalid.ng-touched {
+      &:focus {
+        border-bottom: 1px solid #ff748e !important;
+      }
+    }
+    &:focus {
+      border-bottom: solid 1px #514ee5 !important;
+    }
+  }
+}
+
+// .sidenav a {
+//   padding: 6px 8px 6px 16px;
+//   text-decoration: none;
+//   font-size: 25px;
+//   color: #818181;
+// }
+
+// .sidenav a:hover {
+//   color: #f1f1f1;
+// }
+.doctor-assistant {
+  a {
+    cursor: pointer;
+    span:last-child {
+      text-decoration: none;
+      font-size: 16px;
+      font-family: "poppins-regular";
+      font-weight: normal;
+      line-height: 1.56;
+      color: #333348;
+    }
+  }
+  .icon-logout {
+    margin-right: 5px;
+    &::before {
+      color: #a59c9c;
+    }
+  }
+}
+.sidebar-overlay{
+  
+
+
+  transition: opacity .3s ease-in-out;
+
+  &.active{
+    visibility: visible;
+    opacity: 1;
+
+
+    .sidenav{
+      transform: translateX(0);
+    }
+  }
+
+  @include screen-1200{
+    background-color: rgba(0,0,0,.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 11;
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+.main {
+  width: calc(100% - 190px);
+  flex-direction: row;
+  font-size: 28px;
+  padding: 40px 10px 15px 20px;
+  margin: 0 0 0 190px;
+  height: 100%;
+
+  transition: margin .3s ease-in-out;
+
+  @include screen-1200 {
+    width: 100%;
+    margin: 0;
+    padding:0;
+  }
+
+  > .row {
+    margin: 0;
+    padding: 0;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    position: relative;
+
+    .header-title__brief {
+      font-size: 16px;
+      font-family: "poppins-regular";
+      color: #a8a8a8;
+      margin-bottom: 0;
+    }
+
+    .header-search {
+      width: 47%;
+      input {
+        padding: 12px 15px;
+        border-radius: 5px;
+        box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
+        border: 0;
+        &:focus-visible {
+          outline: 0;
+        }
+        &:focus {
+          box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
+          border: 0;
+        }
+      }
+      .icon-search {
+        position: absolute;
+        right: 15px;
+        top: 17px;
+        &::before {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+  .main-content__details {
+    background-color: #fff;
+    margin: 0 0 20px 0;
+  }
+  .main-content__items {
+  }
+}
+.main-content__items__card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.16);
+  display: flex;
+  align-items: center;
+  max-height: 80px;
+  margin-bottom: 20px;
+  .main-content__items__card__name,
+  .main-content__items__card__payment-type {
+    color: #313450;
+    font-size: 18px;
+    line-height: 15;
+  }
+  .main-content__items__card__name {
+    color: #313450;
+    margin: 0 30px 0 40px;
+  }
+  .main-content__items__card__payment-type {
+    font-style: italic;
+  }
+  .main-content__items__card__type,
+  .main-content__items__card__fees {
+    font-size: 16px;
+    line-height: 1.56;
+  }
+  .main-content__items__card__fees {
+    color: #514ee5;
+    font-weight: 500;
+    margin: 0 115px 0 60px;
+  }
+  .main-content__items__card__type {
+    color: #3082cc;
+    font-weight: 300;
+  }
+}
+body {
+  background-color: #f9f9f9;
+}
+.profile {
+  .profile__item {
+    display: flex;
+    justify-content: center;
+    padding: 15.8px;
+    width: 73%;
+    margin: 0 auto 20px;
+    .main-content__items__card__header {
+      margin-bottom: 0;
+    }
+  }
+}
+.main-content__details {
+  padding: 20px 30px;
+  .main-content__details__image {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+  }
+}
+.details__item {
+  label {
+    font-size: 18px;
+    font-family: "poppins-regular";
+    color: #514ee5;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  // div {
+  //   // width: 100%;
+  // }
+  .form-control {
+    border: 0;
+    border-bottom: 1px solid #d6d6d6;
+    padding: 5px 0;
+    &:focus {
+      box-shadow: unset;
+    }
+  }
+}
+.main-content__details {
+  > div {
+    width: 100%;
+  }
+}
+.Perscription-side-menu {
+  display: none !important;
+}
+
+
+.overflow-hidden-m{
+  overflow: hidden;
+}

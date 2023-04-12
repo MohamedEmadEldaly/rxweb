@@ -1,0 +1,475 @@
+@import "../../../assets/scss/Abstract/mixins.scss";
+.row {
+  margin: 0;
+  padding: 0;
+}
+
+agm-map {
+  display: block;
+  margin: 20px 0;
+  height: 200px;
+}
+
+body {
+  background-color: #f9f9f9;
+}
+.profile-page {
+  .upload-image-container__icon {
+    justify-content: center;
+    margin-bottom: 15px;
+    cursor: pointer;
+  }
+  .generic-switch-btn {
+    .switch {
+      .slider {
+        &::before {
+          left: -1px;
+        }
+      }
+    }
+  }
+  .session-fees {
+    > div {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  .welcome-card__btns {
+    .custom-btn {
+      min-width: 180px;
+      padding: 8px 10px;
+    }
+  }
+  .welcome-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .appointments-img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .main-content__items__card {
+    transition: all 0.4s ease;
+    &.active {
+      border: 1px solid #514ee5;
+    }
+  }
+  .profile__item {
+    cursor: pointer;
+  }
+  .genric-card {
+    &.doctor-info {
+      padding: 20px 30px;
+      .main-content__details__image {
+        margin-bottom: 30px;
+      }
+    }
+  }
+
+  .main-content__details__image {
+    margin-bottom: 15px;
+    img {
+      max-height: 150px;
+    }
+  }
+  .main-content__details.personal-info {
+    padding-top: 20px;
+    margin: 0;
+  }
+
+  .consulto-details {
+    .generic-switch-btn {
+      pointer-events: none;
+    }
+  }
+}
+.details__item {
+  margin-bottom: 70px;
+  position: relative;
+  label {
+    font-size: 18px;
+    font-family: "poppins-regular";
+    color: #514ee5;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .header-underline {
+    position: relative;
+    margin-top: 7px;
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 1px;
+      border-bottom: solid 1px #d6d6d6;
+      top: -5px;
+    }
+  }
+  // div {
+  //   // width: 100%;
+  // }
+  .form-control {
+    border: 0;
+    border-bottom: 1px solid #d6d6d6;
+    padding: 5px 0;
+    &:focus {
+      box-shadow: unset;
+    }
+  }
+}
+.btns {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  .icon {
+    display: flex;
+  }
+  .icon-add-blue {
+    .path1,
+    .path2 {
+      font-family: "icomoon" !important;
+      &::before {
+        font-size: 52px;
+      }
+    }
+  }
+  .custom-btn {
+    padding: 6px 13px;
+    min-width: 180px;
+  }
+}
+.clinic-info {
+  .custom-select {
+    background-color: #f2f2f3;
+    border-radius: 5px;
+    #pet-select {
+      background-color: #f2f2f3;
+      border-radius: 5px;
+      border-bottom: none;
+      padding: 10px;
+    }
+  }
+
+  .details__item {
+    margin-bottom: 0;
+    .arrow {
+      position: relative;
+      &::before {
+        content: "\e939";
+        display: inline-block;
+        position: absolute;
+        top: 9px;
+        font-size: 16px;
+        height: auto;
+        right: 10px;
+        font-family: "icomoon" !important;
+        pointer-events: none;
+      }
+    }
+  }
+}
+.input-section {
+  border: solid 1px #d6d6d6;
+  border-radius: 9px;
+}
+.edit-info {
+  .availability__details {
+    flex-direction: column;
+    justify-content: initial;
+    .availability__details {
+      justify-content: initial;
+      flex-direction: row;
+      width: 100%;
+    }
+    .availability__details__to {
+      flex-direction: row;
+    }
+    .availability__details__from {
+      margin-right: 35px;
+    }
+    .input-title--subsection {
+      flex-direction: row;
+      align-items: center;
+      width: 34%;
+    }
+    .availability__details__from {
+      width: 38%;
+    }
+    .form-group {
+      margin-bottom: 0;
+    }
+    h3 {
+      margin-right: 22px;
+    }
+    .availability__details__days {
+      width: 100%;
+      > .input-title {
+        width: 100%;
+      }
+    }
+  }
+  .section-fees {
+    margin-bottom: 30px;
+    .section-fees__details {
+      flex-direction: column;
+      .section-fees__details__currency {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        > .custom-select {
+          width: 35%;
+          margin-bottom: 0;
+        }
+        h3 {
+          margin-bottom: 0;
+        }
+      }
+    }
+    .section-fees__details__fees {
+      width: 100%;
+      .form-group {
+        margin-bottom: 5px;
+      }
+      .form-control {
+        padding: 0 !important;
+      }
+    }
+  }
+  .welcome-card__btns {
+    .custom-btn {
+      min-width: 180px;
+      padding: 8px 10px;
+    }
+  }
+}
+.consulto-info {
+  .time {
+    margin-bottom: 8px;
+  }
+  .days {
+    display: flex;
+    margin-bottom: 8px;
+  }
+  .session-fees {
+    .regular {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+  .consulto-info__avail-fees {
+    margin-bottom: 55px;
+  }
+}
+.signature-info {
+  .main-content__details__image {
+    margin-bottom: 45px;
+  }
+  .Form-group-wrapper {
+    margin-bottom: 50px;
+  }
+  .details__item {
+    label {
+      margin-bottom: 20px;
+    }
+  }
+}
+.contact-us {
+  padding-top: 50px;
+  .contact-box {
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 6px 0 rgb(0 0 0 / 16%);
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    .massages-wrapper {
+      position: relative;
+      min-height: 200px;
+      form {
+        height: 100%;
+      }
+      .icon-message {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+      }
+    }
+    &.Message {
+      padding: 0;
+      textarea {
+        border: 0;
+        padding: 4px 35px;
+        font-size: 18px;
+        font-family: "poppins-regular";
+        color: #313450;
+        width: 100%;
+        height: 100%;
+        &:focus-visible {
+          outline: 0;
+        }
+      }
+    }
+
+    .heaser,
+    span {
+      font-family: "poppins-regular";
+      color: #313450;
+    }
+    .heaser {
+      font-size: 18px;
+      position: relative;
+      margin-bottom: 25px;
+      &::before {
+        content: "";
+        width: 100%;
+        position: absolute;
+        height: 1px;
+        background-color: #d6d6d6;
+        bottom: -15px;
+      }
+    }
+    span {
+      font-size: 16px;
+    }
+  }
+  .welcome-card__btns {
+    transition: all 0.4s ease;
+    &:not(.active) {
+      button {
+        background-color: #d6d6d6;
+        color: #898a8f;
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+.doctor-code-inputs {
+  .form-control.ng-invalid.ng-touched {
+    margin-bottom: 20px !important;
+  }
+  .error-feedback {
+    bottom: -10px;
+  }
+}
+
+.phone-modal {
+  .error-feedback {
+    position: static;
+  }
+}
+
+.doctor-code-modal {
+  .form-group .form-control {
+    padding: 10px 5px;
+    &.ng-invalid.ng-touched {
+      margin-bottom: 20px !important;
+    }
+    &.ng-invalid.ng-touched {
+      &:focus {
+        border-bottom: 1px solid #ff748e !important;
+      }
+    }
+    &:focus {
+      border-bottom: solid 1px #514ee5 !important;
+    }
+  }
+}
+
+.form-group.custom-select {
+  position: relative;
+  .error-feedback {
+    bottom: -15px;
+  }
+}
+
+.error-feedback {
+  position: static;
+}
+
+.Form-group-wrapper.password {
+  .error-feedback {
+    position: absolute;
+  }
+}
+
+.time__from{
+  flex-direction: column;
+  width: 80px;
+}
+
+
+.profile{
+  @include screen-sm{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .profile__item{
+    @include screen-sm{
+      margin: 0;
+      margin-right: 8px;
+      width: auto;
+      padding: 5px 10px;
+      align-items: center;
+      border-radius: 25px;
+      min-height: 33px;
+      margin-bottom: 10px;
+    }
+    .icon-logout{
+
+      @include screen-sm{
+          margin-right: 5px;
+          display: flex;
+          align-items: center;
+          padding: 5px;
+      }
+      &::before{
+        @include screen-sm{
+          font-size: 13px;
+        }
+      }
+    }
+    .main-content__items__card__header{
+      @include screen-sm{
+        font-size: 12px;
+      }
+    }
+  }
+  
+}
+
+.appointments-img{
+  img{
+    @include screen-sm{
+      max-width: 100%;
+    }
+  }
+}
+
+
+.time > div{
+  @include screen-450{
+    margin-right: 10px;
+  }
+}
+
+.consulto-info .days{
+  @include screen-450 {
+    display: block;
+  }
+}
+
+.main-content__details {
+  @include screen-450{
+    padding: 15px;
+  }
+}

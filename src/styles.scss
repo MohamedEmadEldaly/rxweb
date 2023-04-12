@@ -1,0 +1,338 @@
+@import "assets/scss/Abstract/mixins";
+
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~ngx-owl-carousel-o/lib/styles/scss/owl.carousel";
+@import "~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default";
+@import "./assets/scss/Abstract/variables";
+@import "./assets/scss/GenericComponents/custom-card.scss";
+@import "./assets/scss/GenericComponents/custom-btn.scss";
+@import "./assets/scss/GenericComponents/generic.scss";
+@import "./assets/css/iconmoon.css";
+@import "~swiper/swiper-bundle";
+/* Mandatory */
+@import "~ng-wizard/themes/ng_wizard.min.css";
+
+/* Optional */
+/* If a theme other than default is used, the css file for that theme is required. */
+@import "~ng-wizard/themes/ng_wizard_theme_arrows.min.css";
+@import "~ng-wizard/themes/ng_wizard_theme_circles.min.css";
+@import "~ng-wizard/themes/ng_wizard_theme_dots.min.css";
+
+@font-face {
+  font-family: "poppins-regular";
+  src: url("./assets/Fonts/Poppins/Poppins-Regular.eot");
+  /* IE9 Compat Modes */
+  src: url("./assets/Fonts/Poppins/Poppins-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("./assets/Fonts/Poppins/Poppins-Regular.woff") format("woff"),
+    url("./assets/Fonts/Poppins/Poppins-Regular.ttf") format("truetype"),
+    url("./assets/Fonts/Poppins/Poppins-Regular.woff2") format("svg");
+  /* Legacy iOS */
+}
+
+* {
+  font-family: "poppins-regular";
+}
+.main-container {
+  width: calc(100% - 40px);
+  margin: 0 auto;
+}
+
+.welcome-slider {
+  .owl-theme {
+    .owl-dots {
+      margin-top: 0 !important;
+    }
+  }
+  .owl-theme .owl-dots .owl-dot span {
+    width: 20px;
+    height: 20px;
+    max-width: 0 7px;
+    background-color: #a8a8a8;
+  }
+  .owl-theme .owl-dots .owl-dot.active span,
+  .owl-theme .owl-dots .owl-dot:hover span {
+    background-color: $primary;
+  }
+}
+
+.example {
+  display: table;
+  margin: auto;
+  width: 450px;
+}
+.k-stepper {
+  align-self: center;
+}
+.k-step {
+  pointer-events: none;
+}
+.k-button.prev {
+  margin-right: 16px;
+}
+.k-form-separator {
+  margin-top: 40px;
+}
+.k-buttons-end {
+  justify-content: space-between;
+  align-content: center;
+}
+.page {
+  align-self: center;
+}
+
+textarea {
+  resize: none;
+}
+
+@media print {
+  // *:not(.print-view-container),
+  // *:not(.print-view-container *) {
+  //   display: none;
+  // }
+}
+
+@media print {
+  html,
+  body {
+    width: 210mm;
+    height: 297mm;
+  }
+
+  .back-btn {
+    display: none !important;
+  }
+
+  .sidenav {
+    display: none !important;
+  }
+  .main.main-content {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+  .main-content__list {
+    display: none !important;
+  }
+  .list {
+    display: none !important;
+  }
+  .custom-btn {
+    display: none !important;
+  }
+
+  * {
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact !important; /* Chrome, Safari, Edge */
+    color-adjust: exact !important; /*Firefox*/
+  }
+
+  .doctor-prescription {
+  }
+
+  #print-container {
+    padding: 0 2mm !important;
+    width: 206mm;
+    height: 286mm;
+    #print-container .english-doctor-details::before {
+      display: block !important;
+    }
+
+    .clinic-address {
+      padding: 10px 20px !important;
+    }
+
+    &::before {
+      display: none !important;
+    }
+
+    .english-doctor-details::before {
+      width: 150px !important;
+      bottom: -20px !important;
+    }
+
+    .prescription-print-footer {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      .clinic-phone .phone-container {
+        width: auto !important;
+        margin: 0 !important;
+        border-top-right-radius: 47px !important;
+        padding: 0 40px 0 20px !important;
+      }
+    }
+    position: relative;
+    .prescription-print-body,
+    .prescription-print-details {
+      padding: 0 20px;
+    }
+
+    &::before {
+      content: "";
+      display: block;
+      width: 97%;
+      height: 20px;
+      background-color: #4842e6;
+      position: absolute;
+      top: 0px;
+      left: 1.5%;
+      border-top-left-radius: 45px;
+      border-top-right-radius: 45px;
+    }
+    .english-doctor-details {
+      position: relative;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      padding-top: 40px;
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 80%;
+        height: 5px;
+        background-color: #4842e6;
+        bottom: 0;
+      }
+    }
+    .doctor-prescription__date {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      justify-content: flex-end;
+      span {
+        font-size: 15px;
+      }
+      .date-word {
+        display: inline-block;
+        margin-left: 5px;
+        color: #787ba0;
+      }
+    }
+    .doctor-prescription__date__line {
+      display: inline-block;
+      width: 50%;
+      height: 5px;
+      background-color: #4842e6;
+      margin-left: 10px;
+    }
+    .doctor-prescription__pitent-details {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      span {
+        font-size: 16px;
+        display: inline-block;
+        margin-left: 7px;
+      }
+      .doctor-prescription__pitent-details__name,
+      .doctor-prescription__pitent-details__age {
+        display: flex;
+        span:last-child {
+          color: #787ba0;
+        }
+      }
+    }
+  }
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+/* Handle Scroll style
+==============================*/
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #514ee5;
+  transition: all 0.3s ease-in-out;
+  border-radius: 4px;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #514ee5;
+  cursor: pointer;
+}
+.sm-scroll {
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+}
+.inner-scroll {
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.51);
+  }
+}
+
+
+
+.checkbox {
+  display: inline-flex;
+  cursor: pointer;
+  position: relative;
+}
+
+.checkbox > span {
+  color: #34495e;
+  padding: 0.5rem 0.25rem;
+  transition: all 0.5s ease;
+}
+
+.checkbox > input {
+  height: 25px;
+  width: 25px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border: 1px solid #34495e;
+  border-radius: 4px;
+  outline: none;
+  transition-duration: 0.3s;
+  background-color: #514ee5;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.checkbox > input:checked {
+  border: 1px solid #514ee5;
+  background-color: #34495e;
+}
+
+.checkbox > input:checked + span::before {
+  content: "\e900";
+  font-family: "icomoon" !important;
+  display: block;
+  text-align: center;
+  color: #514ee5;
+  position: absolute;
+  left: -4px;
+  top: 2px;
+  font-size: 25px;
+}
+
+.checkbox > input:active {
+  border: 2px solid #34495e;
+}
+
+
+
+.appointmentday{
+  font-size: 17px;
+    color: #656565;
+}

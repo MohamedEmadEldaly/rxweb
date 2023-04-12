@@ -1,0 +1,68 @@
+@import '../../../../assets/scss/Abstract/variables';
+#specialty {
+  width: 100%;
+  padding: 17px;
+  border-color: #d6d6d6;
+  font-size: 18px;
+  font-family: 'poppins-regular';
+  line-height: 1.5;
+  color: #898a8f;
+  white-space: normal;
+  option {
+  white-space: normal;
+
+  }
+  &:focus-visible {
+    outline: unset;
+  }
+  option {
+   border-color: #d6d6d6;
+   font-family: 'poppins-regular';
+   padding: 5px;
+
+  }
+
+}
+.custom-select {
+  color: #898a8f;
+
+  &:focus-visible {
+    outline: unset;
+  }
+  option {
+    border-color: #d6d6d6;
+    font-family: 'poppins-regular';
+    padding: 5px;
+
+   }
+}
+.consolto-participate {
+  margin-bottom: 40px;
+
+}
+.register-step-one {
+  .upload-image-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    .upload-image-container__image {
+      width: 100px;
+      height: 95px;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 15px;
+      padding: 5px;
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+
+  }
+
+}
+
+

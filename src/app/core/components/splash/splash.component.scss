@@ -1,0 +1,32 @@
+:host {
+  #splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+    z-index: 2026;
+    background-image: url("/assets/images/splash.png");
+    background-size: cover;
+    background-position: center;
+
+    &__logo {
+      width: 400px;
+      height: 400px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  #splash-screen__logo {
+    width: 250px;
+    height: 250px;
+  }
+}

@@ -1,0 +1,44 @@
+<div class="register-step-four">
+  <form #f="ngForm" [formGroup]="signature">
+    <div class="signature">
+      <div class="input-title input-title--subsection">
+        <h3>Your Signature</h3>
+      </div>
+      <div class="signature--upload__image Form-group-wrapper">
+        <div class="signature--upload" (click)="signatureImage.click()">
+          <img
+            #image
+            src="../../../../assets/images/signature-image.png"
+            alt=""
+            srcset=""
+          />
+        </div>
+        <input
+          class="form-control d-none"
+          type="file"
+          data-name="first_input"
+          name="firstInput"
+          id="signatureIamge"
+          #signatureImage
+          accept="image/*"
+          (change)="fileChange($event); addNewItem(stepFourObject)"
+          formControlName="signatureImage"
+        />
+        <div
+          *ngIf="f.submitted || signature.controls.signatureImage.touched"
+          class="error-feedback"
+        >
+          <p *ngIf="signature?.controls?.signatureImage?.errors?.required">
+            This Field is required
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="signature-brief generic-style">
+      <p>
+        The previous inputs contain important information by e-signing you agree
+        by electronic signature to ourterms and conditions for RX Company.
+      </p>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,151 @@
+<div class="appointments-page">
+  <div class="row">
+    <div class="col-lg-7 list">
+      <div class="main-content__list">
+        <div class="header">
+          <div class="header-title">
+            <h3 class="main-title">Notifications</h3>
+            <p class="header-title__brief">
+              Check Your Most Recent Notifications
+            </p>
+          </div>
+          <!-- <div class="header-search">
+                <form>
+                  <input type="" #searchInput class="form-control search-input" placeholder="Search" name=""
+                    id="search" />
+                  <span class="icon-search"></span> (click)="searchPatientNumber()"
+                </form>
+              </div>
+              -->
+        </div>
+        <div class="list-container" [ngClass]="noDataFound ? 'not-found' : ''">
+          <div
+            class="generic-card generic-card--appointment"
+            *ngFor="let notification of notificationList; let i = index"
+          >
+            <div class="row">
+              <div class="col-sm-2 col-3">
+                <img src="../../../assets/images/patient-image.png" alt="" />
+                <!--<img
+                  src="../../../assets/images/femal-image.png"
+                  alt=""
+                  *ngIf="notification?.patient.gender != 'Male'"
+                /> -->
+              </div>
+              <div class="col-sm-6 col-9">
+                <!-- <span class=" generic-style name">"{{notification.patient.name}}" </span> -->
+                <span class="generic-style">{{ notification.en_body }}</span>
+                <!-- <span class="generic-card-type generic-style"
+                      [ngClass]="appointmentTypeClass(notification.appointment.type)">{{appointmentType(notification.appointment.type)}}</span> -->
+              </div>
+              <!-- <div class="col-2">
+                      <span class="generic-card-type generic-style ">{{notification.appointment.date}}</span>
+                  </div> -->
+              <!--   <div class="col-2 delete">
+                     <span class="icon-delete  " ></span>    (click)="deleteAppointment($event, i)"
+                  </div>-->
+            </div>
+          </div>
+          <app-loader *ngIf="isLoaderShow"></app-loader>
+          <div class="oberver-item"></div>
+
+          <app-not-found *ngIf="noDataFound == true"></app-not-found>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5 details">
+      <div
+        class="main-content__details details genric-card patient-details"
+        [ngClass]="upcomingDetails == true ? 'notificationDetails' : ''"
+      >
+        <div class="appointments-img" *ngIf="welcomeImage == true">
+          <img src="../../../assets/images/appiontment-image.png" alt="" />
+        </div>
+        <div class="upcoming-details" *ngIf="upcomingDetails == true">
+          <div class="upcoming-details-personal">
+            <div class="row">
+              <div class="col-3">
+                <div class="upcoming-details-personal__img">
+                  <img src="../../../assets/images/prfile-image.png" alt="" />
+                </div>
+              </div>
+              <div class="col-9">
+                <div class="upcoming-details-personal__info">
+                  <div
+                    class="upcoming-details-personal__info__item details-item"
+                  >
+                    <span class="info-style info-header">Name:</span>
+                    <span class="info-style">patient name</span>
+                  </div>
+                  <div
+                    class="upcoming-details-personal__info__item details-item"
+                  >
+                    <span class="info-style info-header">Age:</span>
+                    <span class="info-style">age</span>
+                  </div>
+                  <div
+                    class="upcoming-details-personal__info__item details-item"
+                  >
+                    <span class="info-style info-header">Mobile Number:</span>
+                    <span class="info-style">phone</span>
+                  </div>
+                  <div
+                    class="upcoming-details-personal__info__item details-item"
+                  >
+                    <span class="info-style info-header">Gender:</span>
+                    <span class="info-style">gender</span>
+                  </div>
+                </div>
+                <div class="upcoming-details-personal__msg">
+                  <button type="button">
+                    Message <span class="icon-messages"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              class="generic-card generic-card--appointment generic-card--info"
+            >
+              <div class="row">
+                <div class="col-4">
+                  <span class="generic-card-type generic-style">fees_type</span>
+                </div>
+                <div class="col-4">
+                  <span class="generic-card-payment-type generic-style">
+                    <span class="icon-visa payment-icon"></span>
+                    cash
+                  </span>
+                </div>
+                <div class="col-4">
+                  <span class="generic-card-type generic-style home-visit">
+                    10th April,2021</span
+                  >
+                </div>
+              </div>
+            </div>
+            <a
+              class="
+                generic-card generic-card--appointment
+                prescription
+                info-box
+                generic-card--info
+              "
+            >
+              <div class="patient-prescription">
+                <h3>Patient Prescriptions</h3>
+                <p>
+                  Check your all patients RX, Labs & Scans written previously
+                </p>
+              </div>
+              <div class="info-arrow">
+                <span class="icon-arrow-blue"></span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-toast aria-live="polite" aria-atomic="true"></app-toast>

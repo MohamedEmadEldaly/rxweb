@@ -1,0 +1,1084 @@
+<div class="row">
+  <div class="col-lg-7  order-lg-1 order-2 list patient-page">
+    <div class="main-content__list">
+      <div class="header">
+        <div class="header-title">
+          <h3 class="main-title">Patient Card</h3>
+          <p class="header-title__brief">Check Your Patient List</p>
+        </div>
+        <div class="header-search">
+          <form (ngSubmit)="searchWord($event)" action="javascript:void(0);">
+            <input
+              type="text"
+              #searchInput
+              class="form-control search-input"
+              (change)="getSearchKeyword()"
+              placeholder="Search"
+              name=""
+              id="search"
+            />
+            <span
+              class="icon-search"
+              tybe="submit"
+              (click)="searchWord($event)"
+            ></span>
+            <!-- (click)="searchPatientNumber()" -->
+          </form>
+        </div>
+      </div>
+      <div class="clinic-list">
+        <ul class="clinic-list__menu">
+          <!-- <swiper
+          [slidesPerView]="6"
+          [spaceBetween]="0"
+          (swiper)="onSwiper($event)"
+          (slideChange)="onSlideChange()"
+          >
+          <ng-template swiperSlide> -->
+          <li
+            class="clinic-list__item active"
+            [ngClass]="{ active: selectedItem == item }"
+            *ngFor="let item of doctorClinisData; let first = first"
+            (click)="listClick($event, item, item.id)"
+          >
+            {{ item.name }}
+          </li>
+
+          <!-- </ng-template>
+        </swiper> -->
+        </ul>
+      </div>
+      <div class="list-container" [ngClass]="noDataFound ? 'not-found' : ''">
+        <div
+          class="generic-card"
+          *ngFor="let patient of patientsList; let i = index"
+          [ngClass]="{ active: selectedPatient == patient }"
+          (click)="getPatientDetails(i, patient)"
+        >
+          <img
+            src="../../../assets/images/patient-image.png"
+            alt=""
+            *ngIf="patient.gender == 'Male'"
+          />
+          <img
+            src="../../../assets/images/femal-image.png"
+            alt=""
+            *ngIf="patient.gender != 'Male'"
+          />
+          <span class="generic-card-name generic-style">{{
+            patient.name
+          }}</span>
+          <span class="generic-card-phone generic-style">
+            <span class="icon-phone"></span>
+            {{ patient.country_code }}{{ patient.phone }}
+          </span>
+        </div>
+        <app-loader *ngIf="isLoaderShow"></app-loader>
+        <div class="oberver-item"></div>
+
+        <app-not-found *ngIf="noDataFound == true"></app-not-found>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5 order-lg-2 order-1 details">
+    <div class="main-content__details details genric-card patient-details">
+      <!-- <h3 class="genric-card-title">Add New Patient</h3> -->
+      <app-loader *ngIf="isDetailsLoaderShow"></app-loader>
+
+      <!-- search form-->
+      <div
+        class="details__item search-patient"
+        *ngIf="isSearchPatientShow == true"
+      >
+        <h3 class="genric-card-title">Add New Patient</h3>
+
+        <form
+          #f="ngForm"
+          [formGroup]="searchSubmitForm"
+          (ngSubmit)="onSearchSubmit()"
+        >
+          <div class="form-group" [class.hasError]="f.submitted === true">
+            <div class="Form-group-wrapper">
+              <!-- <input type="tel" pattern="[0-9]*" #searchNumber name="phone" min="0" id="phone" placeholder="Patient Phone Number"
+                class="form-control" formControlName="phone" />
+              <div class="input-icon">
+                <span class="icon-phone"></span>
+              </div> -->
+              <ngx-intl-tel-input
+                [cssClass]="'form-control'"
+                [preferredCountries]="preferredCountries"
+                [enableAutoCountrySelect]="true"
+                [enablePlaceholder]="true"
+                [searchCountryFlag]="true"
+                [searchCountryField]="[
+                  SearchCountryField.Iso2,
+                  SearchCountryField.Name
+                ]"
+                [selectFirstCountry]="false"
+                [selectedCountryISO]="CountryISO.Egypt"
+                [phoneValidation]="true"
+                [separateDialCode]="separateDialCode"
+                [numberFormat]="PhoneNumberFormat.National"
+                name="phone"
+                formControlName="phone"
+                (keydown)="noSpacesEvent($event)"
+              >
+              </ngx-intl-tel-input>
+              <div
+                *ngIf="f.submitted || searchSubmitForm.controls.phone.touched"
+                class="error-feedback"
+              >
+                <p *ngIf="searchSubmitForm.controls.phone.errors?.required">
+                  This Field is required
+                </p>
+                <p
+                  *ngIf="
+                    searchSubmitForm.value.phone &&
+                    searchSubmitForm.controls['phone'].errors
+                  "
+                >
+                  Invalid Phone Number
+                </p>
+              </div>
+            </div>
+            <!---->
+          </div>
+          <div class="welcome-card__btns">
+            <button
+              class="custom-btn--singup custom-btn btn-main-color"
+              type="submit"
+            >
+              Search
+            </button>
+          </div>
+        </form>
+      </div>
+      <!-- search form-->
+
+      <div class="search-patient-result" *ngIf="isPatientResultShow == true">
+        <button class="back-btn" (click)="resultBack()">
+          <span class="back-btn__icon">
+            <span class="icon-arrow-blue"></span>
+          </span>
+          <span class="back-btn__text"> back </span>
+        </button>
+        <!-- <h3 class="genric-card-title">Patient Card</h3> -->
+        <!-- <div class="search-result__img">
+          <img
+            src="../../../assets/images/patient-result-img.png"
+            alt=""
+            *ngIf="searchPatientResult.gender == 'Male'"
+          />
+          <img
+            src="../../../assets/images/femal-profile-image.png"
+            alt=""
+            *ngIf="searchPatientResult.gender != 'Male'"
+          />
+        </div>
+        <div class="search-result__content">
+          <div class="search-result__content__name result-item">
+            <span class="lable">Name:</span>
+            <span class="text">{{ searchPatientResult.name }}</span>
+          </div>
+          <div class="search-result__content__name result-item">
+            <span class="lable">Age:</span>
+            <span class="text">{{
+              calculateAge(searchPatientResult.age)
+            }}</span>
+          </div>
+          <div class="search-result__content__name result-item">
+            <span class="lable">Mobile Number:</span>
+            <span class="text"
+              >{{ searchPatientResult.country_code
+              }}{{ searchPatientResult.phone }}</span
+            >
+          </div>
+          <div class="search-result__content__name result-item">
+            <span class="lable">Gender:</span>
+            <span class="text">{{ searchPatientResult.gender }}</span>
+          </div>
+          <div class="search-result__content__name result-item">
+            <span class="lable">Location:</span>
+            <span class="text">{{ searchPatientResult.address }}</span>
+          </div>
+        </div>
+        <div class="welcome-card__btns">
+          <button
+            class="custom-btn--singup custom-btn btn-main-color"
+            (click)="directTobook()"
+          >
+            Book Appointment
+          </button>
+        </div> -->
+
+        <!--new design-->
+        <div class="upcoming-details">
+          <div class="upcoming-details-personal">
+            <!--personal info-->
+            <div class="row">
+              <div class="col-3">
+                <div class="upcoming-details-personal__img">
+                  <img
+                    src="../../../assets/images/prfile-image.png"
+                    alt=""
+                    *ngIf="searchPatientResult.gender == 'Male'"
+                  />
+                  <img
+                    src="../../../assets/images/femal-profile-image.png"
+                    alt=""
+                    *ngIf="searchPatientResult.gender != 'Male'"
+                  />
+                </div>
+              </div>
+              <div class="col-9">
+                <div class="upcoming-details-personal__info">
+                  <div
+                    class="upcoming-details-personal__info__item details-item"
+                  >
+                    <span class="info-style info-header">Name:</span>
+                    <span class="info-style">
+                      {{ searchPatientResult.name }}</span
+                    >
+                  </div>
+                  <div
+                    class="upcoming-details-personal__info__item details-item"
+                    *ngIf="searchPatientResult.age != ''"
+                  >
+                    <span class="info-style info-header">Age:</span>
+                    <span class="info-style">{{
+                      calculateAge(searchPatientResult.age)
+                    }}</span>
+                  </div>
+                  <div
+                    class="upcoming-details-personal__info__item details-item"
+                  >
+                    <span class="info-style info-header">Mobile Number:</span>
+                    <span class="info-style"
+                      >{{ searchPatientResult.countryCode
+                      }}{{ searchPatientResult.phone }}</span
+                    >
+                  </div>
+                  <div
+                    class="upcoming-details-personal__info__item details-item"
+                  >
+                    <span class="info-style info-header">Gender:</span>
+                    <span class="info-style">{{
+                      searchPatientResult.gender
+                    }}</span>
+                  </div>
+                </div>
+                <!-- <div class="upcoming-details-personal__msg">
+                                    <button type="button">Message <span class="icon-messages"></span></button>
+                                </div> -->
+              </div>
+            </div>
+            <!--personal info-->
+
+            <a
+              class="
+                generic-card generic-card--appointment
+                prescription
+                info-box
+                generic-card--info
+              "
+              (click)="directToAppointment()"
+            >
+              <div class="patient-prescription">
+                <h3>patient Appointments</h3>
+                <p>You can view patient appointments here</p>
+              </div>
+              <div class="info-arrow">
+                <span class="icon-arrow-blue"></span>
+              </div>
+            </a>
+
+            <a
+              class="
+                generic-card generic-card--appointment
+                prescription
+                info-box
+                generic-card--info
+              "
+              (click)="directToRxHistory()"
+            >
+              <div class="patient-prescription">
+                <h3>Patient Prescriptions</h3>
+                <p>
+                  Check your all patients RX, Labs & Scans written previously
+                </p>
+              </div>
+              <div class="info-arrow">
+                <span class="icon-arrow-blue"></span>
+              </div>
+            </a>
+
+            <div class="upcoming-details-personal__msg">
+              <button type="button" (click)="directTobook()">
+                <span class="icon-add">
+                  <span class="path1"></span>
+                  <span class="path2"></span>
+                </span>
+                Book Appointment
+              </button>
+            </div>
+          </div>
+        </div>
+        <!--new design-->
+      </div>
+
+      <div class="search-patient-result" *ngIf="isAppointmentShow == true">
+        <button class="back-btn" (click)="appointmentBack()">
+          <span class="back-btn__icon">
+            <span class="icon-arrow-blue"></span>
+          </span>
+          <span class="back-btn__text">back</span>
+        </button>
+
+        <!--new design-->
+        <div
+          class="upcoming-details appointment-list"
+          *ngIf="SelectedAppointmentList.length > 0; else noResult"
+        >
+          <div
+            class="generic-card generic-card--appointment"
+            *ngFor="let item of SelectedAppointmentList; let i = index"
+          >
+            <div class="row">
+              <div class="col-2">
+                <img
+                  src="../../../assets/images/patient-image.png"
+                  alt=""
+                  *ngIf="item?.patient.gender == 'Male'"
+                />
+                <img
+                  src="../../../assets/images/femal-image.png"
+                  alt=""
+                  *ngIf="item?.patient.gender != 'Male'"
+                />
+              </div>
+
+              <div class="col-10">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row">
+                      <div class="col-8" style="height: 33px">
+                        <span class="generic-card-name generic-style">{{
+                          item?.patient.name
+                        }}</span>
+                      </div>
+                      <div class="col-4">
+                        <span class="generic-card-fees generic-style"
+                          >{{ item.appointment.fees }}
+                          {{
+                            currencyType(item.appointment.fees_currency)
+                          }}</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="row">
+                      <div class="col-3">
+                        <span
+                          class="generic-card-type generic-style"
+                          [ngClass]="
+                            appointmentTypeClass(item.appointment.fees_type)
+                          "
+                          >{{
+                            appointmentType2(item.appointment.fees_type)
+                          }}</span
+                        >
+                      </div>
+                      <div class="col-5">
+                        <span class="generic-card-type generic-style">
+                          {{ item.appointment.date }}
+                        </span>
+                      </div>
+                      <div class="col-4">
+                        <span class="generic-card-payment-type generic-style">
+                          <span
+                            class="payment-icon"
+                            [ngClass]="
+                              item.appointment.payment_method == 'cash'
+                                ? 'icon-cash'
+                                : 'icon-visa'
+                            "
+                          ></span>
+                          {{ item.appointment.payment_method }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--new design-->
+
+        <ng-template #noResult>
+          <div class="no-result">no result found</div>
+        </ng-template>
+      </div>
+
+      <div class="search-patient-result" *ngIf="isRxHistoryShow == true">
+        <button class="back-btn" (click)="rxHistoryBack()">
+          <span class="back-btn__icon">
+            <span class="icon-arrow-blue"></span>
+          </span>
+          <span class="back-btn__text">back</span>
+        </button>
+
+        <!--new design-->
+        <div
+          class="upcoming-details appointment-list"
+          *ngIf="SelectedRxHistoryList.length > 0; else noResult"
+        >
+          <div
+            class="generic-card generic-card--appointment"
+            *ngFor="let item of SelectedRxHistoryList; let i = index"
+            (click)="selectRxHistroyFun(i, item)"
+          >
+            <div class="row">
+              <div class="col-4">
+                <span class="icon-notes-medical"></span>
+                <span class="generic-card-name generic-style">{{
+                  getdate(item.appointment.appointment_date)
+                }}</span>
+              </div>
+              <div class="col-8">
+                <span class="generic-card-type generic-style"
+                  >Patient Name: {{ item.patient.patient_name }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--new design-->
+
+        <ng-template #noResult>
+          <div class="no-result">no result found</div>
+        </ng-template>
+      </div>
+
+      <div
+        class="search-patient-result appointments-details"
+        *ngIf="selectRxHistoryDetails == true"
+      >
+        <button class="back-btn" (click)="rxDetailsBack()">
+          <span class="back-btn__icon">
+            <span class="icon-arrow-blue"></span>
+          </span>
+          <span class="back-btn__text">back</span>
+        </button>
+
+        <div class="appointments-details__title">
+          <div class="name">
+            <h5 class="prescription-title prescription-title--name">
+              {{ selectRxHistroyitem.patient.patient_name }}
+            </h5>
+            <span class="icon-phone"></span>
+            <span class="phone"
+              >{{ selectRxHistroyitem.patient.patient_countryCode
+              }}{{ selectRxHistroyitem.patient.patient_phone }}</span
+            >
+          </div>
+        </div>
+
+        <div class="appointments-doctor-details">
+          <div class="doctor">
+            <span class="doctor-name"
+              >Dr. {{ selectRxHistroyitem.doctor.name_en }}</span
+            >
+            <span class="doctor-title">{{
+              selectRxHistroyitem.doctor.degree_en
+            }}</span>
+            <span class="doctor-address">{{
+              selectRxHistroyitem.doctor.speciality_en
+            }}</span>
+            <div class="details-item">
+              <span class="info-style info-header">Patient Name:</span>
+              <span class="info-style">{{
+                selectRxHistroyitem.patient.name
+              }}</span>
+            </div>
+            <div class="details-item">
+              <span class="info-style info-header">Age:</span>
+              <span class="info-style">
+                {{
+                  calculateAge(selectRxHistroyitem.patient.patient_age)
+                }}</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="add-prescription__note"
+          *ngIf="selectRxHistroyitem.appointment.diagnosis != ''"
+        >
+          <h5 class="prescription-title">Notes</h5>
+          <p>{{ selectRxHistroyitem.appointment.diagnosis }}</p>
+        </div>
+
+        <div
+          class="add-prescription__rx"
+          *ngIf="prescriptionDetailsRxData.rx_items.length != 0"
+        >
+          <h5 class="prescription-title"><span class="icon-rx"></span>RX</h5>
+          <p *ngFor="let rx of prescriptionDetailsRxData.rx_items">
+            <span>{{ rx.rx }}</span>
+          </p>
+        </div>
+
+        <div
+          class="add-prescription__lab"
+          *ngIf="prescriptionDetailsRxData.lab_items.length != 0"
+        >
+          <h5 class="prescription-title">
+            <span class="icon-lab"></span> LABS
+          </h5>
+          <p *ngFor="let lab of prescriptionDetailsRxData.lab_items">
+            <span>{{ lab.lab }}</span>
+          </p>
+        </div>
+
+        <div
+          class="add-prescription__scan"
+          *ngIf="prescriptionDetailsRxData.scan_items.length != 0"
+        >
+          <h5 class="prescription-title">
+            <span class="icon-scan"
+              ><span class="path1"></span><span class="path2"></span
+              ><span class="path3"></span><span class="path4"></span
+              ><span class="path5"></span><span class="path6"></span
+              ><span class="path7"></span><span class="path8"></span
+              ><span class="path9"></span><span class="path10"></span
+              ><span class="path11"></span><span class="path12"></span
+              ><span class="path13"></span><span class="path14"></span
+              ><span class="path15"></span><span class="path16"></span
+              ><span class="path17"></span><span class="path18"></span
+              ><span class="path19"></span><span class="path20"></span
+              ><span class="path21"></span><span class="path22"></span
+              ><span class="path23"></span><span class="path24"></span
+              ><span class="path25"></span><span class="path26"></span
+              ><span class="path27"></span><span class="path28"></span
+              ><span class="path29"></span><span class="path30"></span
+              ><span class="path31"></span></span
+            >SCANS
+          </h5>
+          <p *ngFor="let scan of prescriptionDetailsRxData.scan_items">
+            <span>{{ scan.scan }}</span>
+          </p>
+        </div>
+
+        <div class="doctor-signature">
+          <img
+            [src]="generateimageUrl(selectRxHistroyitem.doctor.signature)"
+            alt=""
+          />
+        </div>
+
+        <div class="welcome-card__btns">
+          <button
+            class="custom-btn--singup custom-btn custom-btn--print"
+            (click)="covertToRxFormat()"
+            type="submit"
+          >
+            RX-Format
+          </button>
+        </div>
+      </div>
+
+      <div class="search-patient-result" *ngIf="rxPrintViewShow == true">
+        <button class="back-btn" (click)="rxPrintBack()">
+          <span class="back-btn__icon">
+            <span class="icon-arrow-blue"></span>
+          </span>
+          <span class="back-btn__text">back</span>
+        </button>
+        <div class="appointments-details doctor-prescription">
+          <div class="print-view-container" id="print-container">
+            <div class="prescription-print-details">
+              <div class="english-doctor-details">
+                <h5 class="prescription-title prescription-title--print">
+                  Dr. {{ selectRxHistroyitem.doctor.name_en }}
+                </h5>
+                <p class="mb-0 p-print">
+                  {{ selectRxHistroyitem.doctor.speciality_en }}
+                </p>
+                <p class="mb-0 p-print">
+                  {{ selectRxHistroyitem.doctor.degree_en }}
+                </p>
+              </div>
+              <div class="arabic-doctor-details">
+                <h5 class="prescription-title prescription-title--print">
+                  د. {{ selectRxHistroyitem.doctor.name_ar }}
+                </h5>
+                <p class="mb-0 p-print">
+                  {{ selectRxHistroyitem.doctor.speciality_ar }}
+                </p>
+                <p class="mb-0 p-print">
+                  {{ selectRxHistroyitem.doctor.degree_ar }}
+                </p>
+              </div>
+              <div class="doctor-prescription__date">
+                <span>{{
+                  selectRxHistroyitem.appointment.appointment_date
+                }}</span>
+                <span class="date-word">التاريخ</span>
+                <span class="doctor-prescription__date__line"></span>
+              </div>
+              <div class="doctor-prescription__pitent-details">
+                <div class="doctor-prescription__pitent-details__name">
+                  <span>{{ selectRxHistroyitem.patient.patient_name }}</span>
+                  <span> :الاسم</span>
+                </div>
+                <div class="doctor-prescription__pitent-details__age">
+                  <span>{{
+                    calculateAge(selectRxHistroyitem.patient.patient_age)
+                  }}</span>
+                  <span> :السن</span>
+                </div>
+              </div>
+            </div>
+            <div class="prescription-print-body">
+              <div
+                class="add-prescription__rx"
+                *ngIf="prescriptionDetailsRxData.length != 0"
+              >
+                <h5 class="prescription-title">RX</h5>
+                <p *ngFor="let rx of prescriptionDetailsRxData.rx_items">
+                  <span>{{ rx.rx }}</span>
+                </p>
+                <!--*ngFor="let rx of prescriptionDetailsRxData"-->
+              </div>
+
+              <div
+                class="add-prescription__lab"
+                *ngIf="prescriptionDetailsRxData.lab_items.length != 0"
+              >
+                <h5 class="prescription-title">LABS</h5>
+                <p *ngFor="let lab of prescriptionDetailsRxData.lab_items">
+                  <span>{{ lab.lab }}</span>
+                </p>
+                <!-- *ngFor="let lab of prescriptionDetailsLabData"-->
+              </div>
+
+              <div
+                class="add-prescription__scan"
+                *ngIf="prescriptionDetailsRxData.scan_items.length != 0"
+              >
+                <h5 class="prescription-title">SCANS</h5>
+                <p *ngFor="let scan of prescriptionDetailsRxData.scan_items">
+                  <span>{{ scan.scan }}</span>
+                </p>
+                <!-- *ngFor="let scan of prescriptionDetailsScanData"-->
+              </div>
+
+              <!-- <img src="../../../../../rxwebapp/src/assets/images/loader.gif" alt=""> -->
+            </div>
+            <div class="prescription-print-footer">
+              <div class="clinic-phone">
+                <div class="phone-container">
+                  <span class="icon-call"></span>
+                  <span>{{ selectRxHistroyitem.clinic.phone }}</span>
+                </div>
+                <div class="doctor-signature">
+                  <img
+                    [src]="
+                      generateimageUrl(selectRxHistroyitem.doctor.signature)
+                    "
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div class="clinic-address">
+                <span
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="13.26"
+                    height="16.336"
+                    viewBox="0 0 13.26 16.336"
+                  >
+                    <defs>
+                      <style>
+                        .cls-1 {
+                          fill: #fff;
+                        }
+                      </style>
+                    </defs>
+                    <g id="Group_1461" transform="translate(-287.389 -1164.13)">
+                      <path
+                        id="Path_3879"
+                        d="M299.461 1166.98a6.618 6.618 0 0 0-10.881 0 6.616 6.616 0 0 0-.77 6.1 5.244 5.244 0 0 0 .963 1.593l4.73 5.555a.678.678 0 0 0 1.033 0l4.728-5.555a5.225 5.225 0 0 0 .964-1.59 6.622 6.622 0 0 0-.767-6.103zm-.5 5.626a3.917 3.917 0 0 1-.714 1.173l-4.224 4.961-4.217-4.952a3.943 3.943 0 0 1-.723-1.186 5.265 5.265 0 0 1 .616-4.851 5.261 5.261 0 0 1 8.648 0 5.267 5.267 0 0 1 .612 4.855z"
+                        class="cls-1"
+                      />
+                      <path
+                        id="Path_3880"
+                        d="M295.006 1168.472a3.248 3.248 0 1 0 3.248 3.248 3.252 3.252 0 0 0-3.248-3.248zm1.9 3.248a1.9 1.9 0 1 1-1.9-1.9 1.9 1.9 0 0 1 1.9 1.9z"
+                        class="cls-1"
+                        transform="translate(-.986 -.987)"
+                      />
+                    </g>
+                  </svg>
+                  <span>
+                    {{ selectRxHistroyitem.clinic.address }}
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="welcome-card__btns">
+            <button
+              class="custom-btn--singup custom-btn custom-btn--print"
+              (click)="printPrescription()"
+              type="submit"
+            >
+              Print
+            </button>
+            <!-- -->
+          </div>
+        </div>
+      </div>
+
+      <div class="patient-book" *ngIf="isBookShow == true">
+        <button class="back-btn" (click)="bookBack()">
+          <span class="back-btn__icon">
+            <span class="icon-arrow-blue"></span>
+          </span>
+          <span class="back-btn__text"> back </span>
+        </button>
+        <h3 class="genric-card-title">Book an Appointment</h3>
+        <div class="patient-book__img">
+          <img
+            src="../../../assets/images/patient-result-img.png"
+            alt=""
+            *ngIf="searchPatientResult.gender == 'Male'"
+          />
+          <img
+            src="../../../assets/images/femal-profile-image.png"
+            alt=""
+            *ngIf="searchPatientResult.gender != 'Male'"
+          />
+          <h5>{{ searchPatientResult.name }}</h5>
+        </div>
+        <div class="book-details">
+          <div class="book-details__box">
+            <h3 class="box-title">Clinic</h3>
+            <div class="clinic-list">
+              <div
+                class="check-item"
+                *ngFor="
+                  let clinic of clinicList;
+                  let first = first;
+                  let i = index
+                "
+                (click)="showAvailableDates(i)"
+              >
+                <label [for]="clinic.name">
+                  <span>{{ clinic.name }}</span>
+                  <input
+                    type="radio"
+                    [id]="clinic.name"
+                    name="clinic"
+                    [checked]="first"
+                    [value]="clinic.name"
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="book-details__box" *ngIf="appointmentType.length > 0">
+            <h3 class="box-title">Appointment Type</h3>
+            <div class="appointment-type">
+              <div
+                class="check-item"
+                *ngFor="
+                  let appointment of appointmentType;
+                  let first = first;
+                  let i = index
+                "
+                (click)="addPaymentType(i, appointment)"
+              >
+                <label [for]="appointment">
+                  <span>{{ appointment }}</span>
+                  <input
+                    type="radio"
+                    [id]="appointment"
+                    name="appiontment"
+                    [value]="appointment"
+                    [checked]="first"
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="book-details__box avial-daies">
+            <h3 class="box-title">Apoointment's Day</h3>
+            <div class="avialable-daies" *ngIf="avialableDates">
+              <swiper
+                [slidesPerView]="4.5"
+                [spaceBetween]="10"
+                (swiper)="onSwiper($event)"
+                (slideChange)="onSlideChange()"
+              >
+                <ng-template swiperSlide *ngFor="let item of avialableDates">
+                  <div
+                    class="day-item"
+                    :data-value="item"
+                    [ngClass]="{ active: selectedDay == item }"
+                    (click)="dayClick($event, item)"
+                  >
+                    <h3>{{ item.day }}</h3>
+                    <span>{{ item.date }}</span>
+                  </div>
+                </ng-template>
+              </swiper>
+            </div>
+          </div>
+        </div>
+        <div class="welcome-card__btns">
+          <button
+            class="custom-btn--singup custom-btn btn-main-color"
+            (click)="submitBookdata()"
+          >
+            Save
+          </button>
+        </div>
+        <ng-template #reservedDateModel let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">
+              Add new appointment
+            </h4>
+            <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              (click)="modal.dismiss('Cross click')"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body reserved-date-pop">
+            <h3>You already have a pre-booking on the same day</h3>
+            <p>Do you want to add another booking</p>
+          </div>
+          <div class="modal-footer">
+            <div class="welcome-card__btns reserved-date-btn">
+              <!--[ngClass]="{ active: changeDoctorCode}"-->
+              <button
+                type="button"
+                class="custom-btn--singup custom-btn reserved-date-btn__confirm"
+                (click)="modal.close('Cross click'); confirmBook()"
+              >
+                Confirm
+              </button>
+              <button
+                type="button"
+                class="custom-btn--singup custom-btn"
+                (click)="modal.close('Cross click')"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+
+      <div class="add-new-patient" *ngIf="isAddNewPatientShow == true">
+        <h3 class="genric-card-title">Add New Patient</h3>
+        <form
+          #f="ngForm"
+          [formGroup]="newPatientSubmitForm"
+          (ngSubmit)="onNewPatientSubmit()"
+        >
+          <div class="form-group" [class.hasError]="f.submitted === true">
+            <div class="Form-group-wrapper">
+              <input
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Full Name"
+                class="form-control"
+                formControlName="name"
+              />
+              <div class="input-icon">
+                <span class="icon-user"></span>
+              </div>
+              <div
+                *ngIf="
+                  f.submitted || newPatientSubmitForm.controls.name.touched
+                "
+                class="error-feedback"
+              >
+                <p *ngIf="newPatientSubmitForm.controls.name.errors?.required">
+                  This Field is required
+                </p>
+                <p
+                  *ngIf="
+                    newPatientSubmitForm.controls.name.errors?.required ==
+                      undefined &&
+                    newPatientSubmitForm.controls.name.errors?.whitespace
+                  "
+                >
+                  Please Enter Characters
+                </p>
+              </div>
+            </div>
+            <!---->
+          </div>
+          <div class="form-group" [class.hasError]="f.submitted === true">
+            <div class="Form-group-wrapper">
+              <span class="form-control phonaty d-flex">{{
+                patientPhoneObject.internationalNumber
+              }}</span>
+              <div class="input-icon">
+                <span class="icon-phone"></span>
+              </div>
+              <!-- <div *ngIf="f.submitted || newPatientSubmitForm.controls.phone.touched" class="error-feedback">
+                <p *ngIf="newPatientSubmitForm.controls.phone.errors?.required">
+                  This Field is required
+                </p>
+              </div> -->
+            </div>
+            <!---->
+          </div>
+          <div class="form-group age" [class.hasError]="f.submitted === true">
+            <!-- <material-datepicker [(date)]="yourModelDate"></material-datepicker> -->
+            <!-- <mat-form-field appearance="fill">
+              <mat-label>Different locale</mat-label>
+              <input matInput [matDatepicker]="dp">
+              <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+              <mat-datepicker #dp></mat-datepicker>
+            </mat-form-field> -->
+            <input
+              type="text"
+              class="form-control"
+              [max]="todayDate"
+              min="1920-01-01"
+              formControlName="age"
+              name=""
+              placeholder="Age"
+              onfocus="(this.type='date')"
+              onblur="(this.type='text')"
+              id=""
+              onkeydown="return false"
+            />
+            <div
+              *ngIf="f.submitted || newPatientSubmitForm.controls.age.touched"
+              class="error-feedback"
+            >
+              <p *ngIf="newPatientSubmitForm.controls.age.errors?.required">
+                This Field is required
+              </p>
+            </div>
+
+            <!---->
+          </div>
+          <div
+            class="form-group gender"
+            [class.hasError]="f.submitted === true"
+          >
+            <select
+              id="pet-select"
+              #gender
+              formControlName="gender"
+              class="form-control custom-select"
+            >
+              <option value="" disabled selected>Gender</option>
+              <option [value]="gender.name" *ngFor="let gender of genderOption">
+                {{ gender.name }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                f.submitted || newPatientSubmitForm.controls.gender.touched
+              "
+              class="error-feedback"
+            >
+              <p *ngIf="newPatientSubmitForm.controls.gender.errors?.required">
+                This Field is required
+              </p>
+            </div>
+          </div>
+          <div
+            class="form-group gender"
+            [class.hasError]="f.submitted === true"
+          >
+            <div class="Form-group-wrapper">
+              <input
+                type="text"
+                name="address"
+                id="address"
+                placeholder="Type in your street,  Area City,Country"
+                formControlName="address"
+                (keydown)="noSpacesEvent($event)"
+                class="form-control"
+              />
+
+              <div
+                *ngIf="
+                  f.submitted || newPatientSubmitForm.controls.address.touched
+                "
+                class="error-feedback"
+              >
+                <p
+                  *ngIf="newPatientSubmitForm.controls.address.errors?.required"
+                >
+                  This Field is required
+                </p>
+                <p
+                  *ngIf="
+                    newPatientSubmitForm.controls.address.errors?.required ==
+                      undefined &&
+                    newPatientSubmitForm.controls.address.errors?.whitespace
+                  "
+                >
+                  Please Enter Characters
+                </p>
+              </div>
+            </div>
+            <!---->
+          </div>
+          <div class="welcome-card__btns">
+            <button
+              class="custom-btn--singup custom-btn btn-main-color"
+              type="submit"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
+<swiper
+[slidesPerView]="2"
+[spaceBetween]="50"
+(swiper)="onSwiper($event)"
+(slideChange)="onSlideChange()"
+>
+<ng-template swiperSlide>
+  <div class="day-item" >
+    <h3>item.day</h3>
+    <span>item.date</span>
+  </div>
+</ng-template>
+<ng-template swiperSlide>
+  <div class="day-item" >
+    <h3>item.day</h3>
+    <span>item.date</span>
+  </div>
+</ng-template>
+<ng-template swiperSlide>
+  <div class="day-item" >
+    <h3>item.day</h3>
+    <span>item.date</span>
+  </div>
+</ng-template>
+</swiper> -->
+<app-toast aria-live="polite" aria-atomic="true"></app-toast>

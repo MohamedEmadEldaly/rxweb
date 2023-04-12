@@ -1,0 +1,37 @@
+@import "../../../../assets/scss/Abstract/mixins";
+.register-step-three {
+  .home-visit {
+    &.generic-switch-btn {
+      padding: 17px;
+      background: #fff;
+      margin-bottom: 20px;
+      border-radius: 9px;
+    }
+  }
+  .input-section {
+    border: 1px solid #d6d6d6;
+    border-radius: 9px;
+  }
+}
+
+.form-group.custom-select {
+  position: relative;
+  .error-feedback {
+    bottom: -15px;
+  }
+}
+
+
+.availability > .availability__details .availability__details {
+  @include screen-450 {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+}
+.availability__details .availability__details__from{
+  @include screen-450 {
+    width: 100% !important;
+  }
+}
+

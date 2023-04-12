@@ -1,0 +1,1597 @@
+@import "../Abstract/mixins.scss";
+
+.gray-background {
+  background-color: #f9f9f9;
+}
+.main-title {
+  font-family: "poppins-regular";
+  font-size: 22px;
+  color: #333348;
+  line-height: 1.5;
+  font-weight: 600;
+  @include screen-400 {
+    font-size: 19px;
+  }
+
+}
+form {
+  width: 100%;
+}
+.form-group {
+  width: 100%;
+  margin-bottom: 20px;
+  .Form-group-wrapper {
+    position: relative;
+    [class^="icon-"],
+    [class*=" icon-"],
+    .icon-image {
+      position: absolute;
+      top: calc(50% - 10px);
+      left: 15px;
+      transition: all 0.5s ease;
+
+      &::before {
+        font-size: 20px;
+      }
+    }
+    .icon-image {
+      position: absolute;
+      top: 17px;
+      left: 15px;
+      transition: all 0.5s ease;
+      &.icon-image--arabic {
+        right: 15px;
+        left: unset;
+      }
+      img {
+        width: 33px;
+      }
+    }
+    &.password {
+      [class^="icon-"],
+      [class*=" icon-"] {
+        right: 15px;
+        left: unset;
+      }
+      .form-control {
+        padding: 20px 50px 15px 20px;
+      }
+    }
+  }
+  .form-control {
+    border-radius: 9px;
+    border: solid 1px #d6d6d6;
+    background-color: #ffffff;
+    transition: all 0.5s ease;
+    font-family: "poppins-regular";
+    padding: 20px 20px 15px 50px;
+    font-size: 18px;
+    line-height: 1.5;
+    &.form-control--arabic {
+      padding: 20px 50px 15px 20px;
+      text-align: right;
+    }
+
+    &:focus {
+      box-shadow: unset;
+      border: solid 1px $primary;
+      + .input-icon {
+        [class^="icon-"],
+        [class*=" icon-"] {
+          &::before {
+            color: $primary;
+          }
+        }
+      }
+    }
+    &::placeholder {
+      /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: #898a8f;
+    }
+
+    &:-ms-input-placeholder {
+      /* Internet Explorer 10-11 */
+      color: #898a8f;
+    }
+
+    &::-ms-input-placeholder {
+      /* Microsoft Edge */
+      color: #898a8f;
+    }
+  }
+}
+.btn-main-color {
+  color: $white;
+  background-color: $primary;
+}
+.image {
+  .error-feedback {
+    bottom: -18px;
+  }
+}
+.error-feedback {
+  position: absolute;
+  transition: all 0.5s ease;
+  bottom: -24px;
+  font-size: 16px;
+  font-family: "poppins-regular";
+  right: 0;
+  color: #ff748e;
+  p {
+    margin-bottom: 0;
+  }
+}
+.form-control.ng-invalid.ng-touched {
+  margin-bottom: 40px !important;
+  border-color: #ff748e !important;
+}
+.hasError {
+  .ng-invalid {
+    transition: unset;
+    margin-bottom: 40px;
+    border-color: #ff748e !important;
+    > div {
+      transition: unset;
+      margin-bottom: 20px;
+    }
+  }
+}
+.Form-group-wrapper--phone {
+  input {
+    transition: all 0.4s ease;
+  }
+  > ngx-intl-tel-input {
+    transition: all 0.4s ease;
+    > div {
+      transition: all 0.4s ease;
+    }
+  }
+  .ng-invalid.ng-touched {
+    > div {
+      margin-bottom: 20px !important;
+      input {
+        border-color: #ff748e !important;
+      }
+    }
+    // border-color: #ff748e !important;
+  }
+  .error-feedback {
+    bottom: -3px;
+  }
+}
+.generic-switch-btn {
+  display: flex;
+  justify-content: space-between;
+  p {
+    font-family: "poppins-regular";
+    font-size: 18px;
+    color: #313450;
+    font-weight: 500;
+    margin-bottom: 0;
+  }
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 21px;
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      &:checked + .slider {
+        background-color: $primary;
+        &:before {
+          background-color: white;
+          -webkit-transform: translateX(29.5px);
+          -ms-transform: translateX(29.5px);
+          transform: translateX(29.5px);
+        }
+      }
+      &:focus + .slider {
+        box-shadow: 0 0 1px $primary;
+      }
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #d6d6d6;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+      &.round {
+        border-radius: 34px;
+        &:before {
+          border-radius: 50%;
+        }
+      }
+
+      &::before {
+        position: absolute;
+        content: "";
+        height: 21px;
+        width: 21px;
+        left: 0px;
+        bottom: 0px;
+        background-color: #898a8f;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+      }
+    }
+  }
+}
+.input-section {
+  background: #fff;
+  padding: 15px;
+}
+.input-title {
+  margin-bottom: 15px;
+  h3 {
+    font-family: "poppins-regular";
+    font-size: 18px;
+    font-weight: 500;
+    color: #333348;
+    line-height: 1.5;
+    margin-bottom: 0;
+    position: relative;
+    &::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: #d6d6d6;
+      position: absolute;
+      bottom: -5px;
+    }
+  }
+}
+.input-title--subsection {
+  h3 {
+    font-weight: normal;
+    &::before {
+      content: unset;
+    }
+  }
+}
+.section-fees__details {
+  display: flex;
+  width: 100%;
+  &.wrapper {
+    justify-content: space-between;
+    @include screen-xs {
+      flex-direction: column;
+    }
+  }
+  .input-title--fees {
+    flex-direction: column;
+    h3 {
+      margin-bottom: 10px;
+    }
+    .form-control {
+      &.custom-select {
+        border: 1px solid #d6d6d6 !important;
+      }
+    }
+  }
+}
+.input-title--fees {
+  h3 {
+    color: #514ee5;
+    &::before {
+      content: unset;
+    }
+  }
+}
+.availability__details {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+
+  @include screen-xs {
+    flex-direction: column;
+  }
+
+
+
+  .availability__details {
+    display: flex;
+    width: 47%;
+    justify-content: space-between;
+    flex-direction: row;
+    @include screen-xs {
+      width: 100%;
+    }
+  }
+
+  .availability__details__days {
+    display: flex;
+    width: 47%;
+    flex-direction: column;
+    @include screen-xs {
+      width: 100%;
+    }
+
+    .availability__details__days__items {
+      display: flex;
+      flex-wrap: wrap;
+
+      .day {
+        min-height: 34px;
+        min-width: 38px;
+        color: #898a8f;
+        line-height: 1.5;
+        font-size: 18px;
+        background: #d6d6d6;
+        margin-right: 10px;
+        padding: 4px;
+        margin-bottom: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.5s ease;
+        border-radius: 5px;
+        font-family: "poppins-regular";
+        &.active {
+          background: #514ee5;
+          color: #fff;
+        }
+      }
+    }
+  }
+  .availability__details__from {
+    display: flex;
+    width: 46%;
+    flex-direction: column;
+  }
+  .availability__details__to {
+    display: flex;
+    width: 46%;
+    flex-direction: column;
+  }
+}
+.register-step-two,
+.register-step-three {
+  .form-group {
+    .arrow {
+      position: relative;
+      &::before {
+        content: "\e939";
+        font-family: "icomoon" !important;
+        display: block;
+        position: absolute;
+        right: 0;
+        font-size: 14px;
+        top: calc(50% - 10.4px);
+        color: #898a8f;
+        pointer-events: none;
+      }
+    }
+    .form-control {
+      &.custom-select {
+        padding: 5px !important;
+        border: 0;
+        border-radius: 0;
+        border-bottom: 1px solid #d6d6d6;
+      }
+    }
+  }
+}
+.register-step-two,
+.register-step-three {
+  .section-fees__details__currency {
+    width: 45%;
+    @include screen-xs {
+      width: 100%;
+    }
+  }
+  .section-fees__details__fees {
+    width: 45%;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 15px;
+    @include screen-xs {
+      width: 100%;
+    }
+  }
+  .section-fees__details {
+    .form-group {
+      .form-control {
+        padding: 5px;
+        border: 0;
+        border-radius: 0;
+        border-bottom: 1px solid #d6d6d6;
+      }
+      .Form-group-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        label {
+          font-family: "poppins-regular";
+          font-size: 18px;
+          font-weight: normal;
+          color: #313450;
+        }
+        input {
+          width: 46%;
+        }
+      }
+    }
+    .form-control.ng-invalid.ng-touched {
+      margin-bottom: 0 !important;
+    }
+    .error-feedback {
+      font-size: 13px;
+    }
+  }
+}
+
+.generic-style {
+  font-family: "poppins-regular";
+  font-size: 13px;
+  color: #898a8f;
+  font-weight: 300;
+  margin-bottom: 0;
+  line-height: 1.71;
+}
+.signature {
+  background: #fff;
+  padding: 10px 18px;
+  margin-top: 45px;
+  margin-bottom: 20px;
+  .input-title {
+    margin-bottom: 15px;
+    h3 {
+      font-family: "poppins-regular";
+      font-size: 18px;
+      font-weight: 500;
+      color: #333348;
+      line-height: 1.5;
+      margin-bottom: 0;
+      position: relative;
+      &::before {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 1px;
+        background: #d6d6d6;
+        position: absolute;
+        bottom: -5px;
+      }
+    }
+  }
+}
+
+.register-step-four {
+  // background: #fff;
+  .signature--upload__image {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    min-height: 210px;
+    &.Form-group-wrapper {
+      position: relative;
+      .error-feedback {
+        bottom: -33px;
+      }
+    }
+    .signature--upload {
+      width: 190px;
+      height: 130px;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+  }
+  .signature-brief {
+    margin-bottom: 115px;
+  }
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  position: relative;
+
+  .header-title__brief {
+    font-size: 16px;
+    font-family: "poppins-regular";
+    color: #a8a8a8;
+    margin-bottom: 0;
+  }
+
+  .header-search {
+    width: 47%;
+    input {
+      padding: 12px 15px;
+      border-radius: 5px;
+      box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
+      border: 0;
+      &:focus-visible {
+        outline: 0;
+      }
+      &:focus {
+        box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
+        border: 0;
+      }
+    }
+    .icon-search {
+      position: absolute;
+      right: 15px;
+      top: 17px;
+      &::before {
+        font-size: 20px;
+      }
+    }
+  }
+}
+.main-content__items__card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.16);
+  display: flex;
+  align-items: center;
+  max-height: 80px;
+  margin-bottom: 20px;
+  .main-content__items__card__name,
+  .main-content__items__card__payment-type {
+    color: #313450;
+    font-size: 18px;
+    line-height: 15;
+  }
+  .main-content__items__card__name {
+    color: #313450;
+    margin: 0 30px 0 40px;
+  }
+  .main-content__items__card__payment-type {
+    font-style: italic;
+  }
+  .main-content__items__card__type,
+  .main-content__items__card__fees {
+    font-size: 16px;
+    line-height: 1.56;
+  }
+  .main-content__items__card__fees {
+    color: #514ee5;
+    font-weight: 500;
+    margin: 0 115px 0 60px;
+  }
+  .main-content__items__card__type {
+    color: #3082cc;
+    font-weight: 300;
+  }
+}
+.profile__item {
+  display: flex;
+  justify-content: center;
+  padding: 15.8px;
+  width: 73%;
+  margin: 0 auto 20px;
+  .main-content__items__card__header {
+    margin-bottom: 0;
+  }
+}
+.main-content__details {
+  background-color: #fff;
+  margin: 0 0 20px 0;
+  padding: 20px 30px;
+  height: 100%;
+  .main-content__details__image {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  > div {
+    width: 100%;
+  }
+}
+.main-content {
+  height: 100%;
+  .row {
+    margin: 0;
+    height: 100%;
+    .details {
+      height: 100%;
+    }
+  }
+}
+.generic-card {
+  background: #fff;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.16);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  transition: all 0.5s ease;
+  cursor: pointer;
+  .Consult {
+    color: #cc8830;
+  }
+  .regular {
+    color: #27ae60;
+  }
+  .video-Consult {
+    color: #cc8830;
+  }
+  .home-visit {
+    color: #3082cc;
+  }
+  .urgent {
+    color: #ff748e;
+  }
+  &.active {
+    border-color: #514ee5;
+  }
+  .payment-icon {
+    &::before {
+      font-size: 26px;
+      margin-right: 7px;
+    }
+  }
+  &.generic-card--appointment {
+    .generic-style {
+      display: flex;
+      width: 100%;
+    }
+  }
+  .row {
+    display: flex;
+    align-items: center;
+  }
+  .generic-style {
+    font-family: "poppins-regular";
+    line-height: 1.5;
+    display: flex;
+    &.generic-card-type {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.56;
+      margin-right: 40px;
+      &.home-visit {
+        color: #3082cc;
+      }
+    }
+  }
+  img {
+    margin-right: 44px;
+  }
+  .generic-card-name {
+    font-size: 18px;
+    color: #313450;
+    // margin-right: 20px;
+    min-width: 150px;
+  }
+  .generic-card-phone {
+    font-size: 18px;
+    color: #333348;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .icon-phone {
+      &::before {
+        font-size: 24px;
+        color: #514ee5;
+      }
+    }
+  }
+  .generic-card-fees {
+    color: #514ee5;
+    font-size: 16px;
+    line-height: 1.56;
+    font-weight: 500;
+    // margin-right: 110px;
+  }
+  .generic-card-payment-type {
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.17;
+    align-items: center;
+    color: 313450;
+  }
+}
+.genric-card-title {
+  font-family: "poppins-regular";
+  font-size: 24px;
+  font-weight: 600;
+  color: #333348;
+  line-height: 1;
+  text-align: center;
+  // margin-bottom: 90px;
+}
+.main-content__details {
+  min-height: 600px;
+  position: relative;
+  .loader {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    align-items: center;
+    top: 0;
+    border-radius: 37px;
+    // opacity: 0.1;
+    z-index: 9999;
+    // background: #000;
+    &::before {
+      content: "";
+      display: flex;
+      width: 100%;
+      position: absolute;
+      height: 100%;
+      background: white;
+      z-index: 2;
+      opacity: 0.4;
+    }
+    // img {
+    //   // height: 50%;
+    // }
+  }
+  .form-group {
+    .Form-group-wrapper {
+      [class^="icon-"],
+      [class*=" icon-"] {
+        top: calc(50% - 9px);
+        display: flex;
+        &::before {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}
+// .clinic-list__menu {
+//   list-style: none;
+//   padding: 0;
+//   width: fit-content;
+//   background: #fff;
+//   display: flex;
+//   border-radius: 22px;
+//   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
+//   margin-bottom: 35px;
+//   li {
+//     display: inline-block;
+//     padding: 7px;
+//     min-width: 130px;
+//     text-align: center;
+//     font-family: "poppins-regular";
+//     font-size: 18px;
+//     color: #333348;
+//     line-height: 1.33;
+//     transition: all 0.5s ease;
+//     border-radius: 22px;
+//     cursor: pointer;
+
+//     &.active {
+//       background-color: #514ee5;
+//       color: #fff;
+//     }
+//   }
+// }
+
+.clinic-list__menu {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  border-radius: 22px;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
+  margin-bottom: 35px !important;
+  overflow-x: scroll;
+  // width: 100%;k
+  // width: max-content;
+  .swiper-slide {
+    display: flex;
+  }
+  li {
+    display: inline-flex;
+    padding: 7px;
+    min-width: 150px;
+    text-align: center;
+    font-family: "poppins-regular";
+    font-size: 18px;
+    color: #333348;
+    line-height: 1.33;
+    transition: all 0.5s ease;
+    border-radius: 22px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // white-space: nowrap;
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0 !important;
+    }
+
+    &.active {
+      background-color: #514ee5;
+      color: #fff;
+    }
+  }
+}
+
+.details-item {
+  display: flex;
+  margin-bottom: 3px;
+  .info-style {
+    font-family: "poppins-regular";
+    font-size: 16px;
+    color: #313450;
+    line-height: 1.56;
+  }
+  .info-header {
+    color: #514ee5;
+    margin-right: 6px;
+  }
+}
+.upcoming-details-personal__msg {
+  button {
+    border-radius: 5px;
+    background-color: #514ee5;
+    padding: 7px 5px;
+    font-size: 16px;
+    font-family: "poppins-regular";
+    color: #fff;
+    font-weight: 300;
+    line-height: 1.56;
+    border: 0;
+    min-width: 140px;
+  }
+  .icon-messages {
+    margin-left: 10px;
+  }
+}
+.cdk-overlay-container {
+  position: absolute !important;
+  top: 350px !important;
+  right: 220px !important;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
+}
+.list {
+  height: 665px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.prescription-title {
+  font-family: "poppins-regular";
+  color: #514ee5;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 40px;
+  [class^="icon-"],
+  [class*=" icon-"] {
+    margin-right: 6px;
+  }
+}
+.icon-rx:before {
+  font-size: 28px;
+}
+.icon-lab:before {
+  font-size: 29px;
+}
+.icon-scan {
+  > span {
+    font-family: "icomoon" !important;
+    &::before {
+      font-size: 28px;
+    }
+  }
+}
+.icon-search {
+  cursor: pointer;
+}
+.profile-page {
+  .Form-group-wrapper {
+    position: relative;
+    .input-icon {
+      position: absolute;
+      top: -3px;
+      right: 0;
+      .icon-edit {
+        cursor: pointer;
+        &:before {
+          font-size: 23px;
+        }
+      }
+    }
+  }
+}
+.switch-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 50px;
+}
+.generic-details {
+  font-family: "poppins-regular";
+  font-size: 16px;
+  line-height: 1.56;
+  color: #898a8f;
+  margin-bottom: 0;
+
+  &.header {
+    color: #313450;
+    display: inline-block;
+    margin-right: 7px;
+  }
+}
+.time {
+  display: flex;
+  margin-bottom: 15px;
+  > div {
+    display: flex;
+    align-items: center;
+    margin-right: 60px;
+  }
+}
+.days {
+  .generic-details {
+    margin-right: 16px;
+    &.header {
+      margin-right: 20px;
+    }
+  }
+}
+.session-fees {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  > div {
+    display: flex;
+  }
+  .generic-details {
+    &:last-child {
+      font-size: 18px;
+    }
+  }
+}
+.form-control:disabled,
+.form-control[readonly] {
+  background-color: #fff !important;
+}
+.modal-dialog {
+  .modal-footer:not(.reset-password-modal) {
+    .welcome-card__btns {
+      transition: all 0.4s ease;
+      &:not(.active) {
+        button {
+          background-color: #d6d6d6;
+          color: #898a8f;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+  .form-group {
+    .form-control {
+      padding: 15px 20px;
+    }
+  }
+}
+.add-new-clinic {
+  .form-control {
+    padding: 15px 20px;
+  }
+  .availability {
+    .input-title--subsection h3 {
+      margin-right: 15px;
+    }
+    > .availability__details {
+      flex-direction: column;
+      justify-content: initial;
+      .availability__details__days {
+        width: 100%;
+      }
+      .availability__details {
+        flex-direction: row;
+        width: 85%;
+        justify-content: space-between;
+      }
+      .availability__details__from {
+        display: flex;
+        width: 48%;
+        flex-direction: row;
+        align-items: center;
+        .form-group {
+          margin-bottom: 0;
+        }
+      }
+      .availability__details__to {
+        width: 43%;
+        flex-direction: row;
+        align-items: center;
+        .form-group {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  .input-section {
+    border-radius: 9px;
+    border: solid 1px #d6d6d6;
+  }
+
+  .section-fees__details {
+    justify-content: initial;
+    flex-direction: column;
+    .section-fees__details {
+      flex-direction: row;
+      width: 100%;
+      align-items: center;
+      h3 {
+        margin-right: 30px;
+        margin-bottom: 0;
+      }
+      .form-group {
+        width: 30%;
+        margin-bottom: 0;
+      }
+    }
+    .section-fees__details__fees {
+      flex-direction: column;
+      margin-top: 0;
+      .form-control.ng-invalid.ng-touched {
+        margin-bottom: 30px !important;
+      }
+      .error-feedback {
+        bottom: 6px;
+      }
+      > .form-group {
+        width: 100%;
+      }
+    }
+  }
+}
+.register-step-two {
+  .form-group {
+    .arrow {
+      &::before {
+        right: 10px;
+      }
+    }
+    .iti__selected-flag.dropdown-toggle {
+      width: 110px !important;
+    }
+    input#phone {
+      padding: 20px 20px 15px 110px;
+    }
+  }
+}
+.upcoming-details-personal {
+  .row {
+    > div {
+      padding: 0;
+      &:last-child {
+        padding-left: 15px;
+      }
+    }
+  }
+  .generic-card--appointment {
+    text-decoration: none;
+  }
+}
+.upcoming-details-personal__info {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 10px 10px 0;
+}
+.upcoming-details-personal {
+  .generic-card--info {
+    margin: 16px 20px 0;
+    padding: 12px 20px;
+  }
+  .prescription {
+    padding: 18px 20px;
+    margin-bottom: 50px;
+    cursor: pointer;
+  }
+  .documents {
+    padding: 18px 20px;
+  }
+  > .upcoming-details-personal__msg {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 35px;
+    button {
+      display: flex;
+      align-items: center;
+      border-radius: 25px;
+      padding: 0 10px 0 0;
+    }
+  }
+  .info-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h3 {
+      font-size: 18px;
+      font-family: "poppins-regular";
+      font-weight: 500;
+      color: #313450;
+      margin-bottom: 5px;
+    }
+    p {
+      margin-bottom: 0;
+      font-size: 12px;
+      font-family: "poppins-regular";
+      color: #898a8f;
+      line-height: 1.5;
+      width: 60%;
+    }
+    .info-arrow {
+      display: flex;
+    }
+  }
+  .patient-documents {
+    p {
+      width: 100%;
+    }
+  }
+  .icon-add {
+    display: flex;
+    flex-direction: row;
+    padding-top: 5px;
+    margin-right: 5px;
+    .path1,
+    .path2 {
+      font-family: "icomoon" !important;
+      display: inline-flex;
+      &::before {
+        font-size: 46px;
+      }
+    }
+  }
+  .info-box--info {
+    margin-bottom: 50px;
+  }
+}
+.consulto-edit {
+  .register-step-three .home-visit.generic-switch-btn {
+    margin-bottom: 0;
+  }
+  .form-group {
+    margin-bottom: 0;
+  }
+  .section-fees__details.wrapper {
+    justify-content: initial;
+    flex-direction: column;
+  }
+  .availability {
+    margin-bottom: 25px;
+    > .availability__details {
+      flex-direction: column;
+      justify-content: initial;
+      .availability__details__days {
+        width: 100%;
+      }
+      .availability__details {
+        width: 85%;
+        h3 {
+          margin-right: 10px;
+        }
+        .availability__details__from {
+          align-items: center;
+          flex-direction: row;
+        }
+        .availability__details__to {
+          align-items: center;
+          flex-direction: row;
+        }
+      }
+    }
+  }
+
+  .section-fees__details .input-title--fees h3 {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .register-step-two .section-fees__details__currency,
+  .register-step-three .section-fees__details__currency {
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+  }
+  .register-step-two .section-fees__details__fees,
+  .register-step-three .section-fees__details__fees {
+    width: 100%;
+  }
+}
+
+.doctor-code-inputs {
+  display: flex;
+  width: 67%;
+  justify-content: space-between;
+  margin: 0 auto;
+  position: relative;
+  .code-input {
+    width: 15%;
+    position: relative;
+    input {
+      box-shadow: none;
+      border: 0;
+      border-bottom: solid 1px #514ee5;
+      border-radius: 0;
+      text-align: center;
+      font-size: 45px;
+      font-family: "poppins-regular";
+      color: #514ee5;
+      line-height: 1.51;
+      font-weight: 500;
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+}
+.modal-body {
+  .doctor-code-inputs {
+    width: 80%;
+  }
+}
+
+.signature-modal {
+  .signature--upload {
+    display: flex;
+    max-height: 300px;
+    position: relative;
+    margin-bottom: 20px;
+    &::before {
+      display: block;
+      content: "";
+      width: 100%;
+      padding-top: 30%;
+    }
+    img {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      max-width: 100%;
+      max-height: 100%;
+      margin: auto;
+    }
+  }
+}
+.doctor-signature-image {
+  max-width: 25%;
+}
+
+.doctor-info {
+  .doctor-info-edit {
+    .upload-image-container {
+      display: none !important;
+    }
+    .form-group {
+      .form-control {
+        padding: 20px 15px;
+      }
+    }
+  }
+}
+.doctor-info-details {
+  .generic-switch-btn {
+    pointer-events: none;
+  }
+  .welcome-card__btns {
+    margin-top: 15px;
+  }
+}
+.iti.iti--allow-dropdown {
+  width: 100%;
+}
+input#phone {
+  padding: 20px 20px 15px 95px;
+}
+
+.doctor-assistant {
+  a {
+    text-decoration: none;
+    font-size: 16px;
+    font-family: "poppins-regular";
+    font-weight: normal;
+    line-height: 1.56;
+    color: #333348;
+  }
+  .icon-logout {
+    margin-right: 5px;
+    &::before {
+      color: #a59c9c;
+    }
+  }
+}
+
+.patient-details {
+  .iti__selected-flag {
+    width: 110px !important;
+  }
+  input#phone {
+    padding: 20px 20px 15px 108px;
+  }
+}
+.sign-up-card,
+.sign-in-card {
+  position: relative;
+  .loader {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    align-items: center;
+    top: 0;
+    border-radius: 37px;
+    // opacity: 0.1;
+    z-index: 9999;
+    // background: #000;
+    &::before {
+      content: "";
+      display: flex;
+      width: 100%;
+      position: absolute;
+      height: 100%;
+      background: white;
+      z-index: 2;
+      opacity: 0.4;
+    }
+    img {
+      height: 75px;
+    }
+  }
+}
+
+.main-content__list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .list-container {
+    &.not-found {
+      display: flex;
+      height: 100%;
+      /* align-items: center; */
+      justify-content: center;
+      flex-direction: column;
+    }
+  }
+  .nont-found {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+}
+
+.sign-in-card__signup {
+  display: flex;
+  justify-content: center;
+  p,
+  a {
+    font-size: 16px;
+    font-family: "poppins-regular";
+    font-weight: 500;
+
+    @include screen-400 {
+      font-size: 14px;
+    }
+  }
+  a {
+    text-decoration: none;
+    color: $primary;
+    margin-left: 5px;
+    &:focus-visible {
+      outline: 0;
+    }
+  }
+}
+
+.upload-image-container__icon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  p {
+    margin-bottom: 0;
+    font-family: "poppins-regular";
+    font-size: 16px;
+    line-height: 1.5;
+    color: #898a8f;
+    margin-left: 5px;
+    @include screen-360{
+      font-size: 14px;
+    }
+  }
+}
+.custom-select {
+  .error-feedback {
+    bottom: -51px;
+  }
+}
+
+.form-control--arabic {
+  text-align: right;
+}
+
+.doctor-info-edit {
+  .custom-select {
+    .error-feedback {
+      bottom: -24px;
+    }
+  }
+}
+
+.modal-dialog {
+  .modal-footer:not(.reset-password-modal) {
+    .welcome-card__btns {
+      &.reserved-date-btn {
+        width: 100%;
+        &:not(.active) {
+          button {
+            min-width: 160px;
+            background-color: #fff;
+            color: #514ee5;
+            cursor: pointer;
+            pointer-events: unset;
+            text-transform: uppercase;
+          }
+          .reserved-date-btn__confirm {
+            color: #fff;
+            background-color: #514ee5;
+            margin-right: 20px;
+          }
+        }
+      }
+    }
+  }
+  .reserved-date-pop {
+    h3 {
+      font-weight: bold;
+    }
+    p {
+      color: #aba6a6;
+      font-size: 21px;
+    }
+    h3,
+    p {
+      text-align: center;
+    }
+  }
+}
+
+.appointments-page {
+  .main-content__list {
+    position: relative;
+    .list-container {
+      .delete-loader {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        top: 0;
+        > app-loader {
+          width: 100%;
+        }
+        &::before {
+          content: "";
+          display: block;
+          background-color: #dedede;
+          opacity: 0.1;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          z-index: 1;
+        }
+      }
+    }
+  }
+}
+
+.reset-password-card {
+  app-loader {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &::before {
+      content: "";
+      display: block;
+      background-color: #dedede;
+      opacity: 0.1;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      z-index: 1;
+    }
+    .loader {
+      width: 100%;
+    }
+  }
+}
+
+.consulto-details,
+.consulto-edit {
+  .welcome-card__btns {
+    margin-top: 20px;
+  }
+}
+
+.register-step-one {
+  .form-group {
+    .arrow {
+      position: relative;
+      &::before {
+        content: "\e939";
+        font-family: "icomoon" !important;
+        display: block;
+        position: absolute;
+        right: 15px;
+        font-size: 14px;
+        top: calc(50% - 10.4px);
+        color: #898a8f;
+        pointer-events: none;
+      }
+    }
+    .error-feedback {
+      bottom: -24px;
+    }
+  }
+}
+
+.confirm-out__body {
+  .custom-btn {
+    min-width: 170px;
+    text-transform: uppercase;
+    &.btn-main-color {
+      margin-right: 25px;
+    }
+  }
+}
+.confirm-out__header--assistant {
+  .modal-title {
+    text-align: center;
+  }
+}
+
+
+
+.welcome-card__btns{
+  .custom-btn{
+    @include screen-xs {
+      min-width: 110px;
+    }
+  }
+}
+
+
+.doctor-code-inputs{
+  @include screen-xs{
+    width: 100%;
+  }
+  .form-control{
+    @include screen-xs{
+      padding: 0;
+    }
+  }
+}

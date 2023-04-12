@@ -1,0 +1,35 @@
+<div class="welcome-card genric-card">
+  <div class="welcome-card__image">
+    <img
+      src="../../../assets/images/logo-image.png"
+      alt="logo image"
+      srcset=""
+    />
+  </div>
+  <div class="welcome-card__content">
+    <h3 class="main-title">RX Company for health care</h3>
+
+    <p>Doctor's Version</p>
+  </div>
+
+  <p class="is-this" *ngIf="cachedUser">is this your account ?</p>
+  <div class="welcome-card__btns">
+    <div class="cached-users" *ngIf="cachedUser" (click)="autoLogin()">
+      <div class="cached-users__img">
+        <img [src]="cachedUser?.userPhoto" alt="userPhoto" />
+      </div>
+      <p class="cached-users__name">
+        {{ cachedUser?.userName }}
+      </p>
+    </div>
+
+    <p class="is-this" *ngIf="cachedUser">or</p>
+
+    <button class="welcome-card__btns__signin custom-btn" routerLink="SignIn">
+      Sign In
+    </button>
+    <button class="welcome-card__btns__signup custom-btn" routerLink="SignUp">
+      Sign Up
+    </button>
+  </div>
+</div>
